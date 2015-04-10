@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C67D864E-EBCC-4642-88E2-DEE0D4D8C837}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>iAgentDataTool.Models</RootNamespace>
+    <AssemblyName>iAgentDataTool.Models</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\MongoDB.Bson.2.0.0-rc0\lib\net45\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\MongoDB.Driver.2.0.0-rc0\lib\net45\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core">
+      <HintPath>..\packages\MongoDB.Driver.Core.2.0.0-rc0\lib\net45\MongoDB.Driver.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\AgentClient.cs" />
+    <Compile Include="Common\ApcoWebDev.cs" />
+    <Compile Include="Common\dsa_clientMaster.cs" />
+    <Compile Include="Nosql\AgentResponseData.cs" />
+    <Compile Include="Nosql\AuthImage.cs" />
+    <Compile Include="Nosql\AuthImageData.cs" />
+    <Compile Include="Nosql\RawExtractionImageData.cs" />
+    <Compile Include="Remix\AgentSchedule.cs" />
+    <Compile Include="Remix\ExtractionMap.cs" />
+    <Compile Include="Remix\PayerResponseMap.cs" />
+    <Compile Include="Remix\AgentConfiguration.cs" />
+    <Compile Include="Remix\ClientInformation.cs" />
+    <Compile Include="Common\Upw.cs" />
+    <Compile Include="Remix\dsa_ClientLocation.cs" />
+    <Compile Include="Common\ClientMappingMaster.cs" />
+    <Compile Include="Common\ClientMappingValue.cs" />
+    <Compile Include="Common\ClientMaster.cs" />
+    <Compile Include="Remix\ClientRequests.cs" />
+    <Compile Include="Remix\ClientScript.cs" />
+    <Compile Include="Common\UserLogin.cs" />
+    <Compile Include="Common\FacilityDetail.cs" />
+    <Compile Include="Common\ScriptMaster.cs" />
+    <Compile Include="Common\ScriptReturnValue.cs" />
+    <Compile Include="Common\PayerWebsiteMappingValue.cs" />
+    <Compile Include="Remix\Portal.cs" />
+    <Compile Include="Remix\ViewModels\PortalUserAndLocationId.cs" />
+    <Compile Include="Remix\PortalUserLocation.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Common\WebsiteMaster.cs" />
+    <Compile Include="Common\FacilityMaster.cs" />
+    <Compile Include="Remix\PortalUser.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SmartAgentModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

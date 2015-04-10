@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CE7B28E3-0A0C-4077-9666-9D8E65CF6C7A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>iAgentDataTool.Repositories</RootNamespace>
+    <AssemblyName>iAgentDataTool.Repositories</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\MongoDB.Bson.2.0.0-rc0\lib\net45\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\MongoDB.Driver.2.0.0-rc0\lib\net45\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core">
+      <HintPath>..\packages\MongoDB.Driver.Core.2.0.0-rc0\lib\net45\MongoDB.Driver.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Legacy">
+      <HintPath>..\packages\mongocsharpdriver.2.0.0-rc0\lib\net45\MongoDB.Driver.Legacy.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="phc_DACommon, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CommonDlls\phc_DACommon.dll</HintPath>
+    </Reference>
+    <Reference Include="PHC_ECLib">
+      <HintPath>..\CommonDlls\PHC_ECLib.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Utility">
+      <HintPath>..\CommonDlls\Utility.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AsyncRepositoires\RemixRepositoires\ClientLocRepo.cs" />
+    <Compile Include="AsyncRepositoires\RemixRepositoires\ExtractionMapRepositoryAsync.cs" />
+    <Compile Include="AsyncRepositoires\RemixRepositoires\PayerResponseRepositoryAsync.cs" />
+    <Compile Include="AsyncRepositoires\RemixRepositoires\PortalsAsyncRepository.cs" />
+    <Compile Include="AsyncRepositoires\Common\ClientMasterRepositoryAsync.cs" />
+    <Compile Include="AsyncRepositoires\Common\UpwAsyncRepository.cs" />
+    <Compile Include="AsyncRepositoires\RemixRepositoires\ClientLocationsAsyncRepository.cs" />
+    <Compile Include="AsyncRepositoires\Common\UserLoginsRepositoryAsync.cs" />
+    <Compile Include="AsyncRepositoires\Common\ApcoWebDevAsyncRepoisitory.cs" />
+    <Compile Include="AsyncRepositoires\Common\ClientMappingMasterRepositoryAsync.cs" />
+    <Compile Include="AsyncRepositoires\Common\ClientMappingValuesRepositoryAsync.cs" />
+    <Compile Include="AsyncRepositoires\Common\FacilityDetialsAsyncRepository.cs" />
+    <Compile Include="AsyncRepositoires\Common\FacilityMasterAsyncRepository.cs" />
+    <Compile Include="AsyncRepositoires\Common\PayerWebsiteMappingValuesAsyncRepository.cs" />
+    <Compile Include="AsyncRepositoires\Common\WebsiteMasterAsyncRepository.cs" />
+    <Compile Include="AsyncRepositoires\RemixRepositoires\AgentConfigurationAsyncRepository.cs" />
+    <Compile Include="AsyncRepositoires\RemixRepositoires\ClientScriptsAsyncRepostiory.cs" />
+    <Compile Include="AsyncRepositoires\RemixRepositoires\PortalUserRepo.cs" />
+    <Compile Include="AsyncRepositoires\RemixRepositoires\TransactionRepo.cs" />
+    <Compile Include="AsyncRepositoires\RemixRepositoires\ViewModelRepos\PortalUserDataRepo.cs" />
+    <Compile Include="MongoRepos\IDataExtractionRepo.cs" />
+    <Compile Include="MongoRepos\INoSqlRepo.cs" />
+    <Compile Include="MongoRepos\MongoRepo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AsyncRepositoires\RemixRepositoires\PortalUsersAsyncRepository.cs" />
+    <Compile Include="AsyncRepositoires\Common\ScriptMasterRepository.cs" />
+    <Compile Include="AsyncRepositoires\Common\ScriptRetrunValuesRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\dapper-dot-net-master\Dapper NET45\Dapper NET45.csproj">
+      <Project>{0fff5bc7-0a4b-4d87-835e-4fad70937507}</Project>
+      <Name>Dapper NET45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\iAgentDataTool.Helpers\iAgentDataTool.Helpers.csproj">
+      <Project>{0f4e3ae7-4ef2-4677-9f54-3900099c27f2}</Project>
+      <Name>iAgentDataTool.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\iAgentDataTool.Models\iAgentDataTool.Models.csproj">
+      <Project>{c67d864e-ebcc-4642-88e2-dee0d4d8c837}</Project>
+      <Name>iAgentDataTool.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="RemixRepositories\Tests\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

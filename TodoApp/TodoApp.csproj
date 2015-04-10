@@ -1,0 +1,1167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8E073138-EE17-4A9D-9679-886627BFBDBF}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TodoApp</RootNamespace>
+    <AssemblyName>TodoApp</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Ninject.Web.Common.3.2.3.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Ninject.MVC5.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.WebApi, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Ninject.Web.WebApi.3.2.4.0\lib\net45-full\Ninject.Web.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
+    <Reference Include="WebApiContrib.IoC.Ninject">
+      <HintPath>..\packages\WebApiContrib.IoC.Ninject.0.9.3.0\lib\net40\WebApiContrib.IoC.Ninject.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Global.asax" />
+    <Content Include="node_modules\bower\Gruntfile.js" />
+    <Content Include="node_modules\bower\lib\commands\cache\clean.js" />
+    <Content Include="node_modules\bower\lib\commands\cache\list.js" />
+    <Content Include="node_modules\bower\lib\commands\help.js" />
+    <Content Include="node_modules\bower\lib\commands\home.js" />
+    <Content Include="node_modules\bower\lib\commands\index.js" />
+    <Content Include="node_modules\bower\lib\commands\info.js" />
+    <Content Include="node_modules\bower\lib\commands\init.js" />
+    <Content Include="node_modules\bower\lib\commands\install.js" />
+    <Content Include="node_modules\bower\lib\commands\link.js" />
+    <Content Include="node_modules\bower\lib\commands\list.js" />
+    <Content Include="node_modules\bower\lib\commands\login.js" />
+    <Content Include="node_modules\bower\lib\commands\lookup.js" />
+    <Content Include="node_modules\bower\lib\commands\prune.js" />
+    <Content Include="node_modules\bower\lib\commands\register.js" />
+    <Content Include="node_modules\bower\lib\commands\search.js" />
+    <Content Include="node_modules\bower\lib\commands\uninstall.js" />
+    <Content Include="node_modules\bower\lib\commands\unregister.js" />
+    <Content Include="node_modules\bower\lib\commands\update.js" />
+    <Content Include="node_modules\bower\lib\commands\version.js" />
+    <Content Include="node_modules\bower\lib\config.js" />
+    <Content Include="node_modules\bower\lib\core\Manager.js" />
+    <Content Include="node_modules\bower\lib\core\PackageRepository.js" />
+    <Content Include="node_modules\bower\lib\core\Project.js" />
+    <Content Include="node_modules\bower\lib\core\ResolveCache.js" />
+    <Content Include="node_modules\bower\lib\core\resolverFactory.js" />
+    <Content Include="node_modules\bower\lib\core\resolvers\FsResolver.js" />
+    <Content Include="node_modules\bower\lib\core\resolvers\GitFsResolver.js" />
+    <Content Include="node_modules\bower\lib\core\resolvers\GitHubResolver.js" />
+    <Content Include="node_modules\bower\lib\core\resolvers\GitRemoteResolver.js" />
+    <Content Include="node_modules\bower\lib\core\resolvers\GitResolver.js" />
+    <Content Include="node_modules\bower\lib\core\resolvers\index.js" />
+    <Content Include="node_modules\bower\lib\core\resolvers\Resolver.js" />
+    <Content Include="node_modules\bower\lib\core\resolvers\SvnResolver.js" />
+    <Content Include="node_modules\bower\lib\core\resolvers\UrlResolver.js" />
+    <Content Include="node_modules\bower\lib\core\scripts.js" />
+    <Content Include="node_modules\bower\lib\index.js" />
+    <Content Include="node_modules\bower\lib\renderers\index.js" />
+    <Content Include="node_modules\bower\lib\renderers\JsonRenderer.js" />
+    <Content Include="node_modules\bower\lib\renderers\StandardRenderer.js" />
+    <Content Include="node_modules\bower\lib\util\analytics.js" />
+    <Content Include="node_modules\bower\lib\util\cli.js" />
+    <Content Include="node_modules\bower\lib\util\cmd.js" />
+    <Content Include="node_modules\bower\lib\util\copy.js" />
+    <Content Include="node_modules\bower\lib\util\createError.js" />
+    <Content Include="node_modules\bower\lib\util\createLink.js" />
+    <Content Include="node_modules\bower\lib\util\download.js" />
+    <Content Include="node_modules\bower\lib\util\extract.js" />
+    <Content Include="node_modules\bower\lib\util\md5.js" />
+    <Content Include="node_modules\bower\lib\util\readJson.js" />
+    <Content Include="node_modules\bower\lib\util\removeIgnores.js" />
+    <Content Include="node_modules\bower\lib\util\rootCheck.js" />
+    <Content Include="node_modules\bower\lib\util\semver.js" />
+    <Content Include="node_modules\bower\lib\util\template.js" />
+    <Content Include="node_modules\bower\lib\util\validLink.js" />
+    <Content Include="node_modules\bower\node_modules\abbrev\abbrev.js" />
+    <Content Include="node_modules\bower\node_modules\abbrev\test.js" />
+    <Content Include="node_modules\bower\node_modules\archy\examples\beep.js" />
+    <Content Include="node_modules\bower\node_modules\archy\examples\multi_line.js" />
+    <Content Include="node_modules\bower\node_modules\archy\index.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\example\array.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\example\fail.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\example\nested.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\example\nested_fail.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\example\not_enough.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\example\static\index.html" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\example\static\server.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\example\timing.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\example\too_many.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\index.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\lib\default_stream.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\lib\render.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\lib\test.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\deep-equal\example\cmp.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\deep-equal\index.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\deep-equal\node_modules\tap\bin\tap-http.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\deep-equal\node_modules\tap\bin\tap-reader.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\deep-equal\node_modules\tap\bin\tap.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\deep-equal\node_modules\tap\lib\main.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\deep-equal\node_modules\tap\test\common.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\deep-equal\node_modules\tap\test\meta-test.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\deep-equal\node_modules\tap\test\non-tap-output.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\deep-equal\node_modules\tap\test\result-trap.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\deep-equal\node_modules\tap\test\simple-harness-test-with-plan.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\deep-equal\node_modules\tap\test\simple-harness-test.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\deep-equal\node_modules\tap\test\test-test.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\deep-equal\test\cmp.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\defined\example\defined.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\defined\index.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\defined\node_modules\tape\example\array.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\defined\node_modules\tape\example\fail.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\defined\node_modules\tape\example\nested.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\defined\node_modules\tape\example\nested_fail.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\defined\node_modules\tape\example\static\server.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\defined\node_modules\tape\example\timing.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\defined\node_modules\tape\example\too_many.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\defined\node_modules\tape\index.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\defined\test\def.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\falafel\example\array.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\falafel\example\prompt.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\falafel\index.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\falafel\node_modules\esprima\esprima.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\falafel\node_modules\tape\example\array.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\falafel\node_modules\tape\example\nested_fail.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\falafel\node_modules\tape\example\timing.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\falafel\node_modules\tape\example\too_many.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\falafel\node_modules\tape\index.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\falafel\test\array.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\falafel\test\async.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\falafel\test\for.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\falafel\test\parent.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\index.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\lib\parse.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\lib\stringify.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\node_modules\garbage\index.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\node_modules\garbage\test\array.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\node_modules\garbage\test\object.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\node_modules\tap\bin\tap-http.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\node_modules\tap\bin\tap-reader.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\node_modules\tap\bin\tap.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\node_modules\tap\lib\main.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\node_modules\tap\test\common.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\node_modules\tap\test\meta-test.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\node_modules\tap\test\non-tap-output.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\test\parse.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\test\stringify.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\test\array.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\test\child_ordering.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\test\exit.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\test\exit\fail.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\test\exit\ok.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\test\exit\too_few.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\test\fail.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\test\harness.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\test\max_listeners.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\test\max_listeners\source.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\test\nested.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\test\order.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\test\plan_optional.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\test\skip.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\test\throw.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\test\too_many.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\bin\tap-http.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\bin\tap-reader.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\bin\tap.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\coverage-example\lib\bar.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\coverage-example\lib\foo.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\coverage-example\test\bar.test.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\coverage-example\test\baz.test.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\coverage-example\test\foo.test.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\example\lib\math.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\example\test\test-example.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\lib\main.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\lib\tap-assert.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\lib\tap-browser-harness.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\lib\tap-consumer.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\lib\tap-cov-html.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\lib\tap-global-harness.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\lib\tap-harness.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\lib\tap-producer.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\lib\tap-results.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\lib\tap-runner.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\lib\tap-test.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\node_modules\inherits\inherits-old.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\node_modules\inherits\inherits.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\node_modules\yamlish\yamlish.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test-disabled\bailout.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test-disabled\foo.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test-disabled\t.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test\buffer_compare.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test\common.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test\deep.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test\end-exception\t.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test\expose-gc-test.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test\independent-timeouts.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test\isolated-conf-test.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test\meta-test.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test\nested-test.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test\non-tap-output.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test\output-childtest-description.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test\result-trap.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test\segv.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test\simple-harness-test-with-plan.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test\simple-harness-test.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test\test-test.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test\timeout.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test\trivial-success.js" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test\undefined_indented.js" />
+    <Content Include="node_modules\bower\node_modules\archy\test\beep.js" />
+    <Content Include="node_modules\bower\node_modules\archy\test\multi_line.js" />
+    <Content Include="node_modules\bower\node_modules\archy\test\non_unicode.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\Gruntfile.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\lib\Config.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\lib\util\defaults.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\lib\util\expand.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\lib\util\paths.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\lib\util\rc.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\graceful-fs\graceful-fs.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\graceful-fs\polyfills.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\graceful-fs\test\open.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\graceful-fs\test\readdir-sort.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\images\error.png" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\images\ok.png" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\browser\debug.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\browser\diff.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\browser\events.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\browser\fs.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\browser\path.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\browser\progress.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\browser\tty.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\context.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\hook.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\interfaces\bdd.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\interfaces\exports.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\interfaces\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\interfaces\qunit.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\interfaces\tdd.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\mocha.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\ms.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\reporters\base.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\reporters\doc.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\reporters\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\reporters\json-cov.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\reporters\json-stream.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\reporters\json.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\reporters\markdown.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\runnable.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\runner.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\suite.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\template.html" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\test.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\lib\utils.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\mocha.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\append.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\collect.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\combine.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\compact.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\contains.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\difference.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\every.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\filter.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\find.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\findIndex.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\findLast.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\findLastIndex.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\flatten.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\forEach.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\indexOf.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\insert.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\intersection.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\invoke.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\join.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\lastIndexOf.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\map.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\max.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\min.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\pick.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\pluck.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\range.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\reduce.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\reduceRight.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\reject.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\remove.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\removeAll.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\shuffle.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\slice.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\some.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\sort.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\sortBy.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\split.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\toLookup.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\union.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\unique.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\xor.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\array\zip.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\collection.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\date.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\function.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\lang.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\math.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\math\ceil.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\math\clamp.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\math\countSteps.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\math\floor.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\math\inRange.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\math\isNear.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\math\lerp.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\math\loop.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\math\map.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\math\norm.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\math\round.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\number.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\number\abbreviate.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\number\currencyFormat.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\number\enforcePrecision.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\number\isNaN.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\number\MAX_INT.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\number\nth.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\number\pad.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\number\rol.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\number\ror.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\object.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\queryString.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\random.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\string.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\time.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\example\bool.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\example\boolean_double.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\example\boolean_single.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\example\default_hash.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\example\default_singles.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\example\divide.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\example\line_count.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\example\line_count_options.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\example\line_count_wrap.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\example\nonopt.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\example\reflect.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\example\short.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\example\string.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\example\usage-options.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\example\xup.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\hashish\examples\chain.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\hashish\examples\map.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\hashish\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\hashish\test\hash.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\hashish\test\property.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\example\parse.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\node_modules\tape\example\not_enough.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\node_modules\tape\example\too_many.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\node_modules\tape\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\test\bool.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\test\dash.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\test\default_bool.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\test\dotted.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\test\long.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\test\num.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\test\parse.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\test\parse_modified.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\test\short.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\test\whitespace.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\tap\bin\tap-http.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\tap\bin\tap-reader.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\tap\bin\tap.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\tap\coverage-example\lib\bar.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\tap\coverage-example\lib\foo.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\tap\coverage-example\test\bar.test.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\tap\coverage-example\test\baz.test.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\tap\coverage-example\test\foo.test.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\tap\example\lib\math.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\tap\example\test\test-example.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\tap\lib\main.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\tap\lib\tap-assert.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\tap\lib\tap-browser-harness.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\tap\lib\tap-consumer.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\tap\lib\tap-cov-html.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\tap\lib\tap-harness.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\tap\lib\tap-producer.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\wordwrap\example\center.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\wordwrap\example\meat.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\wordwrap\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\wordwrap\test\break.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\wordwrap\test\idleness.txt" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\wordwrap\test\wrap.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\test\dash.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\test\parse.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\test\parse_modified.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\test\short.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\test\usage.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\test\whitespace.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\test\_.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\test\_\argv.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\test\_\bin.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\bin\tap-http.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\bin\tap-reader.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\bin\tap.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\coverage-example\lib\bar.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\coverage-example\lib\foo.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\coverage-example\test\bar.test.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\coverage-example\test\baz.test.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\coverage-example\test\foo.test.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\example\lib\math.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\example\test\test-example.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\lib\main.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\lib\tap-assert.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\lib\tap-browser-harness.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\lib\tap-consumer.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\lib\tap-cov-html.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\lib\tap-global-harness.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\lib\tap-harness.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\lib\tap-producer.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\lib\tap-results.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\lib\tap-runner.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\lib\tap-test.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\node_modules\inherits\inherits-old.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\node_modules\inherits\inherits.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\node_modules\yamlish\yamlish.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\test-disabled\bailout.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\test-disabled\foo.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\test-disabled\t.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\test\buffer_compare.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\test\common.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\test\deep.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\test\independent-timeouts.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\test\isolated-conf-test.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\test\meta-test.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\test\nested-test.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\test\non-tap-output.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\test\result-trap.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\test\simple-harness-test-with-plan.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\test\simple-harness-test.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\test\test-test.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\test\timeout.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\test\trivial-success.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\osenv.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\test\unix.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\test\windows.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\test\helpers.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\test\test.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\test\util\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-config\test\util\rc.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\expect.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\commander\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\commander\lib\commander.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\commander\node_modules\should\gulpfile.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\commander\node_modules\should\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\commander\node_modules\should\should.min.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\cache.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\connect.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\basicAuth.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\bodyParser.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\compress.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\cookieParser.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\cookieSession.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\csrf.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\directory.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\errorHandler.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\favicon.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\json.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\methodOverride.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\multipart.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\query.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\responseTime.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\session.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\static.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\staticCache.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\urlencoded.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\patch.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\proto.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\utils.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\test.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\jade\jade.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\lib\middleware.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\lib\utilities.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\import-exp.css" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\importSimple-exp.css" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\pathRoot-exp.css" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\postprocessCss-exp.css" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\preprocessLess-exp-a.css" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\preprocessLess-exp-b.css" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\preprocessParserPaths-exp.css" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\preprocessPath-exp.css" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\simple-exp.css" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\test-middleware.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\test-utilities.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\stylus\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\browserify.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\colors.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\errors.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\lexer.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\middleware.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\parser.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\renderer.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\stack\frame.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\stack\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\stylus.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\token.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\units.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\utils.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\images\error.png" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\images\ok.png" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\browser\debug.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\browser\diff.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\browser\events.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\browser\fs.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\browser\path.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\browser\progress.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\browser\tty.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\context.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\hook.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\interfaces\bdd.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\interfaces\exports.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\interfaces\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\interfaces\qunit.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\interfaces\tdd.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\mocha.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\ms.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\reporters\base.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\reporters\doc.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\reporters\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\reporters\json-cov.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\reporters\json-stream.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\reporters\json.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\reporters\markdown.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\runnable.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\runner.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\suite.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\template.html" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\test.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\lib\utils.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\mocha.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\append.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\collect.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\combine.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\compact.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\contains.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\difference.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\every.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\filter.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\find.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\findIndex.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\findLast.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\findLastIndex.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\flatten.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\forEach.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\indexOf.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\insert.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\intersection.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\invoke.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\join.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\lastIndexOf.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\map.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\max.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\min.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\pick.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\pluck.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\range.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\reduce.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\reduceRight.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\reject.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\remove.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\removeAll.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\shuffle.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\slice.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\some.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\sort.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\sortBy.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\split.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\toLookup.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\union.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\unique.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\xor.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\array\zip.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\collection.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\date.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\function.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\lang.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\math.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\math\ceil.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\math\clamp.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\math\countSteps.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\math\floor.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\math\inRange.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\math\isNear.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\math\lerp.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\math\loop.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\math\map.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\math\norm.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\math\round.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\number.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\number\abbreviate.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\number\currencyFormat.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\number\enforcePrecision.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\number\isNaN.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\number\MAX_INT.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\number\nth.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\number\pad.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\number\rol.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\number\ror.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\number\sign.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\object.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\queryString.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\random.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\string.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\time.js" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\test\test.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\Gruntfile.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\lib\json.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\lib\util\createError.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\lib\util\isComponent.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\mocha\images\error.png" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\mocha\images\ok.png" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\mocha\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\mocha\lib\hook.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\mocha\lib\utils.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\mocha\mocha.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\should\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\should\lib\browser.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\should\lib\eql.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\should\lib\ext\assert.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\should\lib\ext\bool.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\should\lib\ext\chain.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\should\lib\ext\deprecated.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\should\lib\ext\eql.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\should\lib\ext\http.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\should\lib\ext\match.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\should\lib\ext\string.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\should\lib\node.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\should\lib\should.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\should\lib\util.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\should\should.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\should\should.min.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\test\index.spec.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\expect.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\commander\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\commander\lib\commander.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\commander\node_modules\should\gulpfile.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\commander\node_modules\should\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\commander\node_modules\should\should.min.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\cache.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\connect.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\basicAuth.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\bodyParser.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\compress.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\cookieParser.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\cookieSession.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\csrf.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\directory.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\errorHandler.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\favicon.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\json.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\methodOverride.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\multipart.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\query.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\responseTime.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\session.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\static.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\staticCache.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\middleware\urlencoded.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\patch.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\proto.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\lib\utils.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\test.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\jade\jade.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\lib\middleware.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\lib\utilities.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\import-exp.css" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\importSimple-exp.css" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\pathRoot-exp.css" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\postprocessCss-exp.css" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\preprocessLess-exp-a.css" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\preprocessLess-exp-b.css" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\preprocessParserPaths-exp.css" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\preprocessPath-exp.css" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\simple-exp.css" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\test-middleware.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\test-utilities.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\stylus\index.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\browserify.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\colors.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\errors.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\lexer.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\middleware.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\parser.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\renderer.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\stack\frame.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\stylus.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\token.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\units.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\stylus\lib\utils.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\graceful-fs\graceful-fs.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\graceful-fs\polyfills.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\graceful-fs\test\open.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\graceful-fs\test\readdir-sort.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\Gruntfile.js" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\node_modules\grunt-contrib-internal\node_modules\grunt-contrib-jshint\node_modules\hooker\child.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BrowserFormatter.cs" />
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ClientsController.cs" />
+    <Compile Include="Controllers\FacilitiesController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <Content Include="node_modules\bower\.editorconfig" />
+    <Content Include="node_modules\bower\.jshintrc" />
+    <Content Include="node_modules\bower\.npmignore" />
+    <Content Include="node_modules\bower\.travis.yml" />
+    <Content Include="node_modules\bower\appveyor.yml" />
+    <Content Include="node_modules\bower\bin\bower" />
+    <Content Include="node_modules\bower\CHANGELOG.md" />
+    <Content Include="node_modules\bower\CONTRIBUTING.md" />
+    <Content Include="node_modules\bower\HOOKS.md" />
+    <Content Include="node_modules\bower\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\.bin\opn" />
+    <Content Include="node_modules\bower\node_modules\.bin\opn.cmd" />
+    <Content Include="node_modules\bower\node_modules\.bin\rimraf" />
+    <Content Include="node_modules\bower\node_modules\.bin\rimraf.cmd" />
+    <Content Include="node_modules\bower\node_modules\.bin\uuid" />
+    <Content Include="node_modules\bower\node_modules\.bin\uuid.cmd" />
+    <Content Include="node_modules\bower\node_modules\.bin\which" />
+    <Content Include="node_modules\bower\node_modules\.bin\which.cmd" />
+    <Content Include="node_modules\bower\node_modules\abbrev\CONTRIBUTING.md" />
+    <Content Include="node_modules\bower\node_modules\abbrev\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\abbrev\package.json" />
+    <Content Include="node_modules\bower\node_modules\abbrev\README.md" />
+    <Content Include="node_modules\bower\node_modules\archy\.travis.yml" />
+    <Content Include="node_modules\bower\node_modules\archy\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\.travis.yml" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\example\static\build.sh" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\deep-equal\node_modules\tap\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\deep-equal\node_modules\tap\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\deep-equal\node_modules\tap\package.json" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\deep-equal\node_modules\tap\README.md" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\deep-equal\package.json" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\deep-equal\README.markdown" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\defined\.travis.yml" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\defined\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\defined\node_modules\tape\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\defined\node_modules\tape\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\defined\node_modules\tape\package.json" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\defined\package.json" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\defined\readme.markdown" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\falafel\.travis.yml" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\falafel\node_modules\esprima\package.json" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\falafel\node_modules\esprima\README.md" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\falafel\node_modules\tape\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\falafel\node_modules\tape\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\falafel\node_modules\tape\package.json" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\falafel\package.json" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\falafel\README.markdown" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\node_modules\garbage\package.json" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\node_modules\garbage\README.markdown" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\node_modules\tap\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\node_modules\tap\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\node_modules\tap\package.json" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\node_modules\tap\README.md" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\package.json" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\README.markdown" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\package.json" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tape\readme.markdown" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\AUTHORS" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\node_modules\inherits\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\node_modules\inherits\package.json" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\node_modules\inherits\README.md" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\node_modules\yamlish\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\node_modules\yamlish\package.json" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\node_modules\yamlish\README.md" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\package.json" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\README.md" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test\executed.sh" />
+    <Content Include="node_modules\bower\node_modules\archy\node_modules\tap\test\not-executed.sh" />
+    <Content Include="node_modules\bower\node_modules\archy\package.json" />
+    <Content Include="node_modules\bower\node_modules\archy\readme.markdown" />
+    <Content Include="node_modules\bower\node_modules\bower-config\.editorconfig" />
+    <Content Include="node_modules\bower\node_modules\bower-config\.jshintrc" />
+    <Content Include="node_modules\bower\node_modules\bower-config\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-config\.travis.yml" />
+    <Content Include="node_modules\bower\node_modules\bower-config\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\graceful-fs\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\graceful-fs\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\graceful-fs\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\graceful-fs\README.md" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\bin\mocha" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\bin\_mocha" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mocha\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\.editorconfig" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\.jshintrc" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\.travis.yml" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\LICENSE.md" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\mout\README.md" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\.travis.yml" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\hashish\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\hashish\README.markdown" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\.travis.yml" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\node_modules\tape\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\node_modules\tape\bin\tape" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\node_modules\tape\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\node_modules\tape\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\minimist\readme.markdown" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\tap\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\tap\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\tap\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\tap\README.md" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\wordwrap\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\wordwrap\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\node_modules\wordwrap\README.markdown" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\optimist\readme.markdown" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\AUTHORS" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\node_modules\inherits\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\node_modules\inherits\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\node_modules\inherits\README.md" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\node_modules\yamlish\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\node_modules\yamlish\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\node_modules\yamlish\README.md" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\node_modules\tap\README.md" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-config\node_modules\osenv\README.md" />
+    <Content Include="node_modules\bower\node_modules\bower-config\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-config\README.md" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\.editorconfig" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\.jshintrc" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\.travis.yml" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\History.md" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\bin\serve" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\History.md" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\commander\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\commander\.travis.yml" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\commander\History.md" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\commander\Makefile" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\commander\node_modules\should\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\commander\node_modules\should\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\commander\node_modules\should\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\commander\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\commander\Readme.md" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\connect\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\jade\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\jade\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\jade\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\jade\README.md" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\changelog.md" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\license" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\readme.md" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\cacheFile-exp.json" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\cacheFile-exp2.json" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\external\2.43.3\externalvariables.less" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\external\2.43.3\ui\ui.less" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\import-color.less" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\import-header.less" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\import-widget.less" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\import.less" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\importSimple.less" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\pathRoot.less" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\postprocessCss.less" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\preprocessLess.less" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\preprocessParserPaths.less" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\preprocessPath.less" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\simple-exp.css.map" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\simple.less" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\stylus\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\stylus\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\node_modules\stylus\Readme.md" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\node_modules\serve\Readme.md" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\expect.js\README.md" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\bin\mocha" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\bin\_mocha" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mocha\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\.editorconfig" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\.jshintrc" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\.travis.yml" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\LICENSE.md" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\node_modules\mout\README.md" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-endpoint-parser\README.md" />
+    <Content Include="node_modules\bower\node_modules\bower-json\.editorconfig" />
+    <Content Include="node_modules\bower\node_modules\bower-json\.jshintrc" />
+    <Content Include="node_modules\bower\node_modules\bower-json\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-json\.travis.yml" />
+    <Content Include="node_modules\bower\node_modules\bower-json\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\mocha\bin\mocha" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\mocha\bin\_mocha" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\mocha\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\mocha\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\mocha\Readme.md" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\should\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\should\CONTRIBUTING.md" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\should\History.md" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\should\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\node_modules\should\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\README.md" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\deep-extend\test\mocha.opts" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\History.md" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\bin\serve" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\History.md" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\commander\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\commander\.travis.yml" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\commander\History.md" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\commander\Makefile" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\commander\node_modules\should\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\commander\node_modules\should\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\commander\node_modules\should\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\commander\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\commander\Readme.md" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\connect\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\jade\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\jade\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\jade\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\jade\README.md" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\changelog.md" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\license" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\readme.md" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\cacheFile-exp.json" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\cacheFile-exp2.json" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\external\2.43.3\externalvariables.less" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\external\2.43.3\ui\ui.less" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\import-color.less" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\import-header.less" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\import-widget.less" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\import.less" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\importSimple.less" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\pathRoot.less" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\postprocessCss.less" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\preprocessLess.less" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\preprocessParserPaths.less" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\preprocessPath.less" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\simple-exp.css.map" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\less-middleware\test\fixtures\simple.less" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\stylus\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\stylus\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\node_modules\stylus\Readme.md" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\node_modules\serve\Readme.md" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\expect.js\README.md" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\graceful-fs\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\graceful-fs\LICENSE" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\graceful-fs\package.json" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\graceful-fs\README.md" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\.jshintignore" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\.jshintrc" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\.npmignore" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\.travis.yml" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\AUTHORS" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\CHANGELOG" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\CONTRIBUTING.md" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\docs\jshint-examples.md" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\docs\jshint-options.md" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\docs\jshint-overview.md" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\LICENSE-MIT" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\node_modules\grunt-contrib-internal\CONTRIBUTING.md" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\node_modules\grunt-contrib-internal\LICENSE-MIT" />
+    <Content Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\node_modules\grunt-contrib-internal\node_modules\grunt-contrib-jshint\LICENSE-MIT" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+    <Folder Include="node_modules\bower\node_modules\archy\node_modules\tape\node_modules\jsonify\node_modules\garbage\node_modules\traverse\" />
+    <Folder Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\node_modules\grunt-contrib-internal\node_modules\grunt-contrib-jshint\node_modules\grunt-contrib-nodeunit\" />
+    <Folder Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\node_modules\grunt-contrib-internal\node_modules\grunt-contrib-jshint\node_modules\hooker\dist\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\iAgentDataTool.Helpers\iAgentDataTool.Helpers.csproj">
+      <Project>{0f4e3ae7-4ef2-4677-9f54-3900099c27f2}</Project>
+      <Name>iAgentDataTool.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\iAgentDataTool.Models\iAgentDataTool.Models.csproj">
+      <Project>{c67d864e-ebcc-4642-88e2-dee0d4d8c837}</Project>
+      <Name>iAgentDataTool.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\iAgentDataTool.Repositories\iAgentDataTool.Repositories.csproj">
+      <Project>{ce7b28e3-0a0c-4077-9666-9d8e65cf6c7a}</Project>
+      <Name>iAgentDataTool.Repositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SmartAgent.Models\SmartAgent.Models.csproj">
+      <Project>{235e5902-ef19-465a-a139-66626548cfb9}</Project>
+      <Name>SmartAgent.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>35077</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:35077/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
