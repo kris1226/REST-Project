@@ -26,7 +26,7 @@ namespace iAgentDataTool.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ScriptReturnValue> Find(Guid websiteKey)
+        public async Task<IEnumerable<ScriptReturnValue>> Find(Guid websiteKey)
         {
             var query = @"SELECT scriptKey, returnValue, valueOperation, nextScriptID, mappingValue
                           FROM dsa_scriptReturnValues WHERE (scriptKey IN
@@ -34,7 +34,7 @@ namespace iAgentDataTool.Repositories
                           WHERE (websiteKey = @websiteKey))) ORDER BY deviceID";
             try
             {
-                return _db.Query<ScriptReturnValue>(query, new {websiteKey });
+                return await _db.QueryAsync<ScriptReturnValue>(query, new {websiteKey });
             }
             catch (SqlException ex)
             {

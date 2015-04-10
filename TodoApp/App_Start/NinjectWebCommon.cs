@@ -18,6 +18,10 @@ namespace TodoApp.App_Start
     using iAgentDataTool.Models.Common;
     using Ninject.Web.WebApi;
     using System.Web.Http;
+    using iAgentDataTool.Repositories;
+    using iAgentDataTool.Models;
+    using iAgentDataTool.Models.SmartAgentModels;
+    using iAgentDataTool.Repositories.AsyncRepositoires.SmartAgent;
 
     public static class NinjectWebCommon 
     {
@@ -74,8 +78,13 @@ namespace TodoApp.App_Start
         {
             IDbConnection smartAgentDb = new SqlConnection(ConfigurationManager.ConnectionStrings["SmartAgentDev"].ConnectionString);
             kernel.Bind<IAsyncRepository<ClientMaster>>().To<ClientMasterRepositoryAsync>().WithConstructorArgument("db", smartAgentDb);
+
+            kernel.Bind<IAsyncRepository<CriteriaSets>>().To<CriteriaSetsRepository>().WithConstructorArgument("db", smartAgentDb);
+            
             kernel.Bind<IAsyncRepository<FacilityMaster>>().To<FacilityMasterAsyncRepository>().WithConstructorArgument("db", smartAgentDb);
             kernel.Bind<IAsyncRepository<FacilityDetail>>().To<FacilityDetialsAsyncRepository>().WithConstructorArgument("db", smartAgentDb);
+            kernel.Bind<IAsyncRepository<ScriptMaster>>().To<ScriptMasterRepository>().WithConstructorArgument("db", smartAgentDb);
+            kernel.Bind<ScriptRetrunValuesRepository>().ToSelf().WithConstructorArgument("db", smartAgentDb);
         }        
     }
 }

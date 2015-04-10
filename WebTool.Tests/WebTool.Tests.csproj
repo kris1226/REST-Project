@@ -68,10 +68,6 @@
     <Compile Include="SmartAgentApiTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\dapper-dot-net-master\Dapper NET45\Dapper NET45.csproj">
-      <Project>{0fff5bc7-0a4b-4d87-835e-4fad70937507}</Project>
-      <Name>Dapper NET45</Name>
-    </ProjectReference>
     <ProjectReference Include="..\iAgentDataTool.Helpers\iAgentDataTool.Helpers.csproj">
       <Project>{0f4e3ae7-4ef2-4677-9f54-3900099c27f2}</Project>
       <Name>iAgentDataTool.Helpers</Name>

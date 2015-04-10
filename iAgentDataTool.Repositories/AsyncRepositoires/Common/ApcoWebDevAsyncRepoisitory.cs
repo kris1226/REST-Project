@@ -32,7 +32,6 @@ namespace iAgentDataTool.Repositories.Common
 
         public async Task<IEnumerable<ApcoWebDev>> FindByName(string name)
         {
-            // var encoder = name.Replace("%", "[%]").Replace("[", "[]]").Replace("]", "[]]");
             string term = "%" + name + "%";
             var query = @"SELECT TPID, ClientID, FacilityID, entKey, siteKey, KOPSiteName, IsRemixClient
                           FROM businessUnitsClientMapping

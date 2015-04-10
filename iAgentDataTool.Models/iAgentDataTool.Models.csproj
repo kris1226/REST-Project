@@ -82,10 +82,9 @@
     <Compile Include="Common\WebsiteMaster.cs" />
     <Compile Include="Common\FacilityMaster.cs" />
     <Compile Include="Remix\PortalUser.cs" />
+    <Compile Include="SmartAgentModels\CriteriaSets.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SmartAgentModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
