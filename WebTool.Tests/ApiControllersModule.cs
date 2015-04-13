@@ -1,5 +1,7 @@
 ﻿using iAgentDataTool.Helpers.Interfaces;
 using iAgentDataTool.Models.Common;
+using iAgentDataTool.Models.SmartAgentModels;
+using iAgentDataTool.Repositories.AsyncRepositoires.SmartAgent;
 using iAgentDataTool.Repositories.Common;
 using Ninject.Modules;
 using System;
@@ -16,7 +18,7 @@ namespace WebTool.Tests
 {
     public class ApiControllersModule : NinjectModule
     {
-        IDbConnection _db;
+        private IDbConnection _db;
 
         public ApiControllersModule(IDbConnection db)
         {
@@ -25,6 +27,8 @@ namespace WebTool.Tests
         public override void Load()
         {
             Bind<IAsyncRepository<FacilityMaster>>().To<FacilityMasterAsyncRepository>().WithConstructorArgument("db", _db);
+            Bind<IAsyncRepository<CriteriaSets>>().To<CriteriaSetsRepository>().WithConstructorArgument("db", _db);
+            Bind<IAsyncRepository<CriteriaSets>>().To<CriteriaSetsRepository>();
             Bind<FacilitiesController>().ToSelf();
         }
     }

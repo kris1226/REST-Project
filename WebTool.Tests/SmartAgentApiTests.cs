@@ -11,6 +11,7 @@ using iAgentDataTool.Helpers.Interfaces;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Data;
+using System.Web.Http;
 
 namespace WebTool.Tests
 {
@@ -68,12 +69,15 @@ namespace WebTool.Tests
         #endregion
 
         [TestMethod]
-        public void GetFacilitesTest()
+        public async void GetFacilitesTest()
         {
             IDbConnection smartAgentDb = new SqlConnection(ConfigurationManager.ConnectionStrings["SmartAgentDev"].ConnectionString);
             IKernel kerenl = new StandardKernel(new ApiControllersModule(smartAgentDb));
             var facilityController = kerenl.Get<FacilitiesController>();
-            var facilityRepoMock = new Mock<IAsyncRepository<FacilityMaster>>();
+            var facilites = await facilityController.GetFacilites();
+            Console.WriteLine(facilites);
+            
+           // var facilityRepoMock = new Mock<IAsyncRepository<FacilityMaster>>();
          
         }
     }
