@@ -1,36 +1,28 @@
 ﻿using iAgentDataTool.Helpers.Interfaces;
-using iAgentDataTool.Models.Common;
 using iAgentDataTool.Models.SmartAgentModels;
 using iAgentDataTool.Repositories.AsyncRepositoires.SmartAgent;
-using iAgentDataTool.Repositories.Common;
 using Ninject.Modules;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TodoApp.Controllers;
 
-namespace WebTool.Tests
+namespace RepoTests
 {
-    public class ApiControllersModule : NinjectModule
+    public class RepoTestsModule : NinjectModule
     {
-        private readonly IDbConnection _db;
+        private IDbConnection _db;
 
-        public ApiControllersModule(IDbConnection db)
+        public RepoTestsModule(IDbConnection db)
         {
             this._db = db;
         }
         public override void Load()
         {
-            Bind<IAsyncRepository<FacilityMaster>>().To<FacilityMasterAsyncRepository>().WithConstructorArgument("db", _db);
             Bind<IAsyncRepository<CriteriaSets>>().To<CriteriaSetsRepository>().WithConstructorArgument("db", _db);
-
             Bind<IAsyncRepository<CriteriaDetails>>().To<CriteriaDetialsRepository>().WithConstructorArgument("db", _db);
-            //Bind<FacilitiesController>().ToSelf();
         }
     }
 }

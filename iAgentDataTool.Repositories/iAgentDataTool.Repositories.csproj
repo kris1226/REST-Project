@@ -89,6 +89,7 @@
     <Compile Include="AsyncRepositoires\RemixRepositoires\PortalUserRepo.cs" />
     <Compile Include="AsyncRepositoires\RemixRepositoires\TransactionRepo.cs" />
     <Compile Include="AsyncRepositoires\RemixRepositoires\ViewModelRepos\PortalUserDataRepo.cs" />
+    <Compile Include="AsyncRepositoires\SmartAgent\CriteriaDetialsRepository.cs" />
     <Compile Include="AsyncRepositoires\SmartAgent\CriteriaSetsRepository.cs" />
     <Compile Include="MongoRepos\IDataExtractionRepo.cs" />
     <Compile Include="MongoRepos\INoSqlRepo.cs" />

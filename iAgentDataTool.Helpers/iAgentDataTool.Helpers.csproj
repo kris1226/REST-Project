@@ -65,10 +65,6 @@
       <Project>{c67d864e-ebcc-4642-88e2-dee0d4d8c837}</Project>
       <Name>iAgentDataTool.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SmartAgent.Models\SmartAgent.Models.csproj">
-      <Project>{235e5902-ef19-465a-a139-66626548cfb9}</Project>
-      <Name>SmartAgent.Models</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

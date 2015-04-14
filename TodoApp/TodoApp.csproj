@@ -793,7 +793,7 @@
     <Content Include="node_modules\bower\node_modules\bower-json\node_modules\graceful-fs\test\readdir-sort.js" />
     <Content Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\Gruntfile.js" />
     <Content Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\node_modules\grunt-contrib-internal\node_modules\grunt-contrib-jshint\node_modules\hooker\child.js" />
-    <Content Include="Web.config">
+    <Content Include="App.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
@@ -1094,11 +1094,11 @@
     <Content Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\node_modules\grunt-contrib-internal\CONTRIBUTING.md" />
     <Content Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\node_modules\grunt-contrib-internal\LICENSE-MIT" />
     <Content Include="node_modules\bower\node_modules\bower-json\node_modules\grunt-contrib-jshint\node_modules\grunt-contrib-internal\node_modules\grunt-contrib-jshint\LICENSE-MIT" />
-    <None Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
+    <None Include="App.Debug.config">
+      <DependentUpon>App.config</DependentUpon>
     </None>
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
+    <None Include="App.Release.config">
+      <DependentUpon>App.config</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1120,10 +1120,6 @@
     <ProjectReference Include="..\iAgentDataTool.Repositories\iAgentDataTool.Repositories.csproj">
       <Project>{ce7b28e3-0a0c-4077-9666-9d8e65cf6c7a}</Project>
       <Name>iAgentDataTool.Repositories</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SmartAgent.Models\SmartAgent.Models.csproj">
-      <Project>{235e5902-ef19-465a-a139-66626548cfb9}</Project>
-      <Name>SmartAgent.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

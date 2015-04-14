@@ -11,5 +11,6 @@ namespace iAgentDataTool.Models.SmartAgentModels
         public Guid CriteriaSetKey { get; set; }
         public string CriteriaSetName { get; set; }
         public Guid ScriptKey { get; set; }
+        public string DeviceId { get; set; }
     }
 }

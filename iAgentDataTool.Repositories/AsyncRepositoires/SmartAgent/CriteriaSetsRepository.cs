@@ -65,9 +65,24 @@ namespace iAgentDataTool.Repositories.AsyncRepositoires.SmartAgent
             throw new NotImplementedException();
         }
 
-        public Task AddAsync(CriteriaSets entity)
+        public async Task AddAsync(CriteriaSets entity)
         {
-            throw new NotImplementedException();
+            //var criteriaSetName = entity.CriteriaSetName;
+            //var scriptKey = entity.ScriptKey;
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@criteriaSetName", entity.CriteriaSetName);
+            parameters.Add("@scriptKey", entity.ScriptKey);
+        
+            try
+            {
+                await _db.ExecuteAsync("CreateCriteriaSet", parameters, commandType: CommandType.StoredProcedure);
+            }
+            catch (Exception)
+            {
+                var errorMessage = "Error adding client ";
+                Console.WriteLine(errorMessage);
+            }
         }
 
         public Task AddMultipleToProd(IEnumerable<CriteriaSets> entities)
