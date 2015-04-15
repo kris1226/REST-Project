@@ -1,5 +1,7 @@
 ﻿using iAgentDataTool.Helpers.Interfaces;
+using iAgentDataTool.Models.Common;
 using iAgentDataTool.Models.SmartAgentModels;
+using iAgentDataTool.Repositories;
 using iAgentDataTool.Repositories.AsyncRepositoires.SmartAgent;
 using Ninject.Modules;
 using System;
@@ -23,6 +25,7 @@ namespace RepoTests
         {
             Bind<IAsyncRepository<CriteriaSets>>().To<CriteriaSetsRepository>().WithConstructorArgument("db", _db);
             Bind<IAsyncRepository<CriteriaDetails>>().To<CriteriaDetialsRepository>().WithConstructorArgument("db", _db);
+            Bind<IAsyncRepository<ScriptMaster>>().To<ScriptMasterRepository>().WithConstructorArgument("db", _db);
         }
     }
 }
