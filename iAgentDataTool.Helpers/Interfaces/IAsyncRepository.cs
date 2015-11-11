@@ -16,7 +16,8 @@ namespace iAgentDataTool.Helpers.Interfaces
         Task<IEnumerable<T>> FindWithIdAsync(int id);
         Task<IEnumerable<T>> FindByName(string name);
         Task<IEnumerable<T>> Find(T obj);
-        Task AddAsync(T entity);
+        Task<bool> UpdateLocationKey(Guid clientKey, Guid oldLocationKey, Guid newLocationKey);
+        Task<Guid> AddAsync(IEnumerable<T> entity);
         Task AddMultipleToProd(IEnumerable<T> entities);
         Task RemoveAsync(T entity);
         Task UpdateAsync(T entity);
