@@ -23,8 +23,6 @@ namespace iAgentDataTool.Repositories.Common
             this._db = db;
         }
 
-        public IDbConnection Database { get { return _db; } set { } }
-
         public async Task<IEnumerable<ClientMaster>> GetAllAsync()
         {
             var query = @"SELECT DISTINCT clientKey, clientName, HowToDeliver 
@@ -33,7 +31,7 @@ namespace iAgentDataTool.Repositories.Common
             try
             {
 
-                return await Database.QueryAsync<ClientMaster>(query);
+                return await _db.QueryAsync<ClientMaster>(query);
   
             }
             catch (SqlException ex)
@@ -49,7 +47,7 @@ namespace iAgentDataTool.Repositories.Common
             var query = @"Select clientName, clientKey, HowToDeliver From dsa_clientMaster where clientKey = @clientKey";
             try
             {
-                return await Database.QueryAsync<ClientMaster>(query, new { clientKey });
+                return await _db.QueryAsync<ClientMaster>(query, new { clientKey });
             }
             catch (SqlException)
             {              
@@ -61,12 +59,13 @@ namespace iAgentDataTool.Repositories.Common
         {
             throw new NotImplementedException();
         }
+
         public async Task<IEnumerable<ClientMaster>> Find(ClientMaster obj)
         {
             var query = @"SELECT clientName, clientKey, HowToDeliver FROM dsa_clientMaster WHERE clientName LIKE @clientName";
             try
             {
-                var task = await Database.QueryAsync<ClientMaster>(query, new { clientName = "%" + obj.ClientName + "%" });
+                var task = await _db.QueryAsync<ClientMaster>(query, new { clientName = "%" + obj.ClientName + "%" });
                 return task.ToList();
             }
             catch (SqlException ex)
@@ -76,7 +75,8 @@ namespace iAgentDataTool.Repositories.Common
                 return error;
             }
         }
-        public async Task AddAsync(ClientMaster client)
+
+        public async Task<Guid> AddAsync(ClientMaster client)
         {
             var p = new DynamicParameters();
             p.Add("@clientName", client.ClientName);
@@ -87,11 +87,12 @@ namespace iAgentDataTool.Repositories.Common
 
             try
             {
-                var task = await _db.ExecuteScalarAsync<ClientMaster>("CreateClient", p, commandType: CommandType.StoredProcedure);
+                var result = await _db.QueryAsync<ClientMaster>("CreateClient", p, commandType: CommandType.StoredProcedure);
+                return result.SingleOrDefault().ClientKey;
             }
-            catch (SqlException ex)
+            catch (SqlException)
             {
-                Console.WriteLine("Error adding client " + ex);
+                return new Guid("00000000-0000-0000-0000-000000000000");
             }
         }
 
@@ -111,21 +112,67 @@ namespace iAgentDataTool.Repositories.Common
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<ClientMaster>> FindByName(string name)
+        public async Task<IEnumerable<ClientMaster>> FindByName(string name)
         {
-            throw new NotImplementedException();
+            if (String.IsNullOrWhiteSpace(name))
+            {
+                return null;
+            }
+            try
+            {
+                var term = "%" + name + "%";
+                var query = @"select clientname, clientkey, howtodeliver
+                              FROM dsa_clientMaster where clientName like @term";
+                var result = await _db.QueryAsync<ClientMaster>(query, new { term });
+                if (result.Any())
+                {
+                    return result;
+                }
+                return new List<ClientMaster>();
+            }
+            catch (Exception)
+            {                
+                throw;
+            }
         }
-
-
-        Task IAsyncRepository<ClientMaster>.AddAsync(ClientMaster entity)
-        {
-            throw new NotImplementedException();
-        }
-
-
         public Task AddMultipleToProd(IEnumerable<ClientMaster> entities)
         {
             throw new NotImplementedException();
+        }
+
+
+        public Task<bool> UpdateLocationKey(Guid clientKey, Guid oldLocationKey, Guid newLocationKey)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public async Task<Guid> AddAsync(IEnumerable<ClientMaster> entity)
+        {
+            if (entity.Any())
+            {
+                var lastCreatedClient = new ClientMaster();
+                var p = new DynamicParameters();
+                foreach (var item in entity)
+                {
+                    p.Add("@clientKey", item.ClientKey);
+                    p.Add("@deviceId", item.DeviceId);
+                    p.Add("@clientName", item.ClientName);
+                    p.Add("@howToDeliver", item.HowToDeliver);
+                    
+                    try
+                    {
+                        var result = await _db.QueryAsync<ClientMaster>("sp_CreateClientMaster", p, commandType: CommandType.StoredProcedure);
+                        lastCreatedClient = result.SingleOrDefault();
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                }
+                return lastCreatedClient.ClientKey;
+            }
+            return new Guid();
         }
     }
 }

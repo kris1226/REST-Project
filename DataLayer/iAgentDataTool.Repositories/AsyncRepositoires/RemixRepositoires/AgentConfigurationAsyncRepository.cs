@@ -67,7 +67,7 @@ namespace iAgentDataTool.Repositories.RemixRepositories
             throw new NotImplementedException();
         }
 
-        public Task AddAsync(AgentConfiguration entity)
+        public Task<Guid> AddAsync(AgentConfiguration entity)
         {
             throw new NotImplementedException();
         }
@@ -90,6 +90,18 @@ namespace iAgentDataTool.Repositories.RemixRepositories
 
 
         public Task AddMultipleToProd(IEnumerable<AgentConfiguration> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Task<bool> UpdateLocationKey(Guid clientKey, Guid oldLocationKey, Guid newLocationKey)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Task<Guid> AddAsync(IEnumerable<AgentConfiguration> entity)
         {
             throw new NotImplementedException();
         }

@@ -34,6 +34,7 @@ namespace iAgentDataTool.Repositories.Common
 
             try
             {
+                
                 return await Database.QueryAsync<ClientMappingMaster>(sql, new { clientKey });
             }
             catch (Exception ex)
@@ -54,7 +55,7 @@ namespace iAgentDataTool.Repositories.Common
             throw new NotImplementedException();
         }
 
-        public Task AddAsync(ClientMappingMaster entity)
+        public Task<Guid> AddAsync(ClientMappingMaster entity)
         {
             throw new NotImplementedException();
         }
@@ -82,6 +83,18 @@ namespace iAgentDataTool.Repositories.Common
 
 
         public Task AddMultipleToProd(IEnumerable<ClientMappingMaster> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Task<bool> UpdateLocationKey(Guid clientKey, Guid oldLocationKey, Guid newLocationKey)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Task<Guid> AddAsync(IEnumerable<ClientMappingMaster> entity)
         {
             throw new NotImplementedException();
         }

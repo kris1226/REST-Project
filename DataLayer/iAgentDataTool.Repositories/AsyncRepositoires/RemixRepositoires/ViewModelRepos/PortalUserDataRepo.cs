@@ -11,7 +11,7 @@ using Dapper;
 
 namespace iAgentDataTool.Repositories.AsyncRepositoires.RemixRepositoires.ViewModelRepos
 {
-    public class PortalUserDataRepo : IAsyncRepository<PortalUserAndLocationId>
+    public class PortalUserDataRepo 
     {
         IDbConnection _db;
 
@@ -51,53 +51,53 @@ namespace iAgentDataTool.Repositories.AsyncRepositoires.RemixRepositoires.ViewMo
                 throw;
             }
         }
-        public async Task AddAsync(PortalUserAndLocationId portalUser)
-        {
-            if (portalUser != null)
-            {
-                var parameters = new DynamicParameters();
-                var insertPortalUserQuery = @"INSERT INTO PortalUsers(Portal_Id, Username, Password, IsExpired, IsEnabled, AllowsConcurrent)
-                        VALUES (@Portal_Id, @Username, @Password, @IsExpired, @IsEnabled, @AllowsConcurrent)";
+//        public async Task<Guid> AddAsync(PortalUserAndLocationId portalUser)
+//        {
+//            if (portalUser != null)
+//            {
+//                var parameters = new DynamicParameters();
+//                var insertPortalUserQuery = @"INSERT INTO PortalUsers(Portal_Id, Username, Password, IsExpired, IsEnabled, AllowsConcurrent)
+//                        VALUES (@Portal_Id, @Username, @Password, @IsExpired, @IsEnabled, @AllowsConcurrent)";
 
-                var portalUserIdQuery = "SELECT TOP 1 Id From PortalUsers ORDER BY Id DESC";
+//                var portalUserIdQuery = "SELECT TOP 1 Id From PortalUsers ORDER BY Id DESC";
 
-                var insertPortalUserLocationsQuery = @"INSERT INTO PortalUserLocationMap(Location_Id, PortalUser_Id)
-                                          VALUES(@Location_Id, @PortalUser_Id)";
+//                var insertPortalUserLocationsQuery = @"INSERT INTO PortalUserLocationMap(Location_Id, PortalUser_Id)
+//                                          VALUES(@Location_Id, @PortalUser_Id)";
 
-                parameters.Add("@Portal_Id", portalUser.Portal_Id);
-                parameters.Add("@Username", portalUser.Username);
-                parameters.Add("@Password", portalUser.Password);
-                parameters.Add("@IsExpired", portalUser.IsExpired);
-                parameters.Add("@IsEnabled", portalUser.IsEnabled);
-                parameters.Add("@Allows", portalUser.AllowsConcurrent);
+//                parameters.Add("@Portal_Id", portalUser.Portal_Id);
+//                parameters.Add("@Username", portalUser.Username);
+//                parameters.Add("@Password", portalUser.Password);
+//                parameters.Add("@IsExpired", portalUser.IsExpired);
+//                parameters.Add("@IsEnabled", portalUser.IsEnabled);
+//                parameters.Add("@Allows", portalUser.AllowsConcurrent);
 
-                try
-                {
-                    await _db.ExecuteAsync(insertPortalUserQuery, new
-                    {
-                        portalUser.Portal_Id,
-                        portalUser.Username,
-                        portalUser.Password,
-                        portalUser.IsExpired,
-                        portalUser.IsEnabled,
-                        portalUser.AllowsConcurrent
-                    });
+//                try
+//                {
+//                    await _db.ExecuteAsync(insertPortalUserQuery, new
+//                    {
+//                        portalUser.Portal_Id,
+//                        portalUser.Username,
+//                        portalUser.Password,
+//                        portalUser.IsExpired,
+//                        portalUser.IsEnabled,
+//                        portalUser.AllowsConcurrent
+//                    });
 
-                    var newPortalId = await _db.QueryAsync<int>(portalUserIdQuery);
-                    var PortalUser_Id = newPortalId.SingleOrDefault();
+//                    var newPortalId = await _db.QueryAsync<int>(portalUserIdQuery);
+//                    var PortalUser_Id = newPortalId.SingleOrDefault();
 
-                    await _db.ExecuteAsync(insertPortalUserLocationsQuery, new
-                    {
-                        PortalUser_Id,
-                        portalUser.Location_Id
-                    });
-                }
-                catch (SqlException)
-                {
-                    throw;
-                }
-            }
-        }
+//                    await _db.ExecuteAsync(insertPortalUserLocationsQuery, new
+//                    {
+//                        PortalUser_Id,
+//                        portalUser.Location_Id
+//                    });
+//                }
+//                catch (SqlException)
+//                {
+//                    throw;
+//                }
+//            }
+//        }
         public Task<IEnumerable<PortalUserAndLocationId>> FindByName(string name)
         {
             throw new NotImplementedException();
@@ -122,6 +122,12 @@ namespace iAgentDataTool.Repositories.AsyncRepositoires.RemixRepositoires.ViewMo
 
 
         public Task AddMultipleToProd(IEnumerable<PortalUserAndLocationId> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Task<bool> UpdateLocationKey(Guid clientKey, Guid oldLocationKey, Guid newLocationKey)
         {
             throw new NotImplementedException();
         }

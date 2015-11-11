@@ -53,7 +53,7 @@ namespace iAgentDataTool.Repositories.RemixRepositories
             throw new NotImplementedException();
         }
 
-        public Task<ClientScript> AddAsync(ClientScript entity)
+        public Task<Guid> AddAsync(ClientScript entity)
         {
             //var sql = @"";
             throw new NotImplementedException();
@@ -90,13 +90,6 @@ namespace iAgentDataTool.Repositories.RemixRepositories
             throw new NotImplementedException();
         }
 
-
-        Task IAsyncRepository<ClientScript>.AddAsync(ClientScript entity)
-        {
-            throw new NotImplementedException();
-        }
-
-
         public async Task AddMultipleToProd(IEnumerable<ClientScript> clientScripts)
         {
             if (!clientScripts.Equals(null))
@@ -121,6 +114,17 @@ namespace iAgentDataTool.Repositories.RemixRepositories
                     await db.ExecuteAsync(sql, p);
                 }
             }           
+        }
+
+        public Task<bool> UpdateLocationKey(Guid clientKey, Guid oldLocationKey, Guid newLocationKey)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Task<Guid> AddAsync(IEnumerable<ClientScript> entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

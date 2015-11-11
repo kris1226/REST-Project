@@ -96,7 +96,7 @@ namespace iAgentDataTool.Repositories.AsyncRepositoires
 
 
 
-        public async Task AddAsync(UserLogin login)
+        public async Task<Guid> AddAsync(UserLogin login)
         {
             var user = new UserLogin();
             var parameters = new DynamicParameters();
@@ -112,14 +112,12 @@ namespace iAgentDataTool.Repositories.AsyncRepositoires
 
             try
             {
-                await Database.ExecuteAsync("CreateUserLoginReocrds", parameters, commandType: CommandType.StoredProcedure);
+                var result = await Database.QueryAsync("CreateUserLoginReocrds", parameters, commandType: CommandType.StoredProcedure);
+                return result.SingleOrDefault();
             }
-            catch (SqlException ex)
+            catch (SqlException)
             {
-                
-                var errorMessage = "Error adding client " + ex;
-                Console.WriteLine(errorMessage);
-                login.log = errorMessage.ToString();
+                return new Guid("00000000-0000-0000-0000-000000000000");
             }
         }
         public Task<IEnumerable<UserLogin>> FindWithIdAsync(int id)
@@ -190,6 +188,18 @@ namespace iAgentDataTool.Repositories.AsyncRepositoires
 
 
         public Task AddMultipleToProd(IEnumerable<UserLogin> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Task<bool> UpdateLocationKey(Guid clientKey, Guid oldLocationKey, Guid newLocationKey)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Task<Guid> AddAsync(IEnumerable<UserLogin> entity)
         {
             throw new NotImplementedException();
         }

@@ -15,7 +15,7 @@ using iAgentDataTool.Helpers.Interfaces;
 
 namespace iAgentDataTool.Repositories.RemixRepositories
 {
-    public class PortalUsersAsyncRepository : IAsyncRepository<PortalUser>
+    public class PortalUsersAsyncRepository 
     {
         private readonly IDbConnection _db;
 
@@ -95,49 +95,49 @@ namespace iAgentDataTool.Repositories.RemixRepositories
             throw new NotImplementedException();
         }
 
-        public async Task AddAsync(PortalUser portalUser)
-        {
-            if (portalUser != null)
-            {
-                var parameters = new DynamicParameters();
-                var sql = @"INSERT INTO PortalUsers(Portal_Id, Username, Password, IsExpired, IsEnabled, AllowsConcurrent)
-                        VALUES (@Portal_Id, @Username, @Password, @IsExpired, @IsEnabled, @AllowsConcurrent)";
-//                var query = @"INSERT INTO PortalUserLocationMap(Location_Id, PortalUser_Id)
-//                          VALUES(@Location_Id, @PortalUser_Id)";
-//                var query2 = "SELECT TOP 1 Id From PortalUsers ORDER BY Id DESC";
+//        public async Task<Guid> AddAsync(PortalUser portalUser)
+//        {
+//            if (portalUser != null)
+//            {
+//                var parameters = new DynamicParameters();
+//                var sql = @"INSERT INTO PortalUsers(Portal_Id, Username, Password, IsExpired, IsEnabled, AllowsConcurrent)
+//                        VALUES (@Portal_Id, @Username, @Password, @IsExpired, @IsEnabled, @AllowsConcurrent)";
+////                var query = @"INSERT INTO PortalUserLocationMap(Location_Id, PortalUser_Id)
+////                          VALUES(@Location_Id, @PortalUser_Id)";
+////                var query2 = "SELECT TOP 1 Id From PortalUsers ORDER BY Id DESC";
 
-                parameters.Add("@Portal_Id", portalUser.Portal_Id);
-                parameters.Add("@Username", portalUser.Username);
-                parameters.Add("@Password", portalUser.Password);
-                parameters.Add("@IsExpired", portalUser.IsExpired);
-                parameters.Add("@IsEnabled", portalUser.IsEnabled);
-                parameters.Add("@Allows", portalUser.AllowsConcurrent);
+//                parameters.Add("@Portal_Id", portalUser.Portal_Id);
+//                parameters.Add("@Username", portalUser.Username);
+//                parameters.Add("@Password", portalUser.Password);
+//                parameters.Add("@IsExpired", portalUser.IsExpired);
+//                parameters.Add("@IsEnabled", portalUser.IsEnabled);
+//                parameters.Add("@Allows", portalUser.AllowsConcurrent);
 
-                try
-                {
-                    await Database.ExecuteAsync(sql, new
-                    {
-                        portalUser.Portal_Id,
-                        portalUser.Username,
-                        portalUser.Password,
-                        portalUser.IsExpired,
-                        portalUser.IsEnabled,
-                        portalUser.AllowsConcurrent
-                    });
-                    //var newPortalId = await _db.QueryAsync<int>(query2);
-                    //var PortalUser_Id = newPortalId.SingleOrDefault();
-                    //await Database.ExecuteAsync(query, new { PortalUser_Id, portalUser.Location_Id });
-                }
-                catch (SqlException)
-                {
-                    throw;
-                }
-            }
-            else
-            {
-                throw new ArgumentNullException("Portal User is empty");
-            }          
-        }
+//                try
+//                {
+//                    await Database.ExecuteAsync(sql, new
+//                    {
+//                        portalUser.Portal_Id,
+//                        portalUser.Username,
+//                        portalUser.Password,
+//                        portalUser.IsExpired,
+//                        portalUser.IsEnabled,
+//                        portalUser.AllowsConcurrent
+//                    });
+//                    //var newPortalId = await _db.QueryAsync<int>(query2);
+//                    //var PortalUser_Id = newPortalId.SingleOrDefault();
+//                    //await Database.ExecuteAsync(query, new { PortalUser_Id, portalUser.Location_Id });
+//                }
+//                catch (SqlException)
+//                {
+//                    throw;
+//                }
+//            }
+//            else
+//            {
+//                throw new ArgumentNullException("Portal User is empty");
+//            }          
+//        }
 
         public Task RemoveAsync(PortalUser entity)
         {
@@ -180,6 +180,12 @@ namespace iAgentDataTool.Repositories.RemixRepositories
 
 
         public Task AddMultipleToProd(IEnumerable<PortalUser> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Task<bool> UpdateLocationKey(Guid clientKey, Guid oldLocationKey, Guid newLocationKey)
         {
             throw new NotImplementedException();
         }

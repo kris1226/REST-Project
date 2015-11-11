@@ -49,7 +49,7 @@ namespace iAgentDataTool.Repositories.Common
             throw new NotImplementedException();
         }
 
-        public Task AddAsync(ClientMappingValue entity)
+        public Task<Guid> AddAsync(ClientMappingValue entity)
         {
             throw new NotImplementedException();
         }
@@ -77,6 +77,18 @@ namespace iAgentDataTool.Repositories.Common
 
 
         public Task AddMultipleToProd(IEnumerable<ClientMappingValue> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Task<bool> UpdateLocationKey(Guid clientKey, Guid oldLocationKey, Guid newLocationKey)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Task<Guid> AddAsync(IEnumerable<ClientMappingValue> entity)
         {
             throw new NotImplementedException();
         }

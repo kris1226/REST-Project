@@ -54,7 +54,7 @@ namespace iAgentDataTool.Repositories.Common
             throw new NotImplementedException();
         }
 
-        public Task AddAsync(FacilityDetail entity)
+        public Task<Guid> AddAsync(FacilityDetail entity)
         {
             throw new NotImplementedException();
         }
@@ -66,7 +66,8 @@ namespace iAgentDataTool.Repositories.Common
 
         public Task UpdateAsync(FacilityDetail entity)
         {
-            throw new NotImplementedException();
+            var sql = @"update dsa_facilityDetials";
+            return null;
         }
 
 
@@ -85,6 +86,40 @@ namespace iAgentDataTool.Repositories.Common
         public Task AddMultipleToProd(IEnumerable<FacilityDetail> entities)
         {
             throw new NotImplementedException();
+        }
+
+
+        public Task<bool> UpdateLocationKey(Guid clientKey, Guid oldLocationKey, Guid newLocationKey)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public async Task<Guid> AddAsync(IEnumerable<FacilityDetail> entity)
+        {
+            if (entity.Any())
+            {
+                var p = new DynamicParameters();
+                Guid lastCreatedKey = new Guid();
+                foreach (var item in entity)
+                {
+                    p.Add("@facilityKey", item.FacilityKey);
+                    p.Add("@UpdatedBy", item.UpdatedBy);
+
+                    try
+                    {
+                        var result = await _db.QueryAsync<Guid>("sp_CreateFacilityDetails", p, commandType: CommandType.StoredProcedure);
+                        lastCreatedKey = result.FirstOrDefault();
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                }
+                return lastCreatedKey;
+
+            }
+            return new Guid();
         }
     }
 }

@@ -66,7 +66,7 @@ namespace iAgentDataTool.Repositories.Common
             throw new NotImplementedException();
         }
 
-        public Task AddAsync(ApcoWebDev entity)
+        public Task<Guid> AddAsync(ApcoWebDev entity)
         {
             throw new NotImplementedException();
         }
@@ -89,6 +89,18 @@ namespace iAgentDataTool.Repositories.Common
 
 
         public Task AddMultipleToProd(IEnumerable<ApcoWebDev> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Task<bool> UpdateLocationKey(Guid clientKey, Guid oldLocationKey, Guid newLocationKey)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Task<Guid> AddAsync(IEnumerable<ApcoWebDev> entity)
         {
             throw new NotImplementedException();
         }

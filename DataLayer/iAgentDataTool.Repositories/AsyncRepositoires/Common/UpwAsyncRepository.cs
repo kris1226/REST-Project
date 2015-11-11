@@ -31,7 +31,7 @@ namespace iAgentDataTool.AsyncRepositories.Common
         {
             if (clientKey != null || clientKey != null)
             {
-                var query = @"SELECT Username 
+                var query = @"SELECT Username, EntKey, SiteKey, SqLServer, SqlDb, ClientKey, ClientLocationKey
                               FROM dbo.UPW_UPW with (nolock) 
                               WHERE ClientKey = @clientKey and ClientLocationKey = @ClientLocationKey and username like 'AUTO%'";
                 try
@@ -91,10 +91,21 @@ namespace iAgentDataTool.AsyncRepositories.Common
             }
             throw new NotImplementedException();
         }
-        public Task<IEnumerable<Upw>> FindByName(string name)
+        public async Task<IEnumerable<Upw>> FindByName(string name)
         {
-            //var query = @"SELECT";
-            throw new NotImplementedException();
+            if (name != null || name != "")
+            {
+                var term = "%" + name + "%";
+                var query = @"SELECT Username, EntKey, SiteKey, SqLServer, SqlDb, ClientKey, ClientLocationKey
+                          FROM dbo.UPW_UPW with (nolock) 
+                          WHERE(SqlDb LIKE @term) ORDER BY Username, SITEKEY";
+
+                using (var db = new SqlConnection(ConfigurationManager.ConnectionStrings["UPW"].ConnectionString))
+                {
+                    return await db.QueryAsync<Upw>(query, new { term });
+                }
+            }
+            return null;
         }
 
         public Task<IEnumerable<Upw>> FindWithIdAsync(int id)
@@ -102,7 +113,7 @@ namespace iAgentDataTool.AsyncRepositories.Common
             throw new NotImplementedException();
         }
 
-        public Task AddAsync(Upw entity)
+        public Task<Guid> AddAsync(Upw entity)
         {
             throw new NotImplementedException();
         }
@@ -129,6 +140,18 @@ namespace iAgentDataTool.AsyncRepositories.Common
         }
 
         public Task AddMultipleToProd(IEnumerable<Upw> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Task<bool> UpdateLocationKey(Guid clientKey, Guid oldLocationKey, Guid newLocationKey)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Task<Guid> AddAsync(IEnumerable<Upw> entity)
         {
             throw new NotImplementedException();
         }

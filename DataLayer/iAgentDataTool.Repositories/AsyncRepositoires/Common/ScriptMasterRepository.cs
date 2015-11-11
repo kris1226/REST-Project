@@ -104,7 +104,7 @@ namespace iAgentDataTool.Repositories
             throw new NotImplementedException();
         }
 
-        public Task AddAsync(ScriptMaster entity)
+        public Task<Guid> AddAsync(ScriptMaster entity)
         {
             throw new NotImplementedException();
         }
@@ -124,6 +124,18 @@ namespace iAgentDataTool.Repositories
 
         }
         public Task AddMultipleToProd(IEnumerable<ScriptMaster> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Task<bool> UpdateLocationKey(Guid clientKey, Guid oldLocationKey, Guid newLocationKey)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Task<Guid> AddAsync(IEnumerable<ScriptMaster> entity)
         {
             throw new NotImplementedException();
         }

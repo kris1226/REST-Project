@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using ScriptDataHelpers;
 using iAgentDataTool.Helpers.Interfaces;
 using iAgentDataTool.Helpers;
 using iAgentDataTool.Models.Common;
@@ -72,7 +73,7 @@ namespace iAgentDataTool.Repositories.Common
             throw new NotImplementedException();
         }
 
-        public async Task AddAsync(PayerWebsiteMappingValue payerWebsiteMappingValuesRecord)
+        public async Task<Guid> AddAsync(PayerWebsiteMappingValue payerWebsiteMappingValuesRecord)
         {
             var p = new DynamicParameters();
             p.Add("@clientKey", payerWebsiteMappingValuesRecord.ClientKey);
@@ -80,11 +81,12 @@ namespace iAgentDataTool.Repositories.Common
 
             try
             {
-                var task = await _db.ExecuteScalarAsync("CreatePayerWebsiteMappingValuesRecords", p, commandType: CommandType.StoredProcedure);
+                var result = await _db.QueryAsync("CreatePayerWebsiteMappingValuesRecords", p, commandType: CommandType.StoredProcedure);
+                return result.SingleOrDefault();
             }
             catch (SqlException)
             {
-                throw;
+                return new Guid("00000000-0000-0000-0000-000000000000");
             }
         }
 
@@ -102,6 +104,60 @@ namespace iAgentDataTool.Repositories.Common
         public Task AddMultipleToProd(IEnumerable<PayerWebsiteMappingValue> entities)
         {
             throw new NotImplementedException();
+        }
+
+
+        public async Task<bool> UpdateLocationKey(Guid clientKey, Guid oldLocationKey, Guid newLocationKey)
+        {
+            if (oldLocationKey.CheckForNullOrWhiteSpace().Equals(false))
+            {
+                var p = new DynamicParameters();
+
+                var query = @"UPDATE dsa_payerWebsiteMappingValues
+                              SET clientLocationKey = @newLocationKey
+                              WHERE clientKey = @clientKey and clientLocationKey = @oldLocationKey";
+                p.Add("@clientKey", clientKey);
+                p.Add("@oldLocationKey", oldLocationKey);
+                p.Add("@newLocationKey", newLocationKey);
+
+                try
+                {
+                    await _db.ExecuteAsync(query, p);
+                    return await Task.FromResult(true);
+                }
+                catch (SqlException)
+                {
+                    return false;
+                }         
+            }
+            return await Task.FromResult(false);
+        }
+
+
+        public async Task<Guid> AddAsync(IEnumerable<PayerWebsiteMappingValue> entity)
+        {
+            if (entity.Any())
+            {
+                var p = new DynamicParameters();
+                Guid lastCreatedKey = new Guid();
+                foreach (var item in entity)
+                {
+                    p.Add("@clientLocationKey", item.ClientLocationKey);
+                    p.Add("@clientKey", item.ClientKey);
+                    try
+                    {
+                        var result = await _db.QueryAsync<Guid>("CreatePayerWebsiteMappingValues", p, commandType: CommandType.StoredProcedure);
+                        lastCreatedKey = result.SingleOrDefault();
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                }
+                return lastCreatedKey;
+
+            }
+            return new Guid();
         }
     }
 }

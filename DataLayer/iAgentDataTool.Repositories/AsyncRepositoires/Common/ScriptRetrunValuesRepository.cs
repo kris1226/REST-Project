@@ -9,6 +9,7 @@ using System.Configuration;
 using iAgentDataTool.Models;
 using iAgentDataTool.Helpers.Interfaces;
 using Dapper;
+using iAgentDataTool.Models.Common;
 
 
 namespace iAgentDataTool.Repositories
