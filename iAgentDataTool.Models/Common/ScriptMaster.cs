@@ -13,6 +13,8 @@ namespace iAgentDataTool.Models.Common
         public string ScriptCode { get; set; }
         public int NumberOfIterations { get; set; }
         public string Category { get; set; }
+        public string DeviceId { get; set; }
+        public Guid WebsiteKey { get; set; }
 
         public override string ToString()
         {

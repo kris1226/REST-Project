@@ -11,5 +11,6 @@ namespace iAgentDataTool.Models.Remix
         public int AgentId { get; set; }
         public string AgentMachineName { get; set; }
         public bool IsEnabled { get; set; }
+        public int ParentId { get; set; }
     }
 }

@@ -8,10 +8,12 @@ namespace iAgentDataTool.Models.Common
 {
     public class WebsiteMaster
     {
+        public string WebsiteDescription { get; set; }
         public Guid WebsiteKey { get; set; }
         public string WebsiteDomain { get; set; }
-        public string WebsiteDescription { get; set; }
+
         public string Portal_Id { get; set; }
+        public string DeviceId { get; set; }
 
         public override string ToString()
         {

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace iAgentDataTool.Models.Common
 {
-    public class ClientMappingMaster
+    public class ClientMappingMaster : AgentClient
     {
         public Guid FieldKey { get; set; }
+        public bool UseExternalTable { get; set; }
     }
 }

@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>iAgentDataTool.Models</RootNamespace>
     <AssemblyName>iAgentDataTool.Models</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,6 +55,8 @@
     <Compile Include="Common\AgentClient.cs" />
     <Compile Include="Common\ApcoWebDev.cs" />
     <Compile Include="Common\dsa_clientMaster.cs" />
+    <Compile Include="Common\Script.cs" />
+    <Compile Include="Common\ScriptCollectionItem.cs" />
     <Compile Include="Nosql\AgentResponseData.cs" />
     <Compile Include="Nosql\AuthImage.cs" />
     <Compile Include="Nosql\AuthImageData.cs" />
@@ -64,7 +67,7 @@
     <Compile Include="Remix\AgentConfiguration.cs" />
     <Compile Include="Remix\ClientInformation.cs" />
     <Compile Include="Common\Upw.cs" />
-    <Compile Include="Remix\dsa_ClientLocation.cs" />
+    <Compile Include="Common\ClientLocation.cs" />
     <Compile Include="Common\ClientMappingMaster.cs" />
     <Compile Include="Common\ClientMappingValue.cs" />
     <Compile Include="Common\ClientMaster.cs" />
@@ -76,14 +79,19 @@
     <Compile Include="Common\ScriptReturnValue.cs" />
     <Compile Include="Common\PayerWebsiteMappingValue.cs" />
     <Compile Include="Remix\Portal.cs" />
+    <Compile Include="Remix\Agent.cs" />
     <Compile Include="Remix\ViewModels\PortalUserAndLocationId.cs" />
     <Compile Include="Remix\PortalUserLocation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\WebsiteMaster.cs" />
     <Compile Include="Common\FacilityMaster.cs" />
     <Compile Include="Remix\PortalUser.cs" />
+    <Compile Include="SmartAgentModels\ClientApps.cs" />
+    <Compile Include="SmartAgentModels\Criteria.cs" />
     <Compile Include="SmartAgentModels\CriteriaDetails.cs" />
     <Compile Include="SmartAgentModels\CriteriaSets.cs" />
+    <Compile Include="SmartAgentModels\SmartAgentClient.cs" />
+    <Compile Include="SmartAgentModels\WebsiteExtractionMap.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace iAgentDataTool.Models
+namespace iAgentDataTool.Models.Common
 {
     public class ScriptReturnValue
     {
         public Guid ScriptKey { get; set; }
+        public Guid WhenNotEquelScriptKey { get; set; }
+        public Guid WhenEqualScripKey { get; set; }
+        public string DeviceId { get; set; }
         public string ReturnValue { get; set; }
         public string ValueOperation { get; set; }
         public Guid NextScriptId { get; set; }

@@ -15,5 +15,18 @@ namespace iAgentDataTool.Models.Common
         public string ClientLocationKey { get; set; }
         public string EntKey { get; set; }
         public string SiteKey { get; set; }
+
+        public override string ToString()
+        {
+            return string.Join(" | ", new string[] {
+                string.Format("Username: {0} ", this.UserName),
+                string.Format("SqlDb: {0}", this.SqlDb),
+                string.Format("SqlServer: {0}", this.SqlServer),
+                string.Format("Client Key: {0}", this.ClientKey),
+                string.Format("Client Location Key: {0}", this.ClientLocationKey),
+                string.Format("Ent Key: {0}", this.EntKey),
+                string.Format("Site Key: {0}", this.SiteKey)
+            });
+        }
     }
 }

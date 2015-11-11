@@ -8,6 +8,7 @@ namespace iAgentDataTool.Models.Common
 {
     public class ClientMappingValue
     {
+        public Guid ClientKey { get; set; }
         public Guid WebsiteKey { get; set; }
         public Guid FieldKey { get; set; }
         public string FieldValue { get; set; }
@@ -16,10 +17,11 @@ namespace iAgentDataTool.Models.Common
         public override string ToString()
         {
             return string.Join("  |  ", new string[] {
-                string.Format("{0}", this.WebsiteKey),
-                string.Format(" {0}", this.FieldKey),
-                string.Format(" {0}", this.FieldValue),
-                string.Format(" {0}", this.NormalizedValue)
+                string.Format("Client Key: {0}", this.ClientKey),
+                string.Format("WebsiteKey: {0}", this.WebsiteKey),
+                string.Format("Field Key: {0}", this.FieldKey),
+                string.Format("Field Value: {0}", this.FieldValue),
+                string.Format("Normalized Value: {0}", this.NormalizedValue)
             });
         }
     }
