@@ -30,7 +30,7 @@ namespace iAgentDataTool.Models.Common
         public ClientMaster()
         {
         }
-        public static ClientMaster CreateClientMaster(string clientName, Guid clientKey, string howToDeliver)
+        public static ClientMaster CreateClientMaster(string clientName, Guid clientKey, string howToDeliver="OCSVC")
         {
             return new ClientMaster(clientName, clientKey, howToDeliver);
         }

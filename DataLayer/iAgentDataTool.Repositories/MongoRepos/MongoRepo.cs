@@ -25,7 +25,7 @@ namespace iAgentDataTool.Repositories.MongoRepos
         public MongoRepo()
         {
             _mongoClient = new MongoClient(_connectionString);
-            _server = _mongoClient.GetServer();
+            _server = null;
             _database = _server.GetDatabase("iAgent");
    
         }

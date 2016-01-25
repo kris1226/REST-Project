@@ -26,7 +26,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             {
                 throw new ArgumentNullException("Need a script description to create a new record.");
             }
-            var query = @"INSERT INTO ScriptingAgentDatabase.dbo.[dsa_scriptMaster]([dateAdded]
+            var query = @"INSERT INTO [dsa_scriptMaster]([dateAdded]
 	                               ,[dateChanged],[lastUserID],[deviceID],[noRetries],[delayBefore]
 	                               ,[delayAfter],[timeout],[scriptDesc],scriptCode,[websiteKey]
 	                               ,[iterative],[setAgentAs],[noIterations],[tableRow],[tableColumn],[Category]
@@ -39,10 +39,10 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                                     ,0
                                      ,'I.E.7'
                                     ,NULL
-		                                    ,NULL,NULL
-                                            ,@category,1)
+		                            ,NULL,NULL
+                                    ,@category,1)
                           SELECT scriptKey 
-                          FROM ScriptingAgentDatabase.dbo.[dsa_scriptMaster] WHERE scriptDesc = @Desc";
+                          FROM [dsa_scriptMaster] WHERE scriptDesc = @Desc";
 
             var p = new DynamicParameters();
 
@@ -69,7 +69,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             {
                 throw new ArgumentNullException("Please provide a deviceId before adding a record");
             }
-            var query = @"INSERT INTO ScriptingAgentDatabase.dbo.[dsa_scriptReturnValues]
+            var query = @"INSERT INTO dbo.[dsa_scriptReturnValues]
                                ([dateAdded]
                                ,[dateChanged]
                                ,[lastUserID]
@@ -93,7 +93,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                                ,'EQ'
                                ,@EQScriptKey
                                ,@mappingValue)
-                    INSERT INTO ScriptingAgentDatabase.dbo.[dsa_scriptReturnValues]
+                    INSERT INTO .dbo.[dsa_scriptReturnValues]
                                ([dateAdded]
                                ,[dateChanged]
                                ,[lastUserID]
@@ -118,7 +118,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                                ,@NEGuid
                                ,@mappingValue)
                     select deviceId, scriptkey, returnValue, overrideLabel, valueOperation, nextScriptID  
-                    FROM ScriptingAgentDatabase.dbo.[dsa_scriptReturnValues] where scriptKey =@scriptKey";
+                    FROM dbo.[dsa_scriptReturnValues] where scriptKey =@scriptKey";
 
             var p = new DynamicParameters();
 
@@ -146,21 +146,24 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             {
                 throw new ArgumentNullException("Need a deviceId in order to add collection item.");
             }
-            var query = @"INSERT INTO ScriptingAgentDatabase.dbo.dsa_scriptCollectionItems(dateAdded,dateChanged,lastUserID, deviceID, scriptKey, fieldKey,overrideLabel, defaultValue, required, 
+            var query = @"INSERT INTO dbo.dsa_scriptCollectionItems
+                        (dateAdded,dateChanged,lastUserID, deviceID, scriptKey, fieldKey,overrideLabel, defaultValue, required, 
                         collectionMask, validationRoutine,Can_Go_back)
                         VALUES(GetDate(),GetDate(),'kris.lindsey',@deviceId, @scriptKey,@fieldKey,@overideLabel,NULL,1,NULL,NULL, 1)
                          SELECT deviceID, scriptKey, fieldKey,overrideLabel, defaultValue 
-                         FROM ScriptingAgentDatabase.dbo.dsa_scriptCollectionItems WHERE scriptkey = @scriptkey and overrideLabel = @overideLabel";
-             var p = new DynamicParameters();
+                         FROM dbo.dsa_scriptCollectionItems 
+                         WHERE scriptkey = @scriptkey and overrideLabel = @overideLabel";
 
-            p.Add("@deviceId", collectionItem.DeviceId);
-            p.Add("@scriptKey", collectionItem.ScriptKey);
-            p.Add("@fieldKey", collectionItem.FieldKey);
-            p.Add("@overideLabel", collectionItem.OverrideLabel);
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@deviceId", collectionItem.DeviceId);
+            parameters.Add("@scriptKey", collectionItem.ScriptKey);
+            parameters.Add("@fieldKey", collectionItem.FieldKey);
+            parameters.Add("@overideLabel", collectionItem.OverrideLabel);
 
             try
             {
-                var record = await _db.QueryAsync<ScriptCollectionItem>(query, p);
+                var record = await _db.QueryAsync<ScriptCollectionItem>(query, parameters);
                 return record.SingleOrDefault();
             }
             catch (SqlException)

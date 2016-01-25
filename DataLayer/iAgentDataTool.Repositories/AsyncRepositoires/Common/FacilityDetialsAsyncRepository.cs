@@ -66,7 +66,7 @@ namespace iAgentDataTool.Repositories.Common
 
         public Task UpdateAsync(FacilityDetail entity)
         {
-            var sql = @"update dsa_facilityDetials";
+            //var sql = @"update dsa_facilityDetials";
             return null;
         }
 

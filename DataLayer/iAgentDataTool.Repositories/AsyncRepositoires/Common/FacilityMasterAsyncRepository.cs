@@ -42,8 +42,21 @@ namespace iAgentDataTool.Repositories.Common
         {       
             throw new NotImplementedException();
         }
-        public Task<IEnumerable<FacilityMaster>> FindWithGuidAsync(Guid key)
+        public async Task<IEnumerable<FacilityMaster>> FindWithGuidAsync(Guid key)
         {
+            var sql = @"select FacilityName, OrderMap, FacilityKey, ClientKey, ClientLocationKey
+                        from dsa_facilityMaster where Clientkey = @key";
+            var parameters = new DynamicParameters();
+            parameters.Add("@key", key);
+            try
+            {
+                return await _db.QueryAsync<FacilityMaster>(sql, parameters);               
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
             throw new NotImplementedException();
         }
         public Task<IEnumerable<FacilityMaster>> FindWithIdAsync(int id)

@@ -1,0 +1,10 @@
+﻿<div class="container col-md-12">
+    <p>Selected item is: {{client}}</p>
+    <p>Name of selected item is: {{client.ClientName}}</p>
+    <p>Client Key: {{client.ClientKey}}</p>
+    <p>How To Deliver {{client.HowToDeliver}}</p>
+    <select ng-model="client"
+            ng-options="client.ClientName for client in clients track by client.ClientKey">
+        <option class="dropdown-menu" value="">Select a Client</option> 
+    </select>
+</div>

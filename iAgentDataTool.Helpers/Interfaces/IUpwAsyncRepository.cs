@@ -10,5 +10,6 @@ namespace iAgentDataTool.Helpers.Interfaces
     public interface IUpwAsyncRepository
     {
         Task<IEnumerable<Upw>> FindAutoAgentId(string clientKey, string clientLocationKey);
+        Task<IEnumerable<Upw>> FindWithEntKey(string entKey);
     }
 }

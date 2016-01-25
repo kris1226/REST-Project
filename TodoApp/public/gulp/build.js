@@ -18,7 +18,7 @@ module.exports = function(options) {
         quotes: true
       }))
       .pipe($.angularTemplatecache('templateCacheHtml.js', {
-        module: 'public',
+        module: 'toDoApp',
         root: 'app'
       }))
       .pipe(gulp.dest(options.tmp + '/partials/'));
@@ -46,7 +46,6 @@ module.exports = function(options) {
       .pipe($.uglify({ preserveComments: $.uglifySaveLicense })).on('error', options.errorHandler('Uglify'))
       .pipe(jsFilter.restore())
       .pipe(cssFilter)
-      .pipe($.replace('../../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/', '../fonts/'))
       .pipe($.csso())
       .pipe(cssFilter.restore())
       .pipe(assets.restore())
@@ -76,7 +75,7 @@ module.exports = function(options) {
   gulp.task('other', function () {
     return gulp.src([
       options.src + '/**/*',
-      '!' + options.src + '/**/*.{html,css,js,scss}'
+      '!' + options.src + '/**/*.{html,css,js}'
     ])
       .pipe(gulp.dest(options.dist + '/'));
   });

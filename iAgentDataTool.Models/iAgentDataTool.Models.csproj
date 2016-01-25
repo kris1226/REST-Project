@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Common\AgentClient.cs" />
     <Compile Include="Common\ApcoWebDev.cs" />
+    <Compile Include="Common\Client.cs" />
     <Compile Include="Common\dsa_clientMaster.cs" />
     <Compile Include="Common\Script.cs" />
     <Compile Include="Common\ScriptCollectionItem.cs" />

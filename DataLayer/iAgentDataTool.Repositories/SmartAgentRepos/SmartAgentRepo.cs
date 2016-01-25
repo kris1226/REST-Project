@@ -277,9 +277,12 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             {
                 var query = @"SELECT clientKey, clientLocationKey, Primary_PayerKey, WebSiteKey, DefaultValue, DetailLabel FROM dsa_PayerWebsiteMappingValues 
                             WHERE ClientKey = @clientKey ORDER BY DetailLabel";
+                var parameters = new DynamicParameters();
+
+                parameters.Add("@clientKey", clientKey.ToString());
                 try
                 {
-                    return await _db.QueryAsync<PayerWebsiteMappingValue>(query, new { clientKey });
+                    return await _db.QueryAsync<PayerWebsiteMappingValue>(query, parameters);
                 }
                 catch (SqlException ex)
                 {
@@ -288,37 +291,46 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                 }
             }
         }
+        bool ClientKeyIsValid(string clientKey)
+        {
+            if (clientKey.Equals(null) || clientKey.ToString().Equals("00000000-0000-0000-0000-000000000000"))
+            {
+                return false;
+            }
+            return true;
+        }
         public async Task AddPayerWebsiteMappingValues(IEnumerable<PayerWebsiteMappingValue> payerWebsiteMappingValues)
         {
             if (payerWebsiteMappingValues.Any())
-            {
-                var query = @"INSERT INTO dsa_PayerWebsiteMappingValues(Primary_PayerKey, WebSiteKey, DefaultValue, ClientKey, ClientLocationKey, DetailLabel)
-			                  VALUES(@payerKey, @websiteKey, @defaultValue, @clientKey, @clientLocationKey, @detailLabel)";
-                var p = new DynamicParameters();
-
+            {                                
                 foreach (var payerMappingValue in payerWebsiteMappingValues)
                 {
-                    if (payerMappingValue.ClientKey.Equals(null) || payerMappingValue.ClientKey.ToString().Equals("00000000-0000-0000-0000-000000000000"))
+                    if (ClientKeyIsValid(payerMappingValue.ClientKey))
                     {
-                        throw new ArgumentNullException("Client Key is null or empty");
-                    }
-                    else
-                    {
-                        p.Add("@payerKey", payerMappingValue.Primary_PayerKey);
-                        p.Add("@websiteKey", payerMappingValue.WebsiteKey.ToString());
-                        p.Add("@defaultValue", payerMappingValue.DefaultValue);
-                        p.Add("@clientKey", payerMappingValue.ClientKey.ToString());
-                        p.Add("@clientLocationKey", payerMappingValue.ClientLocationKey.ToString());
-                        p.Add("@detailLabel", payerMappingValue.DetailLabel);
+                        var parameters = new DynamicParameters();
+                        parameters.Add("@payerKey", payerMappingValue.Primary_PayerKey);
+                        parameters.Add("@websiteKey", payerMappingValue.WebsiteKey.ToString());
+                        parameters.Add("@defaultValue", payerMappingValue.DefaultValue);
+                        parameters.Add("@clientKey", payerMappingValue.ClientKey.ToString());
+                        parameters.Add("@clientLocationKey", payerMappingValue.ClientLocationKey.ToString());
+                        parameters.Add("@detailLabel", payerMappingValue.DetailLabel);
+
                         try
                         {
-                            await _db.ExecuteAsync(query, p);
+                            var query = @"INSERT INTO dsa_PayerWebsiteMappingValues(Primary_PayerKey, WebSiteKey, DefaultValue, ClientKey, ClientLocationKey, DetailLabel)
+			                  VALUES(@payerKey, @websiteKey, @defaultValue, @clientKey, @clientLocationKey, @detailLabel)";
+
+                            await _db.ExecuteAsync(query, parameters);
                         }
                         catch (SqlException ex)
                         {
                             logger.Debug("Error Adding payer website mapping vlaue records: {0}", ex);
                             throw;
-                        }
+                        }                        
+                    }
+                    else
+                    {
+                        throw new ArgumentNullException("Client Key is null or empty");
                     }
                 }
             }
@@ -745,7 +757,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             {
                 throw new ArgumentNullException("Need websiteKey to process");
             }
-            var query = @"SELECT * FROM ScriptingAgentDatabase.dbo.dsa_websiteExtractionMapping
+            var query = @"SELECT * FROM dbo.dsa_websiteExtractionMapping
                           WHERE websiteKey = @websiteKey";
             try
             {
@@ -764,7 +776,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             {
                 throw new ArgumentNullException("Please provide websitekey to find scriptmaster records");
             }
-            var query = @"SELECT * FROM ScriptingAgentDatabase.dbo.dsa_scriptMaster
+            var query = @"SELECT * FROM dbo.dsa_scriptMaster
                           WHERE websiteKey = @websiteKey 
                           ORDER By scriptDesc";
             try
@@ -781,7 +793,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
         {
             if (scripts.Any())
             {
-                var query = @"INSERT INTO ScriptingAgentDatabase.dbo.[dsa_scriptMaster]([dateAdded]
+                var query = @"INSERT INTO dbo.[dsa_scriptMaster]([dateAdded]
 	                               ,[dateChanged],[lastUserID]
                                    ,[deviceID], scriptKey
                                    ,[noRetries],[delayBefore]
@@ -802,7 +814,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
 		                            ,NULL,NULL
                                     ,@category,1)
                           SELECT deviceId, scriptkey, scriptDesc, scriptCode, websiteKey 
-                          FROM ScriptingAgentDatabase.dbo.[dsa_scriptMaster] WHERE scriptDesc = @Desc";
+                          FROM dbo.[dsa_scriptMaster] WHERE scriptDesc = @Desc";
                 try
                 {
                     foreach (var script in scripts)
@@ -836,7 +848,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                 throw new ArgumentNullException("Need website key to find records");
             }
             var query = @"SELECT deviceID, scriptKey,returnValue,overrideLabel, nextScriptID
-                            FROM ScriptingAgentDatabase.dbo.dsa_scriptReturnValues 
+                            FROM dbo.dsa_scriptReturnValues 
                             Where scriptKey 
                             In (
 	                            SELECT scriptKey
@@ -858,7 +870,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
         {
             if (returnValues.Any())
             {
-                var query = @"INSERT INTO ScriptingAgentDatabase.dbo.[dsa_scriptReturnValues]
+                var query = @"INSERT INTO dbo.[dsa_scriptReturnValues]
                            ([dateAdded]
                            ,[dateChanged]
                            ,[lastUserID]
@@ -914,10 +926,10 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             if (isKeyValid)
             {
                 var query = @"SELECT DeviceId, scriptKey, fieldKey, overrideLabel, defaultValue, collectionMask
-                                FROM ScriptingAgentDatabase.dbo.dsa_scriptCollectionItems
+                                FROM dbo.dsa_scriptCollectionItems
                                 WHERE scriptKey 
                                 IN (
-	                                SELECT scriptkey FROM ScriptingAgentDatabase.dbo.dsa_scriptMaster
+	                                SELECT scriptkey FROM dbo.dsa_scriptMaster
 	                                  where websitekey = @websiteKey
                                    )
                                 order by DeviceId";
@@ -936,7 +948,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
         {
             if (collectionItems.Any())
             {
-                var query = @"INSERT INTO ScriptingAgentDatabase.dbo.dsa_scriptCollectionItems
+                var query = @"INSERT INTO dbo.dsa_scriptCollectionItems
 	                            (lastUserID
 	                            ,deviceID
 	                            ,scriptKey

@@ -295,7 +295,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             }
             catch (SqlException)
             {
-                return new List<Criteria>();
+                return null;
             }            
         }
         public async Task<WebsiteMaster> FindWebsiteRecord(string term)

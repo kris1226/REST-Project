@@ -93,7 +93,7 @@ namespace iAgentDataTool.AsyncRepositories.Common
         }
         public async Task<IEnumerable<Upw>> FindByName(string name)
         {
-            if (name != null || name != "")
+            if (IsValid(name))
             {
                 var term = "%" + name + "%";
                 var query = @"SELECT Username, EntKey, SiteKey, SqLServer, SqlDb, ClientKey, ClientLocationKey
@@ -102,10 +102,26 @@ namespace iAgentDataTool.AsyncRepositories.Common
 
                 using (var db = new SqlConnection(ConfigurationManager.ConnectionStrings["UPW"].ConnectionString))
                 {
-                    return await db.QueryAsync<Upw>(query, new { term });
+                    try
+                    {
+                        return await db.QueryAsync<Upw>(query, new { term });
+                    }
+                    catch (Exception)
+                    {
+                        return null;
+                    }                    
                 }
-            }
+            }            
             return null;
+        }
+
+        bool IsValid(string value)
+        {
+            if (value != null || value != "")
+            {
+                return true;
+            }
+            return false;
         }
 
         public Task<IEnumerable<Upw>> FindWithIdAsync(int id)
@@ -154,6 +170,40 @@ namespace iAgentDataTool.AsyncRepositories.Common
         public Task<Guid> AddAsync(IEnumerable<Upw> entity)
         {
             throw new NotImplementedException();
+        }
+
+
+        public async Task<IEnumerable<Upw>> FindWithEntKey(string entKey)
+        {
+            if (IsValid(entKey))
+            {
+                var sqlParams = new DynamicParameters();
+                sqlParams.Add("@entKey", entKey);
+
+                var query = @"SELECT [UserName]
+	                      , Password
+                          ,[EntKey]
+                          ,[SiteKey]
+                          ,[SQLServer]
+                          ,[SQLDB]
+                          ,[SQLUser]
+                          ,[SQLPW]
+                          ,[ClientKey]
+                          ,[ClientLocationKey]
+                          ,queueNames
+                          ,queueUser
+                      FROM [UPW].[dbo].[UPW_UPW]
+                      where EntKey = @entKey";
+                try
+                {
+                    return await _db.QueryAsync<Upw>(query, sqlParams);
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+            return null;
         }
     }
 }

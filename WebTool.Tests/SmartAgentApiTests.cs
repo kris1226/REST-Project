@@ -3,7 +3,6 @@ using System.Text;
 using System.Collections.Generic;
 using System.Web;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TodoApp.Controllers;
 using Ninject;
 using Moq;
 using iAgentDataTool.Models.Common;
@@ -68,17 +67,17 @@ namespace WebTool.Tests
         //
         #endregion
 
-        [TestMethod]
-        public async Task GetFacilitesTest()
-        {
-            IDbConnection smartAgentDb = new SqlConnection(ConfigurationManager.ConnectionStrings["SmartAgentDev"].ConnectionString);
-            IKernel kerenl = new StandardKernel(new ApiControllersModule(smartAgentDb));
-            //var facilityController = kerenl.Get<FacilitiesController>();
-            //var facilites = await facilityController.GetFacilites();
-            //Console.WriteLine(facilites);
-            
-           // var facilityRepoMock = new Mock<IAsyncRepository<FacilityMaster>>();
-         
-        }
+        //[TestMethod]
+        //public async Task GetFacilitesTest()
+        //{
+        //    IDbConnection smartAgentDb = new SqlConnection(ConfigurationManager.ConnectionStrings["SmartAgentDev"].ConnectionString);
+        //    IKernel kerenl = new StandardKernel(new ApiControllersModule(smartAgentDb));
+        //    var facilityController = kerenl.Get<FacilitiesController>();
+        //    var facilites = await facilityController.GetFacilites();
+        //    Console.WriteLine(facilites);
+
+        //    var facilityRepoMock = new Mock<IAsyncRepository<FacilityMaster>>();
+
+        //}
     }
 }

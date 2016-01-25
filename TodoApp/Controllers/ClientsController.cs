@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace TodoApp.Controllers
 {
@@ -16,22 +17,25 @@ namespace TodoApp.Controllers
         [Inject]
         IAsyncRepository<ClientMaster> _clientRepo;
 
+        [Inject]
         public ClientsController(IAsyncRepository<ClientMaster> clientRepo)
         {
             this._clientRepo = clientRepo;
         }
+
         [HttpGet]
         [Route("api/clients")]
+        [ResponseType(typeof(ClientMaster))]
         public async Task<IHttpActionResult> GetClients()
         {
             var clients = await _clientRepo.GetAllAsync();
             if (clients.Any())
             {
-                return Ok(clients);
+                return this.Ok(clients);
             }
             else
             {
-                return NotFound();
+                return this.NotFound();
             }
         }
 

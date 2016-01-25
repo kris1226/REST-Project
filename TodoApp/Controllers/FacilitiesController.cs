@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace TodoApp.Controllers
 {
@@ -25,6 +26,7 @@ namespace TodoApp.Controllers
 	    }
 
         [HttpGet]
+        [ResponseType(typeof(FacilityMaster))]
         [Route("api/facilites")]
         public async Task<IHttpActionResult> GetFacilites()
         {

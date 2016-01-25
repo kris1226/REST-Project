@@ -6,10 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 
 namespace TodoApp.Controllers
 {
+    [EnableCors("*", "*", "GET")]
     public class ClientsController : ApiController
     {
         [Inject]
@@ -38,7 +40,7 @@ namespace TodoApp.Controllers
         }
 
         [HttpGet]
-        [Route("api/clients/{clientKey}")]
+        [Route("api/client/{clientKey:Guid}")]
         public async Task<IHttpActionResult> GetClient(Guid clientKey)
         {
             var client = await _clientRepo.FindWithGuidAsync(clientKey);
@@ -51,5 +53,43 @@ namespace TodoApp.Controllers
                 return NotFound();
             }
         }
+        [HttpGet]
+        [Route("api/client/{clientName}")]
+        public async Task<IHttpActionResult> Get(string clientName)
+        {
+            if (IsValid(clientName))
+            {
+                var records = await _clientRepo.FindByName(clientName);
+                if (RecordsExits(records))
+                {
+                    return Ok(records);
+                }
+                return NotFound();
+            }
+            return NotFound();
+        }
+
+        private bool RecordsExits<T>(IEnumerable<T> records)
+        {
+            if (records.Any())
+            {
+                return true;
+            }
+            return false;
+        }
+
+        bool IsValid(string value)
+        {
+            if (value != null || value != "")
+            {
+                return true;
+            }
+            return false;
+        }
+        //public async Task<IHttpActionResult> Post([FromBody]string clientName, Guid clientKey, string howToDeliver = "OCSVC")
+        //{
+        //    var newCriteraSet = ClientMaster.CreateClientMaster(clientName, clientKey, howToDeliver);
+        //    return BadRequest();
+        //}
     }
 }

@@ -14,7 +14,9 @@ namespace iAgentDataTool.Models.Common
         public string WebsiteKey { get; set; }
         public string ClientKey { get; set; }
         public string ClientLocationKey { get; set; }
-
+        public PayerWebsiteMappingValue()
+        {
+        }
         private PayerWebsiteMappingValue(Guid clientKey, Guid clientLocationKey)
         {
             this.ClientKey = clientKey.ToString();

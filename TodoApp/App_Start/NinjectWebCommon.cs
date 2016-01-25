@@ -1,5 +1,5 @@
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(TodoApp.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(TodoApp.App_Start.NinjectWebCommon), "Stop")]
+//[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(TodoApp.App_Start.NinjectWebCommon), "Start")]
+//[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(TodoApp.App_Start.NinjectWebCommon), "Stop")]
 
 namespace TodoApp.App_Start
 {
@@ -10,6 +10,7 @@ namespace TodoApp.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
+
     using System.Data;
     using System.Data.SqlClient;
     using System.Configuration;
@@ -76,13 +77,14 @@ namespace TodoApp.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            IDbConnection smartAgentDb = new SqlConnection(ConfigurationManager.ConnectionStrings["SmartAgentDev"].ConnectionString);
+            IDbConnection smartAgentDb = new SqlConnection(ConfigurationManager.ConnectionStrings["SmartAgentProd"].ConnectionString);
             kernel.Bind<IAsyncRepository<ClientMaster>>().To<ClientMasterRepositoryAsync>().WithConstructorArgument("db", smartAgentDb);
-
-            kernel.Bind<IAsyncRepository<CriteriaSets>>().To<CriteriaSetsRepository>().WithConstructorArgument("db", smartAgentDb);
-            
             kernel.Bind<IAsyncRepository<FacilityMaster>>().To<FacilityMasterAsyncRepository>().WithConstructorArgument("db", smartAgentDb);
             kernel.Bind<IAsyncRepository<FacilityDetail>>().To<FacilityDetialsAsyncRepository>().WithConstructorArgument("db", smartAgentDb);
+
+            kernel.Bind<IAsyncRepository<CriteriaSets>>().To<CriteriaSetsRepository>().WithConstructorArgument("db", smartAgentDb);
+            kernel.Bind<IAsyncRepository<CriteriaDetails>>().To<CriteriaDetialsRepository>().WithConstructorArgument("db", smartAgentDb);
+            
             kernel.Bind<IAsyncRepository<ScriptMaster>>().To<ScriptMasterRepository>().WithConstructorArgument("db", smartAgentDb);
             kernel.Bind<ScriptRetrunValuesRepository>().ToSelf().WithConstructorArgument("db", smartAgentDb);
         }        

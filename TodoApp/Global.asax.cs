@@ -12,6 +12,7 @@ namespace TodoApp
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            GlobalConfiguration.Configuration.MapHttpAttributeRoutes();
         }
     }
 }

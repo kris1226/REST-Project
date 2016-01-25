@@ -46,8 +46,16 @@
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Owin.FileSystems, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.FileSystems.3.0.1\lib\net45\Microsoft.Owin.FileSystems.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.StaticFiles, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.StaticFiles.3.0.1\lib\net45\Microsoft.Owin.StaticFiles.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -71,8 +79,16 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.3\lib\net45\System.Web.Http.Cors.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Http.Owin, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -85,30 +101,126 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="smartAgent-tool\.gitignore" />
-    <Content Include="smartAgent-tool\index.html" />
-    <Content Include="smartAgent-tool\server.js" />
-    <Content Include="smartAgent-tool\webpack.config.js" />
+    <Content Include="smart-agent-tool\.gitignore" />
+    <Content Include="smart-agent-tool\actions\index.js" />
+    <Content Include="smart-agent-tool\components\Picker.js" />
+    <Content Include="smart-agent-tool\containers\App.js" />
+    <Content Include="smart-agent-tool\dist\bundle.js" />
+    <Content Include="smart-agent-tool\index.html" />
+    <Content Include="smart-agent-tool\index.js" />
+    <Content Include="smart-agent-tool\reducers\index.js" />
+    <Content Include="smart-agent-tool\server.js" />
+    <Content Include="smart-agent-tool\store\configureStore.js" />
+    <Content Include="smart-agent-tool\webpack.config.js" />
+    <Content Include="smartAgentTool\.gitignore" />
+    <Content Include="smartAgentTool\containers\DevTools.js" />
+    <Content Include="smartAgentTool\containers\Root.dev.js" />
+    <Content Include="smartAgentTool\containers\root.js" />
+    <Content Include="smartAgentTool\index.html" />
+    <Content Include="smartAgentTool\index.js" />
+    <Content Include="smartAgentTool\middleware\api.js" />
+    <Content Include="smartAgentTool\routes.js" />
+    <Content Include="smartAgentTool\server.js" />
+    <Content Include="smartAgentTool\static\bundle.js" />
+    <Content Include="smartAgentTool\static\main.js" />
+    <Content Include="smartAgentTool\store\configureStore.dev.js" />
+    <Content Include="smartAgentTool\store\configureStore.js" />
+    <Content Include="smartAgentTool\store\configureStore.prod.js" />
+    <Content Include="smartAgentTool\webpack.config.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BrowserJsonFormatter.cs" />
+    <Compile Include="App_Start\FileSystemConfig.cs" />
     <Compile Include="App_Start\NinjectConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ClientLocationsController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
+    <Compile Include="Controllers\CriteriaController.cs" />
+    <Compile Include="Controllers\FacilitesController.cs" />
+    <Compile Include="Controllers\FacilityDetailsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PayerWebsiteMappingValuesController.cs" />
+    <Compile Include="Controllers\UpwController.cs" />
     <Compile Include="Controllers\WebsitesController.cs" />
+    <Compile Include="Helpers\Common.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="smartAgent-tool\README.md" />
-    <Content Include="smartAgent-tool\package.json" />
-    <Content Include="smartAgent-tool\.babelrc" />
+    <Content Include="smartAgentTool\README.md" />
+    <Content Include="smartAgentTool\package.json" />
+    <Content Include="smartAgentTool\.babelrc" />
+    <None Include="Properties\PublishProfiles\CustomAppProfile.pubxml" />
+    <Content Include="smartAgentTool\.eslintignore" />
+    <Content Include="smartAgentTool\.eslintrc" />
+    <Content Include="smartAgentTool\npm-debug.log" />
+    <Content Include="smart-agent-tool\.git\COMMIT_EDITMSG" />
+    <Content Include="smart-agent-tool\.git\config" />
+    <Content Include="smart-agent-tool\.git\description" />
+    <Content Include="smart-agent-tool\.git\FETCH_HEAD" />
+    <Content Include="smart-agent-tool\.git\HEAD" />
+    <Content Include="smart-agent-tool\.git\hooks\applypatch-msg.sample" />
+    <Content Include="smart-agent-tool\.git\hooks\commit-msg.sample" />
+    <Content Include="smart-agent-tool\.git\hooks\post-update.sample" />
+    <Content Include="smart-agent-tool\.git\hooks\pre-applypatch.sample" />
+    <Content Include="smart-agent-tool\.git\hooks\pre-commit.sample" />
+    <Content Include="smart-agent-tool\.git\hooks\pre-push.sample" />
+    <Content Include="smart-agent-tool\.git\hooks\pre-rebase.sample" />
+    <Content Include="smart-agent-tool\.git\hooks\prepare-commit-msg.sample" />
+    <Content Include="smart-agent-tool\.git\hooks\update.sample" />
+    <Content Include="smart-agent-tool\.git\index" />
+    <Content Include="smart-agent-tool\.git\info\exclude" />
+    <Content Include="smart-agent-tool\.git\logs\HEAD" />
+    <Content Include="smart-agent-tool\.git\logs\refs\heads\master" />
+    <Content Include="smart-agent-tool\.git\objects\02\9a0acc7aa896d5dd71ed5aa7070996cdeaa64c" />
+    <Content Include="smart-agent-tool\.git\objects\0e\58258ab5c5e51df297bf9dc7fc63b01363eb34" />
+    <Content Include="smart-agent-tool\.git\objects\12\3ae94d052f3fa853fdc228dcabf0c7fb65ce38" />
+    <Content Include="smart-agent-tool\.git\objects\1a\8b58c717a9489da2340c5003aec6d3aa26191e" />
+    <Content Include="smart-agent-tool\.git\objects\21\afabf3522c33e52c4e49d3dc4ffacc00f81dae" />
+    <Content Include="smart-agent-tool\.git\objects\2a\47976b770c112aea29b13176d06dff79d8eb36" />
+    <Content Include="smart-agent-tool\.git\objects\2f\d5822d617890a8e6164de1cd624b60ef5a6481" />
+    <Content Include="smart-agent-tool\.git\objects\33\c09650340783cba0bd2ba76aececa1402df289" />
+    <Content Include="smart-agent-tool\.git\objects\44\12360f3cac8549437b29a1da5aa1732f6c433d" />
+    <Content Include="smart-agent-tool\.git\objects\4d\67d4572d86c9822a1e8517f29a4624fbe62e3e" />
+    <Content Include="smart-agent-tool\.git\objects\4f\ea717fe74f25d508f58d47a640e7032b26759d" />
+    <Content Include="smart-agent-tool\.git\objects\50\58882e8cde58ed4ff8320b3422e7569c3330f1" />
+    <Content Include="smart-agent-tool\.git\objects\55\f24b7ee67a70cdb0f9e5b0854342d165190d6e" />
+    <Content Include="smart-agent-tool\.git\objects\5d\1420b238197e77666263d97219ce2d26c26a68" />
+    <Content Include="smart-agent-tool\.git\objects\5d\de2cc61e94fc469af1d829622df21aa14ca15d" />
+    <Content Include="smart-agent-tool\.git\objects\5e\18051c38014a9354cb883bf54ee5148c610b61" />
+    <Content Include="smart-agent-tool\.git\objects\5f\25c19b9803ba6e48471d95faa57b793eae4334" />
+    <Content Include="smart-agent-tool\.git\objects\61\2522cd4d0424265e0e3c52fbc79743ba0fd6fd" />
+    <Content Include="smart-agent-tool\.git\objects\71\fad3b0d8ca7e9d78aa698f7acac44d113314e9" />
+    <Content Include="smart-agent-tool\.git\objects\76\7e1e5f00d4e04a9451696d3ee1af21e7347031" />
+    <Content Include="smart-agent-tool\.git\objects\7e\58a1050bfec9deead5bba0dc1f378e5608ec56" />
+    <Content Include="smart-agent-tool\.git\objects\82\3c3a71d78c1bdc24d2145d6c9cf994e03ad98d" />
+    <Content Include="smart-agent-tool\.git\objects\85\10bc1d98cbab735b2dc238f5c710f35f897fef" />
+    <Content Include="smart-agent-tool\.git\objects\94\42000560833ce97aa2a58b0612eca222c94424" />
+    <Content Include="smart-agent-tool\.git\objects\95\efae6f135afdf884ccaab7ccf1698926b6edd7" />
+    <Content Include="smart-agent-tool\.git\objects\9c\b99fd958d9bb0a307710c7e563465259edfb6f" />
+    <Content Include="smart-agent-tool\.git\objects\9f\899f8ddc04a28735b55b335728069237d89f5f" />
+    <Content Include="smart-agent-tool\.git\objects\a0\bc37925b443852799df8e4a23662be99d0b4dc" />
+    <Content Include="smart-agent-tool\.git\objects\b0\d4a6557ac193f35307a77ee4a6ed14bebbe028" />
+    <Content Include="smart-agent-tool\.git\objects\b3\e2fcbaab23ed188bd0619f6dff315c7b558359" />
+    <Content Include="smart-agent-tool\.git\objects\bc\091818808dc5a6b1fd32194e7ecf8c18e79ac0" />
+    <Content Include="smart-agent-tool\.git\objects\c8\8bc3f646f97f85c1f96bb2d05aeb788aff91d1" />
+    <Content Include="smart-agent-tool\.git\objects\d3\fa51afb43cd544bc21b929566f902d7e9ba7e1" />
+    <Content Include="smart-agent-tool\.git\objects\d7\3db0cb635d10462d266128c90c86de38fc3afb" />
+    <Content Include="smart-agent-tool\.git\objects\e6\9de29bb2d1d6434b8b29ae775ad8c2e48c5391" />
+    <Content Include="smart-agent-tool\.git\objects\e8\9ab6f419e18972d5c653e1bdf23f71d862cb0f" />
+    <Content Include="smart-agent-tool\.git\objects\ee\6e627fed44982093bf2301eb2910d02e600cda" />
+    <Content Include="smart-agent-tool\.git\objects\f1\c3b80f7ce1841afe6738385fa674b84d87d851" />
+    <Content Include="smart-agent-tool\.git\objects\f5\15c991cd40295862dc2f86462a91bc8c5e1520" />
+    <Content Include="smart-agent-tool\.git\objects\f9\05b5f125d304a48fb52aefd4f9ac311a83f1fd" />
+    <Content Include="smart-agent-tool\.git\objects\fc\c12ae509f4650b70e69e3168e03d131f896140" />
+    <Content Include="smart-agent-tool\.git\refs\heads\master" />
+    <Content Include="smart-agent-tool\LICENSE" />
+    <Content Include="smart-agent-tool\LICENSE.md" />
+    <Content Include="smart-agent-tool\package.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -119,10 +231,14 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="smartAgent-tool\.git\" />
-    <Folder Include="smartAgent-tool\node_modules\" />
-    <Folder Include="smartAgent-tool\public\" />
-    <Folder Include="smartAgent-tool\src\" />
+    <Folder Include="smart-agent-tool\.git\objects\info\" />
+    <Folder Include="smart-agent-tool\.git\objects\pack\" />
+    <Folder Include="smart-agent-tool\.git\refs\tags\" />
+    <Folder Include="smartAgentTool\.git\" />
+    <Folder Include="smartAgentTool\node_modules\" />
+    <Folder Include="smartAgentTool\public\" />
+    <Folder Include="smartAgentTool\reducers\" />
+    <Folder Include="smartAgentTool\src\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataLayer\iAgentDataTool.Repositories\iAgentDataTool.Repositories.csproj">
@@ -162,7 +278,7 @@
           <CustomServerUrl>
           </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
-          <servers defaultServer="SelfHostServer">
+          <servers defaultServer="">
             <server name="SelfHostServer" exePath="" cmdArgs="" url="http://localhost:15626/" workingDir="" />
           </servers>
         </WebProjectProperties>

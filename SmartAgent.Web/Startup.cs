@@ -11,6 +11,7 @@ namespace SmartAgent.Web
         public void Configuration(IAppBuilder app)
         {
             SmartAgent.Web.App_Start.WebApiConfig.Configure(app);
+            SmartAgent.Web.App_Start.FileSystemConfig.Configure(app);
         }
     }
 }

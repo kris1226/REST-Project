@@ -114,9 +114,26 @@ namespace iAgentDataTool.Repositories
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(ScriptMaster entity)
+        public async Task UpdateAsync(ScriptMaster entity)
         {
-            throw new NotImplementedException();
+            var sql = @"UPDATE dsa_scriptMaster
+                        SET scriptCode = @scriptCode
+                        WHERE scriptKey in( @scriptKey)
+                        AND websiteKey = @websiteKey";
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@scriptCode", entity.ScriptCode);
+            parameters.Add("@scriptKey", entity.ScriptKey);
+            parameters.Add("@websiteKey", entity.WebsiteKey);
+
+            try
+            {
+                await _db.ExecuteAsync(sql, parameters);
+            }
+            catch (Exception)
+            {                
+                throw;
+            }
         }
 
         public void GetAllData()

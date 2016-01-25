@@ -34,20 +34,21 @@
       },
       "ui": {
         "key": "bootstrap",
-        "module": null
+        "module": null,
+        "name": "bootstrap"
       },
       "bootstrapComponents": {
         "key": "ui-bootstrap",
         "module": "ui.bootstrap"
       },
       "cssPreprocessor": {
-        "key": "node-sass",
-        "extension": "scss"
+        "key": "none",
+        "extension": "css"
       },
       "jsPreprocessor": {
-        "key": "traceur",
+        "key": "none",
         "extension": "js",
-        "srcExtension": "es6"
+        "srcExtension": "js"
       },
       "htmlPreprocessor": {
         "key": "none",
