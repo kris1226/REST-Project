@@ -39,27 +39,21 @@ namespace iAgentDataTool.Repositories.AsyncRepositoires.SmartAgent
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<CriteriaSets>> FindByName(string name)
-        {
+        public Task<IEnumerable<CriteriaSets>> FindByName(string name) {
             string term = "%" + name + "%";
-            var query = @"SELECT DeviceId, criteriaSetKey, CriteriaSetName, ScriptKey, lastuserid 
+            var query = @"SELECT dateAdded, criteriaSetKey, ScriptKey, CriteriaSetName, DeviceId, lastUserID
                           FROM dsa_criteriaSets 
                           WHERE (CriteriaSetName like @term) order by criteriaSetName";
-            if (!name.Equals(null))
-            {
-                try
-                {
-                    return _db.QueryAsync<CriteriaSets>(query, new { term });
-                }
-                catch (SqlException)
-                {
-                    Task<IEnumerable<CriteriaSets>> error = null;
-                    return error;
-                }
+
+            if (string.IsNullOrWhiteSpace(name)) {
+                throw new ArgumentNullException("Please provide a search term");
             }
-            else
-            {
-                return null;
+            try {
+                return _db.QueryAsync<CriteriaSets>(query, new { term });
+            }
+            catch (Exception) {
+                Task<IEnumerable<CriteriaSets>> error = null; ;
+                return error;
             }
         }
 

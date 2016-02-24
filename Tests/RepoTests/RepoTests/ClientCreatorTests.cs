@@ -26,7 +26,12 @@ namespace RepoTests
         [TestMethod]
         public void IntialiseParams()
         {
-            _client = ClientMaster.CreateClientMaster("Test1", new Guid("A534FF12-2570-4ECB-A5CB-1550D13DA94A"));
+            _client = new ClientMaster(
+                clientName: "Test1", 
+                clientKey: new Guid("A534FF12-2570-4ECB-A5CB-1550D13DA94A"), 
+                howToDeliver: "ECNAUTH"
+            );
+
             _clients = new List<ClientMaster>();
             _clients.Add(_client);
         }

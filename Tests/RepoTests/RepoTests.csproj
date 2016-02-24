@@ -38,6 +38,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ConsoleTables.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ConsoleTables.1.0.0\lib\net45\ConsoleTables.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\..\packages\CommonServiceLocator.1.2\lib\portable-windows8+net40+sl5+windowsphone8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
@@ -136,10 +140,6 @@
     <Compile Include="WebsiteRepoTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\..\..\DEV\Libraries\AutoMapper-master\src\AutoMapper\AutoMapper.csproj">
-      <Project>{ddf551f9-b27d-4283-bfa0-e7068e05967d}</Project>
-      <Name>AutoMapper</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\DataLayer\iAgentDataTool.Repositories\iAgentDataTool.Repositories.csproj">
       <Project>{ce7b28e3-0a0c-4077-9666-9d8e65cf6c7a}</Project>
       <Name>iAgentDataTool.Repositories</Name>
@@ -151,6 +151,10 @@
     <ProjectReference Include="..\..\iAgentDataTool.Models\iAgentDataTool.Models.csproj">
       <Project>{c67d864e-ebcc-4642-88e2-dee0d4d8c837}</Project>
       <Name>iAgentDataTool.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\AgentData\AgentDataServices.csproj">
+      <Project>{082ca88d-db11-4d9d-ae54-c5a778894eb1}</Project>
+      <Name>AgentDataServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\TheCreator\TheCreator.csproj">
       <Project>{776c2dcb-ac14-4000-942e-3e502a43e498}</Project>

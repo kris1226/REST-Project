@@ -8,13 +8,13 @@ using System.Data;
 using System.Configuration;
 using Ninject;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using AutoMapper;
 using iAgentDataTool.Models.Common;
 using iAgentDataTool.Repositories.Interfaces;
 using iAgentDataTool.Repositories.SmartAgentRepos;
 using iAgentDataTool.Helpers.Interfaces;
 using iAgentDataTool.Models.SmartAgentModels;
 using iAgentDataTool.Repositories.AsyncRepositoires.SmartAgent;
+using ConsoleTables.Core;
 using TheCreator;
 
 namespace RepoTests
@@ -22,9 +22,9 @@ namespace RepoTests
     [TestClass]
     public class ClientDataRepoTests
     {
-        private Guid _clientKey = new Guid("38D61357-8643-42EC-9003-3B9DA4DB390C");
-        private string _criteriaSetName = "Rush Copley Medical Center";
-        private Guid _facilityKey = new Guid("F204C3EF-2722-40AD-BF18-9CE5AB8163C3");
+        private Guid _clientKey = new Guid("38d61357-8643-42ec-9003-3b9da4db390c");
+        private string _criteriaSetName = "Palomar Medical Center – Mental Health Services";
+        private Guid _facilityKey = new Guid("3E15E013-4A15-44A2-83F4-D8B2ED630397");
         private readonly string _devAppConfigName = "SmartAgentDev";
         private readonly string _prodAppConfigName = "SmartAgentProd";
         private Action<string, object> writeToConsole = (desc, value) => Console.WriteLine(desc, value);
@@ -39,7 +39,7 @@ namespace RepoTests
             var clientName = "Test1";
             var howToDeliver = "OSVC";
 
-            var newClient = ClientMaster.CreateClientMaster(clientName, clientKey, howToDeliver);
+            var newClient = new ClientMaster(clientName: clientName, clientKey: clientKey, howToDeliver: howToDeliver);
             var testlocation = ClientLocations.CreateClientLocation("Test1", clientKey, clientLocationKey, "clientId", "tpid", "facilityID");
             testlocation.LastUserId = "kris.lindsey";
 
@@ -76,7 +76,7 @@ namespace RepoTests
             var kernel = new StandardKernel(new RepoTestsModule(smartAgentDb));
             var repo = kernel.Get<IAsyncRepository<ClientMaster>>();
 
-            var newClient = ClientMaster.CreateClientMaster(clientname, clientKey, howToDeliver);
+            var newClient = new ClientMaster(clientName: clientname, clientKey: clientKey, howToDeliver: howToDeliver);
 
             // Client Master record
          //   var result = await repo.FindByName(clientname);
@@ -113,7 +113,7 @@ namespace RepoTests
                 clientKey = Guid.NewGuid();
             }
 
-            var client = ClientMaster.CreateClientMaster(clientName, clientKey, howToDeliver);
+            var client = new ClientMaster(clientName: clientName, clientKey: clientKey, howToDeliver: howToDeliver);
 
             var clientLocationName = "CHS - Deaconess Med Ctr";
             var clientId = "109781";
@@ -463,10 +463,7 @@ namespace RepoTests
                 clientData = await repo.GetAllAsync();
             }
 
-            foreach (var client in clientData)
-            {
-                Console.WriteLine(client);
-            }
+            clientData.ToList().ForEach(client => Console.WriteLine(client.ToString()));
 
 
         }
@@ -733,6 +730,7 @@ namespace RepoTests
         public async Task Move_CriteriaSets_From_Dev_To_Prod_Test()
         {
             Action<string, object> WriteToConsole = (text, obj) => Console.WriteLine(obj);
+            
             Func<string, Task<IEnumerable<CriteriaSets>>> FindCriteriaSets = async (conn) =>
             {
                 using (var smartAgentDb = new SqlConnection(ConfigurationManager.ConnectionStrings[conn].ConnectionString))
@@ -770,13 +768,13 @@ namespace RepoTests
         {
             //Find records in development database server.
 
-            Func<string, Task<IEnumerable<CriteriaSets>>> FindCriteriaSets = async (connString) =>
+            Func<string, string, Task<IEnumerable<CriteriaSets>>> FindCriteriaSets = async (criteriaSetTerm, connString) =>
             {
                 using (var smartAgentDb = new SqlConnection(ConfigurationManager.ConnectionStrings[connString].ConnectionString))
                 {
                     var kernel = new StandardKernel(new RepoTestsModule(smartAgentDb));
                     var repo = kernel.Get<ISmartAgentRepository>();
-                    return await repo.FindCriteriaSetRecords(_criteriaSetName);
+                    return await repo.FindCriteriaSetRecords(criteriaSetTerm);
                 }
             };
 
@@ -801,21 +799,44 @@ namespace RepoTests
                     return await repo.FindWithCriteriaSetKeys(records.Select(element => element.CriteriaSetKey));
                 }
             };
-            var criteriaSets = await FindCriteriaSets(_devAppConfigName);
-            // Find dev criteria detials records
-            var criteriaDetialsDev = await FindCriteriaDetails(_devAppConfigName, criteriaSets);
 
-
-            //Move record to production
-            //Might want to return the clientkey to prove the successful add.
-
-            var prodClient = await AddCriteriaDetails(_prodAppConfigName, criteriaDetialsDev);
-
-
-            foreach (var item in prodClient)
+            Func<string, IEnumerable<CriteriaSets>, string, Task<IEnumerable<CriteriaSets>>> AddCrtiera = async (conn, records, criteriaSetName) =>
             {
-                writeToConsole("Client successfully added to production: {0}", item);
+                using (var prodDb = new SqlConnection(ConfigurationManager.ConnectionStrings[conn].ConnectionString))
+                {
+                    var kernel = new StandardKernel(new RepoTestsModule(prodDb));
+                    var repo = kernel.Get<ISmartAgentRepository>();
+                    await repo.AddCriterias(records);
+                    return await repo.FindCriteriaSetRecords(criteriaSetName);
+                }
+            };
+
+            var criteriaName = "Pomerado Palomar Hospital – Outpatient Pavilion:";
+
+            var devCriteriaSets = await FindCriteriaSets(criteriaName,
+                _devAppConfigName);
+
+            if (devCriteriaSets.Any())
+            {
+                var prodCriteriaRecords = await AddCrtiera(_prodAppConfigName, devCriteriaSets, criteriaName);
+                // Find dev criteria detials records
+                var criteriaDetialsDev = await FindCriteriaDetails(_devAppConfigName, devCriteriaSets);
+
+                //Move record to production
+                //Might want to return the clientkey to prove the successful add.
+
+                var prodClient = await AddCriteriaDetails(_prodAppConfigName, criteriaDetialsDev);
+                if (prodClient.Any())
+                {
+                    ConsoleTable.From<CriteriaDetails>(prodClient).Write();
+                }
+                else
+                {
+                    Console.WriteLine("No records added");
+                }
+                
             }
+
         }
         [TestMethod]
         public async Task Move_Client_To_Prod_Test()

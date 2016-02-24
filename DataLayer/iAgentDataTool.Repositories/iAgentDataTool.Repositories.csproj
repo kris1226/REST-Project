@@ -116,8 +116,6 @@
     <Compile Include="AsyncRepositoires\Common\ScriptRetrunValuesRepository.cs" />
     <Compile Include="RemixRepositories\IRemixRepository.cs" />
     <Compile Include="RemixRepositories\RemixRepository.cs" />
-    <Compile Include="RepositoryActionResult.cs" />
-    <Compile Include="RepositoryActionStatus.cs" />
     <Compile Include="SmartAgentRepos\CreateSmartAgentUserRepo.cs" />
     <Compile Include="SmartAgentRepos\ICreatSmartAgentClient.cs" />
     <Compile Include="SmartAgentRepos\IScriptCreation.cs" />

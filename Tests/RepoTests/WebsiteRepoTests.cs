@@ -29,10 +29,9 @@ namespace RepoTests
             var websiteRepo = kernel.Get<IAsyncRepository<WebsiteMaster>>();
             var websites = await websiteRepo.GetAllAsync();
             Assert.NotNull(websites);
-            foreach (var result in websites)
-            {
-                Console.WriteLine(result);
-            }            
+
+            websites.ToList()
+                    .ForEach(website => Console.WriteLine(website.ToString()));        
         }
         [Test]
         public async Task Update_Website_URL()
@@ -44,11 +43,14 @@ namespace RepoTests
             IKernel kernel = new StandardKernel(new RepoTestsModule(db));
 
             var websiteRepo = kernel.Get<IAsyncRepository<WebsiteMaster>>();
-            var website = new WebsiteMaster();
+            var website = WebsiteMaster.CreateWebsiteMaster(
+                "Allied Physicians Submit",
+                "https://portal.nmm.cc/Portal",
+                "CFC",
+                new Guid("e6b9299a-f903-4120-a481-3e5952fb98bc"),
+                122
+             );
 
-            website.WebsiteDescription = "Brand New Day Submit";
-            website.WebsiteKey = Guid.NewGuid();
-            website.WebsiteDomain = "https://aerial.carecoordination.medecision.com/ucipa/physician/LoginDefault.aspx";
            
             await websiteRepo.UpdateAsync(website);
             var websites = await websiteRepo.GetAllAsync();
@@ -59,7 +61,7 @@ namespace RepoTests
          
         }
         [Test]
-        public async Task Create_Website_URL()
+        public async Task Create_Website()
         {
             Func<WebsiteMaster, string, Task<Guid>> CreateRecord = async (newRecord, dbConfig) =>
             {
@@ -73,12 +75,17 @@ namespace RepoTests
 
             var devAppConfigName = "SmartAgentDev";
             var productionDatabase = "SmartAgentProd";
-            var website = new WebsiteMaster();
+
             var websitesToAdd = new List<WebsiteMaster>();
 
-            website.WebsiteDescription = "Onesource BCBS Flordia Submit";
-            website.WebsiteKey = Guid.NewGuid();
-            website.WebsiteDomain = "https://onesource.passporthealth.com/_members/";
+            var website = WebsiteMaster.CreateWebsiteMaster(
+                "Empire BCBS NY Medicaid via Avility",
+                "https://apps.availity.com/",   
+                "NYMedicaid",
+                Guid.NewGuid(),
+                3
+            );
+
             websitesToAdd.Add(website);
 
 

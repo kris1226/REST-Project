@@ -26,6 +26,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
         {
             this._db = db;
         }
+
         public Task<IEnumerable<ClientApps>> FindClientAppsRecords(Guid clientLocationKey)
         {
             throw new NotImplementedException();
@@ -47,7 +48,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                 logger.Debug("Search complete!.");
                 return clientRecord.SingleOrDefault();
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
                 logger.Debug("Error getting client maste record: {0}", ex);
                 throw;
@@ -74,7 +75,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                 logger.Debug("No errors return from add attempt");
                 return result.SingleOrDefault();
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
                 logger.Debug("Error adding client: {0} ", ex);
                 return new Guid("00000000-0000-0000-0000-000000000000");
@@ -254,7 +255,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                             await _db.ExecuteAsync(query, p);
                             await _db.ExecuteAsync(insertIntoClientApps, p);
                         }
-                        catch (SqlException ex)
+                        catch (Exception ex)
                         {
                             logger.Debug("Error Adding client location records: {0}", ex);
                         }
@@ -284,7 +285,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                 {
                     return await _db.QueryAsync<PayerWebsiteMappingValue>(query, parameters);
                 }
-                catch (SqlException ex)
+                catch (Exception ex)
                 {
                     logger.Debug("Error Adding client location records: {0}", ex);
                     throw;
@@ -322,7 +323,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
 
                             await _db.ExecuteAsync(query, parameters);
                         }
-                        catch (SqlException ex)
+                        catch (Exception ex)
                         {
                             logger.Debug("Error Adding payer website mapping vlaue records: {0}", ex);
                             throw;
@@ -351,14 +352,13 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                 {
                     return await _db.QueryAsync<FacilityMaster>(query, new { clientKey });
                 }
-                catch (SqlException ex)
+                catch (Exception ex)
                 {
                     logger.Debug("Error serching facilites: {0}", ex);
                     throw;
                 }
             }
         }
-
 
         public async Task AddFacilityMasterRecord(IEnumerable<FacilityMaster> facilites)
         {
@@ -386,7 +386,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                         {
                             await _db.ExecuteAsync(query, p);
                         }
-                        catch (SqlException ex)
+                        catch (Exception ex)
                         {
                             logger.Debug("Error adding facility records: {0}", ex);
                             throw;
@@ -408,7 +408,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                 {
                     return await _db.QueryAsync<FacilityDetail>(query, p);
                 }
-                catch (SqlException ex)
+                catch (Exception ex)
                 {
                     logger.Debug("Error finding facility Detials records: {0}", ex);
                     throw;
@@ -434,7 +434,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                 {
                     return await _db.QueryAsync<FacilityDetail>(query, p);
                 }
-                catch (SqlException ex)
+                catch (Exception ex)
                 {
                     logger.Debug("Error finding facility Detials records: {0}", ex);
                     throw;
@@ -461,7 +461,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                     {
                         await _db.ExecuteAsync(query, p);
                     }
-                    catch (SqlException ex)
+                    catch (Exception ex)
                     {
                         logger.Debug("Error adding facility Detials records: {0}", ex);
                         throw;
@@ -496,7 +496,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                 {
                     return await _db.QueryAsync<CriteriaSets>(query, p);
                 }
-                catch (SqlException)
+                catch (Exception)
                 {
                     throw;
                 }
@@ -518,7 +518,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                 {
                     return await _db.QueryAsync<CriteriaDetails>(query, p);
                 }
-                catch (SqlException ex)
+                catch (Exception ex)
                 {
                     logger.Debug("Error finding criteria Detials records: {0}", ex);
                     throw;
@@ -540,14 +540,14 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             if (wildCard.Any())
             {
                 string term = "%" + wildCard + "%";
-                var query = @"SELECT criteriaSetKey, CriteriaSetName, ScriptKey, DeviceId 
-                             FROM dsa_criteriaSets WHERE (CriteriaSetName like @term) ORDER BY criteriaSetName";
+                var query = @"SELECT dateAdded,criteriaSetKey, ScriptKey, CriteriaSetName, DeviceId, lastUserId 
+                              FROM dsa_criteriaSets WHERE (CriteriaSetName like @term) ORDER BY criteriaSetName";
 
                 try
                 {
                     return _db.QueryAsync<CriteriaSets>(query, new { term });
                 }
-                catch (SqlException ex)
+                catch (Exception ex)
                 {
                     logger.Debug("Error finding criteria set records: {0}", ex);
                     throw;
@@ -584,7 +584,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                         {
                             await _db.ExecuteAsync(query, p);
                         }
-                        catch (SqlException ex)
+                        catch (Exception ex)
                         {
                             logger.Debug("Error adding criteria set records: {0}", ex);
                             throw;
@@ -632,7 +632,6 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             }
         }
 
-
         public async Task<CriteriaSets> FindCriteriaSetRecord(Guid criteriaSetKey)
         {
             if (criteriaSetKey.Equals(null))
@@ -651,7 +650,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                     var criteriaSet = await _db.QueryAsync<CriteriaSets>(query, p);
                     return criteriaSet.SingleOrDefault();
                 }
-                catch (SqlException)
+                catch (Exception)
                 {
                     throw;
                 }
@@ -678,7 +677,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                     var criteriaSets = await _db.QueryAsync<CriteriaSets>(query, p);
                     return criteriaSets.SingleOrDefault();
                 }
-                catch (SqlException ex)
+                catch (Exception ex)
                 {
                     logger.Debug("Error adding criteria set records: {0}", ex);
                     throw;
@@ -704,7 +703,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                 {
                     return await _db.QueryAsync<CriteriaDetails>(query, p);
                 }
-                catch (SqlException ex)
+                catch (Exception ex)
                 {
                     logger.Debug("Error finding criteria Detials records: {0}", ex);
                     throw;
@@ -716,13 +715,10 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             }
         }
 
-
-
         public Task<IEnumerable<CriteriaDetails>> AddCriteriaDetailRecords(IEnumerable<CriteriaDetails> criteriaDetailRecords)
         {
             throw new NotImplementedException();
         }
-
 
         public async Task<IEnumerable<CriteriaDetails>> FindCriteriaDetailRecords(IEnumerable<Guid> criteriaSetKeys)
         {
@@ -738,7 +734,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                 {
                     return await _db.QueryAsync<CriteriaDetails>(query, p);
                 }
-                catch (SqlException ex)
+                catch (Exception ex)
                 {
                     logger.Debug("Error finding criteria Detials records: {0}", ex);
                     throw;
@@ -749,7 +745,6 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                 throw new ArgumentNullException("UH OH! criteria set key is null or empty!");
             }
         }
-
 
         public Task<IEnumerable<WebsiteExtractionMap>> FindExtractions(Guid websiteKey)
         {
@@ -763,12 +758,11 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             {
                 return _db.QueryAsync<WebsiteExtractionMap>(query, new { websiteKey });
             }
-            catch (SqlException)
+            catch (Exception)
             {
                 throw;
             }
         }
-
 
         public async Task<IEnumerable<ScriptMaster>> FindScripts(Guid websiteKey)
         {
@@ -783,28 +777,40 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             {
                 return await _db.QueryAsync<ScriptMaster>(query, new { websiteKey });
             }
-            catch (SqlException)
+            catch (Exception)
             {
                 throw;
             }
         }
 
-        public async Task<IEnumerable<ScriptMaster>> AddScripts(IEnumerable<ScriptMaster> scripts)
+        public async Task AddScripts(IEnumerable<ScriptMaster> scripts)
         {
-            if (scripts.Any())
+            var scriptCheck = await FindScriptMaster(scripts.FirstOrDefault().WebsiteKey);
+            if (scriptCheck.Any())
             {
-                var query = @"INSERT INTO dbo.[dsa_scriptMaster]([dateAdded]
+                throw new Exception("Script Already Exists in production");
+            }
+            var query = @"INSERT INTO dbo.[dsa_scriptMaster]([dateAdded]
 	                               ,[dateChanged],[lastUserID]
-                                   ,[deviceID], scriptKey
+                                   ,[deviceID]
+                                   , scriptKey
                                    ,[noRetries],[delayBefore]
-	                               ,[delayAfter],[timeout],[scriptDesc],scriptCode,[websiteKey]
-	                               ,[iterative],[setAgentAs],[noIterations],[tableRow],[tableColumn],[Category]
+	                               ,[delayAfter],[timeout]
+                                   ,[scriptDesc]
+                                   ,scriptCode
+                                   ,[websiteKey]
+	                               ,[iterative],[setAgentAs]
+                                   ,[noIterations],[tableRow],[tableColumn]
+                                   ,[Category]
 	                               ,[Priority])
-		                            VALUES(GETDATE(),GETDATE(),'kris.lindsey'
-                                    ,@deviceId
-                                    ,@scriptKey
-                                    ,0
-		                            ,0,0,60
+		                            VALUES(
+                                      GETDATE()
+                                    , GETDATE()
+                                    ,'kris.lindsey'
+                                    , @deviceId
+                                    , @scriptKey
+                                    , 0
+		                            , 0,0,60
                                     , @Desc
                                     , @Code
                                     , @websiteKey
@@ -812,34 +818,33 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                                      ,'I.E.7'
                                     ,NULL
 		                            ,NULL,NULL
-                                    ,@category,1)
-                          SELECT deviceId, scriptkey, scriptDesc, scriptCode, websiteKey 
-                          FROM dbo.[dsa_scriptMaster] WHERE scriptDesc = @Desc";
-                try
+                                    ,@category,1)";
+            try
+            {
+                var p = new DynamicParameters();
+                scripts.ToList().ForEach(async script =>
                 {
-                    foreach (var script in scripts)
+                    p.Add("@Desc", script.ScriptDesc);
+                    p.Add("@scriptKey", script.ScriptKey);
+                    p.Add("@Code", script.ScriptCode);
+                    p.Add("@websiteKey", script.WebsiteKey);
+                    p.Add("@category", script.Category);
+                    p.Add("@deviceId", script.DeviceId);
+                    try
                     {
-                        var p = new DynamicParameters();
-                        p.Add("@Desc", script.ScriptDesc);
-                        p.Add("@scriptKey", script.ScriptKey);
-                        p.Add("@Code", script.ScriptCode);
-                        p.Add("@websiteKey", script.WebsiteKey);
-                        p.Add("@category", script.Category);
-                        p.Add("@deviceId", script.DeviceId);
                         await _db.ExecuteAsync(query, p);
                     }
-                    var websiteKey = scripts.Where(s => s.ScriptDesc.Contains("001"))
-                                            .Select(w => w.WebsiteKey).SingleOrDefault();
-                    return await FindScripts(websiteKey);
-                }
-                catch (SqlException)
-                {
-                    throw;
-                }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                });
             }
-            throw new ArgumentNullException("No scripts provided to add");
+            catch (Exception)
+            {
+                throw;
+            }
         }
-
 
         public async Task<IEnumerable<ScriptReturnValue>> FindScriptReturnValues(Guid websiteKey)
         {
@@ -866,60 +871,60 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             }
         }
 
-        public async Task AddScriptReturnValues(IEnumerable<ScriptReturnValue> returnValues)
+        public async Task AddScriptReturnValues(IEnumerable<ScriptReturnValue> returnValues, Guid websiteKey)
         {
-            if (returnValues.Any())
+            var returnValuesCheck = await FindScriptReturnValues(websiteKey);
+            if (returnValuesCheck.Any())
             {
-                var query = @"INSERT INTO dbo.[dsa_scriptReturnValues]
-                           ([dateAdded]
-                           ,[dateChanged]
-                           ,[lastUserID]
-                           ,[deviceID]
-                           ,[fieldKey]
-                           ,[scriptKey]
-                           ,[returnValue]
-                           ,[overrideLabel]
-                           ,[valueOperation]
-                           ,[nextScriptID]
-                           ,[mappingValue])
-                     VALUES
-                           (GETDATE()
-                           ,GETDATE()
-                           ,'kris.lindsey'
-                           ,@deviceId
-                           ,NULL
-                           ,@scriptKey
-                           ,@returnValue
-                           ,NULL
-                           ,'EQ'
-                           ,@EQScriptKey
-                           ,@mappingValue)";
-                foreach (var returnValue in returnValues)
-                {
-                    var p = new DynamicParameters();
-                    p.Add("@deviceId", returnValue.DeviceId);
-                    p.Add("@scriptKey", returnValue.ScriptKey);
-                    p.Add("@returnValue", returnValue.ReturnValue);
-                    p.Add("@EQScriptKey", returnValue.NextScriptId);
-                    p.Add("@deviceId", returnValue.DeviceId);
-                    p.Add("@mappingValue", returnValue.MappingValue);
-                    try
-                    {
-                        await _db.ExecuteAsync(query, p);
-                    }
-                    catch (SqlException)
-                    {
-                        throw;
-                    }
-                }
+                throw new Exception("Script Already Exists in production");
             }
-            else
-            {
-                throw new ArgumentNullException("Please pass in return values");
+            var query = @"INSERT INTO dbo.[dsa_scriptReturnValues](
+                                [dateAdded]
+                               ,[dateChanged]
+                               ,[lastUserID]
+                               ,[deviceID]
+                               ,[fieldKey]
+                               ,[scriptKey]
+                               ,[returnValue]
+                               ,[overrideLabel]
+                               ,[valueOperation]
+                               ,[nextScriptID]
+                               ,[mappingValue])
+                         VALUES( 
+                                 GETDATE()
+                               , GETDATE()
+                               , 'kris.lindsey'
+                               , @deviceId
+                               , NULL
+                               , @scriptKey
+                               , @returnValue
+                               , NULL
+                               ,'EQ'
+                               , @EQScriptKey
+                               , @mappingValue)";
+
+                var p = new DynamicParameters();
+                
+                    foreach (var record in returnValues)
+                    {
+                        p.Add("@deviceId", record.DeviceId);
+                        p.Add("@scriptKey", record.ScriptKey);
+                        p.Add("@returnValue", record.ReturnValue);
+                        p.Add("@EQScriptKey", record.NextScriptId);
+                        p.Add("@deviceId", record.DeviceId);
+                        p.Add("@mappingValue", record.MappingValue);     
+
+                        try
+                        {
+                            await _db.ExecuteAsync(query, p);
+                        }
+                        catch (Exception)
+                        {
+                            throw;
+                        }
+                    }                             
             }
-        }
-
-
+        
         public async Task<IEnumerable<ScriptCollectionItem>> FindCollectionItems(Guid websiteKey)
         {
             var isKeyValid = CheckForNullOrWhiteSpace(websiteKey);
@@ -944,6 +949,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             }
             throw new ArgumentNullException("Need websitekey to search");
         }
+
         public async Task<bool> AddScriptCollectionItems(IEnumerable<ScriptCollectionItem> collectionItems)
         {
             if (collectionItems.Any())
@@ -984,6 +990,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             }
             return false;
         }
+
         public bool CheckForNullOrWhiteSpace<T>(T value)
         {
             if (string.IsNullOrWhiteSpace(value.ToString()))
@@ -992,7 +999,6 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             }
             return true;
         }
-
 
         public async Task<IEnumerable<ClientMaster>> FindClientMasterRecord(string term)
         {
@@ -1010,7 +1016,6 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             }
         }
 
-
         public async Task<IEnumerable<ClientLocations>> FindClientLocationRecords(string term)
         {
             var query = @"SELECT clientLocationName, ClientKey, clientLocationKey, Tpid, clientId, facilityid
@@ -1027,7 +1032,6 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             }
         }
 
-
         public async Task<IEnumerable<FacilityMaster>> FindFacilityMasterRecords(string term)
         {
             var query = @"SELECT facilityName, ClientKey, clientLocationKey, facilityKey, OrderMap
@@ -1043,7 +1047,6 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                 throw;
             }
         }
-
 
         public async Task<Guid> GetFirstScriptKey(Criteria critera)
         {
@@ -1064,7 +1067,6 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             }
         }
 
-
         public async Task<int> CreateClientMappings(Guid clientKey)
         {
             var p = new DynamicParameters();
@@ -1078,7 +1080,6 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                 throw;
             }
         }
-
 
         public async Task<IEnumerable<Criteria>> AddCriteriaRecord(Criteria criteria)
         {
@@ -1101,13 +1102,36 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             }
         }
 
-
         Task ISmartAgentRepository.AddCriteriaRecord(Criteria criteria)
         {
             throw new NotImplementedException();
         }
 
         Task<IEnumerable<Criteria>> ISmartAgentRepository.AddCriteriaSetRecord(CriteriaSets criteriaSetRecord)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<ScriptMaster>> FindScriptMaster(Guid websiteKey)
+        {
+            var query = @"select scriptKey, websiteKey, scriptDesc, scriptCode, Category, deviceID, noIterations
+                          FROM dsa_scriptMaster
+                          WHERE websiteKey = @websiteKey";
+
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@websiteKey", websiteKey);
+            try
+            {
+                return await _db.QueryAsync<ScriptMaster>(query, parameters);
+            }
+            catch (Exception)
+            {                
+                throw;
+            }
+        }
+
+        public Task<IEnumerable<ScriptCollectionItem>> FindScriptCollectionItems(Guid key)
         {
             throw new NotImplementedException();
         }

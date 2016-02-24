@@ -69,10 +69,15 @@ namespace iAgentDataTool.Repositories.Interfaces
         Task<IEnumerable<ScriptReturnValue>> FindScriptReturnValues(Guid websiteKey);
         Task<IEnumerable<ScriptCollectionItem>> FindCollectionItems(Guid websiteKey);
 
-        Task<IEnumerable<ScriptMaster>> AddScripts(IEnumerable<ScriptMaster> scripts);
-        Task AddScriptReturnValues(IEnumerable<ScriptReturnValue> returnValues);
+        Task AddScripts(IEnumerable<ScriptMaster> scripts);
+        Task AddScriptReturnValues(IEnumerable<ScriptReturnValue> returnValues, Guid websiteKey);
         Task<bool> AddScriptCollectionItems(IEnumerable<ScriptCollectionItem> collectionItems);
 
         Task<Guid> GetFirstScriptKey(Criteria critera);
+
+
+        Task<IEnumerable<ScriptMaster>> FindScriptMaster(Guid websiteKey);
+
+        Task<IEnumerable<ScriptCollectionItem>> FindScriptCollectionItems(Guid key);
     }
 }

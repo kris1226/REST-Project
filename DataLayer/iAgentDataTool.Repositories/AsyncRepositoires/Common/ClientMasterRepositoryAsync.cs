@@ -25,7 +25,7 @@ namespace iAgentDataTool.Repositories.Common
 
         public async Task<IEnumerable<ClientMaster>> GetAllAsync()
         {
-            var query = @"SELECT DISTINCT clientKey, clientName, HowToDeliver 
+            var query = @"SELECT DISTINCT clientKey, clientName, HowToDeliver, DeviceId 
                           FROM dsa_clientMaster
                           ORDER BY clientName";
             try
@@ -34,7 +34,7 @@ namespace iAgentDataTool.Repositories.Common
                 return await _db.QueryAsync<ClientMaster>(query);
   
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
                 var error = new List<ClientMaster>();
                 Console.WriteLine("Database Exception " + ex);
@@ -44,12 +44,16 @@ namespace iAgentDataTool.Repositories.Common
 
         public async Task<IEnumerable<ClientMaster>> FindWithGuidAsync(Guid clientKey)
         {
-            var query = @"Select clientName, clientKey, HowToDeliver From dsa_clientMaster where clientKey = @clientKey";
+            var query = @"Select clientKey, clientName, HowToDeliver, DeviceId 
+                          From dsa_clientMaster where clientKey = @clientKey";
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@clientKey", clientKey);
             try
             {
-                return await _db.QueryAsync<ClientMaster>(query, new { clientKey });
+                return await _db.QueryAsync<ClientMaster>(query, parameters);
             }
-            catch (SqlException)
+            catch (Exception)
             {              
                 throw;
             }
@@ -151,10 +155,11 @@ namespace iAgentDataTool.Repositories.Common
         {
             if (entity.Any())
             {
-                var lastCreatedClient = new ClientMaster();
+                ClientMaster lastCreatedClient = null;
                 var p = new DynamicParameters();
                 foreach (var item in entity)
                 {
+                    lastCreatedClient = new ClientMaster(clientKey: item.ClientKey, clientName: item.ClientName, howToDeliver: item.HowToDeliver);
                     p.Add("@clientKey", item.ClientKey);
                     p.Add("@deviceId", item.DeviceId);
                     p.Add("@clientName", item.ClientName);

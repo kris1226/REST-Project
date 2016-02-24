@@ -29,8 +29,10 @@ namespace RepoTests
         {
             Bind<IUpwAsyncRepository>().To<UpwAsyncRepository>().WithConstructorArgument("db", _db);
             Bind<ISmartAgentRepo>().To<CreateSmartAgentUserRepo>().WithConstructorArgument("db", _db);
-            Bind<IAsyncRepository<WebsiteMaster>>().To<WebsiteMasterAsyncRepository>().WithConstructorArgument("db", _db);
             Bind<ISmartAgentRepository>().To<SmartAgentRepo>().WithConstructorArgument("db", _db);
+
+            Bind<IAsyncRepository<WebsiteMaster>>().To<WebsiteMasterAsyncRepository>().WithConstructorArgument("db", _db);
+        
             Bind<IAsyncRepository<ClientMaster>>().To<ClientMasterRepositoryAsync>().WithConstructorArgument("db", _db);
             Bind<IAsyncRepository<ClientLocations>>().To<ClientLocationsAsyncRepository>().WithConstructorArgument("db", _db);
             Bind<IAsyncRepository<PayerWebsiteMappingValue>>().To<PayerWebsiteMappingValuesAsyncRepository>().WithConstructorArgument("db", _db);

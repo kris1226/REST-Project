@@ -5,7 +5,10 @@
 *.suo
 *.user
 *.sln.docstates
-
+SmartAgentTool.Web
+app.config
+web.config
+Opensource
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -146,6 +149,7 @@ csx/
 Web.config
 Web.Debug.config
 node_modules
+SmartAgentTool.Web
 App.config
 # Windows Store app package directory
 AppPackages/

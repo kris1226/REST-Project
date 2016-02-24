@@ -27,15 +27,16 @@ namespace RepoTests
         [TestMethod]
         public async Task Create_Single_CriteraSet_Record_Test()
         {
-            var firstScriptKey = new Guid("365816a4-306a-e111-90b9-000c29729dff");
-            var clientName = "Baptist Shelby Medical Center: ";
-            var insuranceName = "Aetna Navi Net Submit";
-            var clientkey = new Guid("ab3e9a58-51b0-4ab0-963f-efa0f0c4eebd");
-            var clientLocationKey = new Guid("fbedc0f9-1fac-e111-9f58-000c29729dff");
+            var firstScriptKey = new Guid("763600d9-abd5-e511-8d27-000c29729dff");
+            var clientName = "De La Pena Eye Clinic: ";
+            var insuranceName = "Allied Submit";
+            var clientkey = new Guid("822b47a8-2aea-4ab5-a868-92c1cb3882cd");
+            var clientLocationKey = new Guid("f23522c5-08cd-49ae-9ecd-1c9870902792");
+
             var criteriaSetname = clientName + insuranceName;
             var scriptKey = firstScriptKey;
             var criteriaSetKey = Guid.NewGuid();
-            var iprkey = "PCAETNA001";
+            var iprkey = "PCALLPHYS";
 
             var clientScriptCriteria = Criteria.CreateCriteria
                 (
@@ -48,7 +49,7 @@ namespace RepoTests
                     "kris.lindsey"
                 );
 
-            clientScriptCriteria.DeviceId = "Evicore";
+            clientScriptCriteria.DeviceId = "Allied";
             clientScriptCriteria.UpdatedBy = "kris.lindsey";
          
             Func<Criteria, string, Task<IEnumerable<Criteria>>> CreateRecords = async (newRecord, dbConfig) =>
@@ -111,6 +112,7 @@ namespace RepoTests
                 var repo = kernel.Get<IAsyncRepository<CriteriaDetails>>();
                 criteriaDetials= await repo.FindWithGuidAsync(criteriaSetKey);            
             }
+
             Console.WriteLine("****************=============================================================================***************");
             if (criteriaDetials.Any())
             {
@@ -140,13 +142,15 @@ namespace RepoTests
                 }
             };
 
-            var criteriaSets = await FindCriteria("Chesapeak", _prodAppConfigName);
+            var criteriaSets = await FindCriteria("Palomar", _prodAppConfigName);
+
+
+
             if (criteriaSets.Any())
             {
-                foreach (var item in criteriaSets)
-                {
-                    Console.WriteLine(item);
-                }
+                criteriaSets
+                    .ToList()
+                    .ForEach(criteira => Console.WriteLine(criteira));
             }
             else
             {

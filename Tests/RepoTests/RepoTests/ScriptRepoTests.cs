@@ -2,23 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using iAgentDataTool.Helpers.Interfaces;
-using iAgentDataTool.Models.SmartAgentModels;
-using iAgentDataTool.Repositories.AsyncRepositoires.SmartAgent;
-using Ninject;
-using iAgentDataTool.Repositories.SmartAgentRepos;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
-using NUnit.Framework;
+using Ninject;
 using iAgentDataTool.Models.Common;
 using iAgentDataTool.Models;
 using iAgentDataTool.Repositories.Interfaces;
 using iAgentDataTool.AsyncRepositories.Common;
+using iAgentDataTool.Helpers.Interfaces;
+using iAgentDataTool.Models.SmartAgentModels;
+using iAgentDataTool.Repositories.SmartAgentRepos;
+using iAgentDataTool.Repositories.AsyncRepositoires.SmartAgent;
 using RepoTests.Factories;
+using ConsoleTables.Core;
+using NUnit.Framework;
+using AgentDataServices;
 
 
 
@@ -40,41 +41,41 @@ namespace RepoTests {
             _scriptRepo = kernel.Get<IAsyncRepository<ScriptMaster>>();
         }
 
-        [Test]
-        public async void Update_Script_Records()
-        {
-            var newCode = "SET !TIMEOUT_STEP 5\nTAG POS=1 TYPE=A FORM=ACTION:* ATTR=TXT:Member\nTAG POS=1 TYPE=INPUT:TEXT FORM=ACTION:* ATTR=NAME:*tbMemberID CONTENT=%%MemberID%%\nTAG POS=1 TYPE=INPUT:SUBMIT FORM=ACTION:* ATTR=NAME:*SearchMemberCtrl$btSearch\n";
-            var websiteKey = new Guid("89bd591b-8cbf-e111-b39a-000c29729dff");
-            var scriptKey = new Guid("8294dbd1-acbf-e111-b39a-000c29729dff");
-            var scriptDesc = "KePro Submit 002: Member search";
-            var category = "PatientSearch";
-            var deviceId = "002";
+        //[Test]
+        //public async void Update_Script_Records()
+        //{
+        //    var newCode = "SET !TIMEOUT_STEP 5\nTAG POS=1 TYPE=A FORM=ACTION:* ATTR=TXT:Member\nTAG POS=1 TYPE=INPUT:TEXT FORM=ACTION:* ATTR=NAME:*tbMemberID CONTENT=%%MemberID%%\nTAG POS=1 TYPE=INPUT:SUBMIT FORM=ACTION:* ATTR=NAME:*SearchMemberCtrl$btSearch\n";
+        //    var websiteKey = new Guid("89bd591b-8cbf-e111-b39a-000c29729dff");
+        //    var scriptKey = new Guid("8294dbd1-acbf-e111-b39a-000c29729dff");
+        //    var scriptDesc = "KePro Submit 002: Member search";
+        //    var category = "PatientSearch";
+        //    var deviceId = "002";
 
 
-            var keproScript001 = ScriptMaster.Build()
-                            .WithScriptKey(scriptKey)
-                            .WithScriptDesc(scriptDesc)
-                            .WithWebsiteKey(websiteKey)
-                            .WithScriptCode(newCode)
-                            .WithNumberOfIterations(0)
-                            .WithCategory(category)
-                            .WithDeviceId(deviceId)
-                            .Build();
+        //    var keproScript001 = ScriptMaster.Build()
+        //                    .WithScriptKey(scriptKey)
+        //                    .WithScriptDesc(scriptDesc)
+        //                    .WithWebsiteKey(websiteKey)
+        //                    .WithScriptCode(newCode)
+        //                    .WithNumberOfIterations(0)
+        //                    .WithCategory(category)
+        //                    .WithDeviceId(deviceId)
+        //                    .Build();
 
-            Action<ScriptMaster> UpdateScriptCode = async (script) => {
-                await _scriptRepo.UpdateAsync(script);
-            };
-            try
-            {
-                UpdateScriptCode(keproScript001);
-            }
-            catch (Exception) {
+        //    Action<ScriptMaster> UpdateScriptCode = async (script) => {
+        //        await _scriptRepo.UpdateAsync(script);
+        //    };
+        //    try
+        //    {
+        //        await UpdateScriptCode(keproScript001);
+        //    }
+        //    catch (Exception) {
                                    
-            }                             
-            finally {
-                Console.WriteLine("process complete");
-            }
-        }
+        //    }                             
+        //    finally {
+        //        Console.WriteLine("process complete");
+        //    }
+        //}
 
         [Test]
         public async Task Get_First_ScriptKey_From_Client_Script_SetUp()
@@ -148,11 +149,7 @@ namespace RepoTests {
                 }
             };
             //ClientMaster client  = null;
-            var record = ClientMaster.CreateClientMaster(
-                "Good Samaritan Hospital",
-                new Guid("3bc45110-cad0-4f2a-bd2d-efccda2732d4"),
-                "ECNAUTH2"
-            );
+            var record = new ClientMaster(clientName: "clientname", howToDeliver: "ecnauth", clientKey: new Guid(""));
 
             var clientKey = await CreateClientMasterRecord(record, _devSmartAgent);
             write(clientKey);
@@ -215,11 +212,13 @@ namespace RepoTests {
             Guid websitekey = Guid.NewGuid();
             var container = new UnityContainer();
 
-            var w = new WebsiteMaster();
-            w.DeviceId = "OptumRad";
-            w.WebsiteDescription = "Optum UHC Rad Submit";
-            w.WebsiteDomain = "https://www.unitedhealthcareonline.com/b2c/Logout.do?page=signin";
-            w.WebsiteKey = websitekey;
+            var websiteMaster = WebsiteMaster.CreateWebsiteMaster(
+                "Allied Physicians",
+                "http://portal.nmm.cc/nmm/en/index.jsp",                
+                "CFC",
+                Guid.NewGuid(),
+                117
+            );
 
             Func<WebsiteMaster, string, Task<Guid>> CreateWebsiteRecord = async (website, connectionString) =>
             {
@@ -244,19 +243,19 @@ namespace RepoTests {
             var dataSource = _devSmartAgent;
             var prodDataSource = _prodAppConfigName;
 
-            var result = await FindWebsiteRecord(w.WebsiteDescription, dataSource);
+            var result = await FindWebsiteRecord(websiteMaster.WebsiteDescription, dataSource);
 
             if (result == null)
             {
-                websitekey = await CreateWebsiteRecord(w, dataSource);
+                websitekey = await CreateWebsiteRecord(websiteMaster, dataSource);
                 write(websitekey);
             }
             write(result.WebsiteDescription + " " + result.WebsiteKey);
 
-            var result2 = await FindWebsiteRecord(w.WebsiteDescription, prodDataSource);
+            var result2 = await FindWebsiteRecord(websiteMaster.WebsiteDescription, prodDataSource);
             if (result2 == null)
             {
-                websitekey = await CreateWebsiteRecord(w, prodDataSource);
+                websitekey = await CreateWebsiteRecord(websiteMaster, prodDataSource);
                 write(websitekey);
             }
             write(result.WebsiteDescription + " " + result.WebsiteKey);
@@ -274,15 +273,19 @@ namespace RepoTests {
 
             //IEnumerable<ScriptReturnValue> rtv = null;
 
-            var websiteDescription = "Onesource BCBS Flordia Inquiry ";
-            var websiteKey = new Guid("54fd645a-10bd-4197-b111-a764268dcc20");
-            var deviceId = "OSFlordia";
+            var websiteDescription = "Empire NY Medicaid via Avility Submit ";
+            var websiteKey = new Guid("120e4663-add9-42de-aa7f-fc66768f4570");
+            var deviceId = "NYMedicaid";
 
             var script1 = Script.CreateScript
             (
-                websiteDescription + ":001 Login Script, error check",
-                @"SET !TIMEOUT_STEP 5\nURL GOTO=%%websiteDomain%%\nTAG POS=1 TYPE=INPUT:TEXT ATTR=NAME:*LoginUN CONTENT=%%websiteUsername%%\nTAG POS=1 TYPE=INPUT:PASSWORD ATTR=NAME:*LoginPWD CONTENT=%%websitePassword%%\nTAG POS=1 TYPE=INPUT:SUBMIT FORM=NAME:* ATTR=NAME:btnSubmit\nTAG POS=1 TYPE=FONT ATTR=TXT:User<SP>Login EXTRACT=TXT\n",
-                deviceId + "_001",
+                websiteDescription + "001: Login, onlogin error check",
+                "SET !TIMEOUT_STEP 4\nURL GOTO=%%websiteDomain%%\n" + 
+                "\nTAG POS=1 TYPE=INPUT:TEXT FORM=* ATTR=NAME:userId CONTENT=%%websiteUsername%%\n" + 
+                "\nTAG POS=1 TYPE=INPUT:PASSWORD FORM=ACTION:* ATTR=NAME:password CONTENT=%%websitePassword%%\n" +
+                "\nTAG POS=1 TYPE=INPUT:BUTTON FORM=* ATTR=NAME:loginButton\n" + 
+                "\nTAG POS=1 TYPE=LABEL FORM=ACTION:* ATTR=TXT:User<SP>ID: EXTRACT=TXT\n",
+                string.Concat(deviceId, "_001"),
                 "Login",
                  websiteKey
             );
@@ -290,9 +293,13 @@ namespace RepoTests {
 
             var script2 = Script.CreateScript
             (
-                websiteDescription + "002: goto referral page",
-                @"SET !TIMEOUT_STEP 12\nTAG POS=1 TYPE=A FORM=NAME:frm ATTR=TXT:Referrals<SP>&<SP>Precerts\nTAG POS=1 TYPE=FONT FORM=NAME:frm ATTR=TXT:BCBS<SP>of<SP>Florida\nFRAME NAME=meat\nTAG POS=1 TYPE=SELECT FORM=NAME:* ATTR=NAME:*_NPI CONTENT=%1922032424\n",
-                deviceId + "_002",
+                websiteDescription + "002: Redirect, submit page",
+                "\nSET !TIMEOUT_STEP 12\nTAG POS=1 TYPE=INPUT:BUTTON FORM=NAME:alertsForm ATTR=NAME:continueButtonAlerts\n" +
+                "FRAME NAME=leftMenu\nTAG POS=1 TYPE=A ATTR=TXT:Auths<SP>and<SP>Referrals\nWAIT SECONDS=1\nTAG POS=1 TYPE=A ATTR=TXT:Auth/Referral<SP>Inquiry\nFRAME NAME=body\n" +
+                "TAG POS=1 TYPE=SELECT FORM=* ATTR=NAME:payerPanel:payerContainer:payer CONTENT=$EMPIRE<SP>MEDICARE<SP>ADVANTAGE<SP>BCBS<SP>-<SP>NY\nWAIT SECONDS=1\nFRAME NAME=body\n" +
+                "TAG POS=1 TYPE=INPUT:BUTTON FORM=ACTION:* ATTR=VALUE:Submit\nTAB T=2\nTAB CLOSEALLOTHERS\nFRAME F=0\nWAIT SECONDS=6\nSET !TIMEOUT_STEP 5\n" +
+                "TAG POS=1 TYPE=A ATTR=TXT:Auth<SP>Submission\nTAG POS=1 TYPE=A ATTR=TXT:GeneralServices\nWAIT SECONDS=1\nTAG POS=1 TYPE=SELECT ATTR=NAME:*$DropDownList_PreAuthType CONTENT=%Outpatient\n",
+                string.Concat(deviceId, "_002"),
                 "PatientSearch",
                  websiteKey
             );
@@ -300,146 +307,63 @@ namespace RepoTests {
 
             var script3 = Script.CreateScript
             (
-                websiteDescription + "003: patient demographics",
-                @"SET !TIMEOUT_STEP 3\nTAG POS=1 TYPE=INPUT:TEXT FORM=NAME:* ATTR=NAME:*_SMI CONTENT=%%MemberID%%\nTAG POS=1 TYPE=INPUT:TEXT FORM=NAME:* ATTR=NAME:*_SLN CONTENT=%%PatLname%%\nTAG POS=1 TYPE=INPUT:TEXT FORM=NAME:* ATTR=NAME:*_SFN CONTENT=%%PatFname%%\nTAG POS=1 TYPE=INPUT:TEXT FORM=NAME:* ATTR=NAME:*_SDOB CONTENT=%%PatDOB%%\n",
-                deviceId + "_003",
+                websiteDescription + "003: service start date",
+                @"SET !TIMEOUT_STEP 3\nSET !ERRORIGNORE YES\nTAG POS=1 TYPE=INPUT:TEXT ATTR=NAME:*$Text_AuthStartDate CONTENT=%%ServiceDate%%\n",
+                string.Concat(deviceId,"_003"),
                 "PatientSearch",
                  websiteKey
             );
             scripts.Add(script3);
 
-
-            var script4 = Script.CreateScript(
-                websiteDescription + "004: Service start Date",
-                @"SET !TIMEOUT_STEP 4\nTAG POS=1 TYPE=INPUT:TEXT FORM=NAME:PDQMSForm ATTR=NAME:*_BDOS CONTENT=%%ServiceDate%%\nTAG POS=1 TYPE=INPUT:TEXT FORM=NAME:PDQMSForm ATTR=NAME:*_EDOS CONTENT=%%ServiceDate%%\n",
-                deviceId + "_004",
+            var script4 = Script.CreateScript
+            (
+                websiteDescription + "004: service end date",
+                @"SET !TIMEOUT_STEP 3\nSET !ERRORIGNORE YES\nTAG POS=1 TYPE=INPUT:TEXT ATTR=NAME:*$Text_AuthEndDate CONTENT=%%ServiceDate%%\n",
+                string.Concat(deviceId, "_004"),
                 "PatientSearch",
                  websiteKey
             );
             scripts.Add(script4);
 
-            var script5 = Script.CreateScript
-          (
-              websiteDescription + "005: check if question was incorrect",
-              @"PAUSESUBMIT|SET !TIMEOUT_STEP 2\nTAG POS=1 TYPE=HTML ATTR=* EXTRACT=HTM\nSAVEAS TYPE=PNG FOLDER=* FILE=*\n",
-              deviceId + "_005",
-              "Extraction",
-               websiteKey
-          );
+            var placeOfService = Script.CreateScript
+            (
+                websiteDescription + "005: MemberId",
+                @"SET !TIMEOUT_STEP 3\nTAG POS=1 TYPE=SELECT ATTR=NAME:*$DropDownList_MemberIDType CONTENT=%AMERIGROUP\nTAG POS=1 TYPE=INPUT:TEXT ATTR=NAME:*$Text_MemberID CONTENT=%%MemberID%%\n",
+                string.Concat(deviceId, "_005"),
+                "PatientSearch",
+                 websiteKey
+            );
+            scripts.Add(placeOfService);
+
+
+            var script5 = Script.CreateScript(
+                websiteDescription + "006: Pause for Submit",
+                @"PAUSESUBMIT|SET !TIMEOUT_STEP 2\nTAG POS=1 TYPE=HTML ATTR=* EXTRACT=HTM\nSAVEAS TYPE=PNG FOLDER=* FILE=*\n",
+                string.Concat(deviceId, "_006"),
+                "Extraction",
+                 websiteKey
+            );
             scripts.Add(script5);
 
             var script6 = Script.CreateScript
              (
-                 websiteDescription + "006: Check if on UHC page",
+                 websiteDescription + "007: Pause error",
                  @"PAUSEERR|SET !TIMEOUT_STEP 3\nTAG POS=1 TYPE=HTML ATTR=* EXTRACT=HTM\nSAVEAS TYPE=PNG FOLDER=* FILE=*\n",
-                 deviceId + "_006",
+                 deviceId + "_007",
                  "Extraction",
                   websiteKey
              );
             scripts.Add(script6);
 
-            //var script6a = Script.CreateScript
-            // (
-            //     websiteDescription + "006: Optum transtion page",
-            //     @"SET !TIMEOUT_STEP 5\nSET !ERRORIGNORE YES\nTAG POS=1 TYPE=H3 ATTR=TXT:UnitedHealthcare<SP>Online\nTAG POS=1 TYPE=A ATTR=TXT:Radiology<SP>Notification<SP>&<SP>Authorization<SP>-<SP>Submission<SP>&<SP>Status\nWAIT SECONDS=1\n",
-            //     deviceId + "_006",
-            //     "Login",
-            //      websiteKey
-            // );
-            //scripts.Add(script6a);
-
-            //var script7 = Script.CreateScript
-            // (
-            //     websiteDescription + "007: Check for tax id",
-            //     @"SET !TIMEOUT_STEP 3\nTAG POS=1 TYPE=SELECT FORM=NAME:* ATTR=NAME:corpTaxid EXTRACT=TXT\n",
-            //     deviceId + "_007",
-            //     "PatientSearch",
-            //      websiteKey
-            // );
-            //scripts.Add(script7);
-
-            //var script8 = Script.CreateScript
-            // (
-            //     websiteDescription + "007: CUHC Requesting Provider",
-            //     @"SET !TIMEOUT_STEP 3\nSET !TIMEOUT_STEP 15\nWAIT SECONDS=2\nTAG POS=1 TYPE=SELECT ATTR=NAME:provName CONTENT=$[[UHCRadRequestingProvider[[\n",
-            //     deviceId + "_008",
-            //     "PatientSearch",
-            //      websiteKey
-            // );
-            //scripts.Add(script8);
-
-            //var script9 = Script.CreateScript
-            // (
-            //     websiteDescription + "009: Go to Submit page",
-            //     @"SET !TIMEOUT_STEP 5\nTAG POS=1 TYPE=INPUT:BUTTON ATTR=NAME:Submit2\nTAB T=2\nTAB CLOSEALLOTHERS\nWAIT SECONDS=7\nTAG POS=1 TYPE=A FORM=NAME:* ATTR=TXT:Submit<SP>Clinical<SP>Request\nONDIALOG POS=1 BUTTON=NO\nTAG POS=1 TYPE=INPUT:IMAGE FORM=NAME:* ATTR=NAME:*imgUnited\nTAG POS=1 TYPE=INPUT:TEXT FORM=NAME:* ATTR=NAME:*txtRequestorsName CONTENT=%%UserContactName%%\n",
-            //     deviceId + "_009",
-            //     "PatientSearch",
-            //      websiteKey
-            // );
-            //scripts.Add(script9);
-
-            //var script10 = Script.CreateScript
-            // (
-            //     websiteDescription + "010: Enter Fax number",
-            //     @"SET !TIMEOUT_STEP 5\nTAG POS=1 TYPE=INPUT:TEXT FORM=NAME:* ATTR=NAME:*Physician$txtFax CONTENT=%%ProviderFax%%\n",
-            //     deviceId + "_010",
-            //     "PatientSearch",
-            //      websiteKey
-            // );
-            //scripts.Add(script10);
-
-            //var script11= Script.CreateScript
-            // (
-            //     websiteDescription + "011: Check for invalid fax number entry",
-            //     @"SET !TIMEOUT_STEP 4\nTAG POS=1 TYPE=LI FORM=NAME:* ATTR=TXT:Please<SP>enter<SP>valid<SP>fax<SP>number<SP>in<SP>format<SP>(XXX)XXX-XXXX<SP>or<SP>XXXXXXXXXX EXTRACT=TXT\n",
-            //     deviceId + "_011",
-            //     "PatientSearch",
-            //      websiteKey
-            // );
-            //scripts.Add(script11);
-
-            //var script12 = Script.CreateScript
-            // (
-            //     websiteDescription + "012: Patient Demographics",
-            //     @"SET !TIMEOUT_STEP 4\nTAG POS=1 TYPE=INPUT:SUBMIT FORM=NAME:* ATTR=NAME:*Physician$btnSelectPhysician\nTAG POS=1 TYPE=INPUT:TEXT FORM=NAME:* ATTR=NAME:*txtSearchPatientID CONTENT=%%MemberID%%\nTAG POS=1 TYPE=INPUT:TEXT FORM=NAME:* ATTR=NAME:*txtSearchLastname CONTENT=%%PatLname%%\nTAG POS=1 TYPE=INPUT:TEXT FORM=NAME:* ATTR=NAME:*txtFirstName CONTENT=%%PatFname%%\nTAG POS=1 TYPE=INPUT:TEXT FORM=NAME:* ATTR=NAME:*SearchDateOfBirth CONTENT=%%PatDOB%%\nTAG POS=1 TYPE=INPUT:SUBMIT FORM=NAME:* ATTR=NAME:*Patient$btnSearch\n",
-            //     deviceId + "_012",
-            //     "PatientSearch",
-            //      websiteKey
-            // );
-            //scripts.Add(script12);
-
-            //var script3 = Script.CreateScript
-            //(
-            //websiteDescription + "003: Pause For submit",
-            //@"PAUSESUBMIT|SET !TIMEOUT_STEP 2\nTAG POS=1 TYPE=HTML ATTR=* EXTRACT=HTM\nSAVEAS TYPE=PNG FOLDER=* FILE=*\n",
-            //deviceId + "_003",
-            //"Extraction",
-            //websiteKey
-            //);
-            //scripts.Add(script3);
-
-
-
-            //var script14 = Script.CreateScript
-            // (
-            //     websiteDescription + "004: Error pause",
-            //     @"PAUSEERR|SET !TIMEOUT_STEP 3\nTAG POS=1 TYPE=HTML ATTR=* EXTRACT=HTM\nSAVEAS TYPE=PNG FOLDER=* FILE=*\n",
-            //     deviceId + "_004",
-            //     "Extraction",
-            //      websiteKey
-            // );
-            //scripts.Add(script14);
-
-            //var script5 = Script.CreateScript
-            // (
-            //     websiteDescription + "005: Logout",
-            //     @"SET !TIMEOUT_STEP 3\nONDIALOG POS=1 BUTTON=NO\nTAG POS=1 TYPE=A FORM=NAME:frm ATTR=TXT:LOGOUT\n",
-            //     deviceId + "_005",
-            //     "Logout",
-            //      websiteKey
-            // );
-            //scripts.Add(script5);
-
+            var script7 = Script.CreateScript
+             (
+                 websiteDescription + "006: log out",
+                 @"PAUSESUBMIT|SET !TIMEOUT_STEP 2\nTAG POS=1 TYPE=HTML ATTR=* EXTRACT=HTM\nSAVEAS TYPE=PNG FOLDER=* FILE=*\n",
+                 deviceId + "_005",
+                 "LOGOUT",
+                  websiteKey
+             );
+            scripts.Add(script7);
 
             Func<Script, string, Task<Guid>> AddScriptMasterRecord = async (sm, connectionString) =>
             {
@@ -479,12 +403,13 @@ namespace RepoTests {
 
                     var resultScripts = await AddReturnValues(returnValue, _devSmartAgent);
 
-                    foreach (var returnScript in resultScripts)
-                    {
-                        write(returnScript.ScriptKey + " " + returnScript.DeviceId);
-                    }
+                    resultScripts.ToList().ForEach(s => write(s.ScriptKey + " " + deviceId));
+
                 }
-                Console.WriteLine("error adding record", result);
+                else
+                {
+                    Console.WriteLine("error adding record", result);
+                }
             }
         }
         [Test]
@@ -514,9 +439,9 @@ namespace RepoTests {
         public async Task Create_Collection_Item_Test()
         {
             var container = new UnityContainer();
-            var collectionItem = new Dictionary<string, Guid>();
             var collectionItems = new List<ScriptCollectionItem>();
-
+            var data = new SmartAgentDataSvc();
+            var collectionItemsMap = data.GetCollectionItemsMap();
             Func<ScriptCollectionItem, Task<ScriptCollectionItem>> CreateCollectionItems = async (c) =>
             {
                 using (var db = new SqlConnection(ConfigurationManager.ConnectionStrings[_devSmartAgent].ConnectionString))
@@ -528,127 +453,83 @@ namespace RepoTests {
                 }
             };
 
-            collectionItem.Add("WebsiteDomain", new Guid("96F51FD2-6539-49BD-A1C8-1F8DDE73CE1E"));
-            collectionItem.Add("Username", new Guid("D8BB9D68-DC56-E011-B21D-001E4F27A50B"));
-            collectionItem.Add("websitePassword", new Guid("D9BB9D68-DC56-E011-B21D-001E4F27A50B"));
-            collectionItem.Add("MemberID", new Guid("AAC881E8-ECB6-4B9B-835E-A56C89E5973F"));
-            collectionItem.Add("PatientDOB", new Guid("B6147C25-8F9A-E411-82F5-000C29729DFF"));
-            collectionItem.Add("PatientLastName", new Guid("D19691B4-9E92-E411-82F5-000C29729DFF"));
-            collectionItem.Add("PatientFirstName", new Guid("D09691B4-9E92-E411-82F5-000C29729DFF"));
-            collectionItem.Add("ToDate", new Guid("A17CC0FD-170A-4F75-AB50-44BA8AA064F5"));
-            collectionItem.Add("ServiceDate", new Guid("2917715D-C7F5-E011-ABE5-000C29729DFF"));
-            collectionItem.Add("SearchType", new Guid("c75bcc73-5356-e011-b21d-001e4f27a50b"));
-            collectionItem.Add("3PartDate", new Guid("62593b00-4777-e011-b21d-001e4f27a50b"));
-            collectionItem.Add("Health Plan", new Guid("b59302d2-226c-e011-b21d-001e4f27a50b"));
-            collectionItem.Add("HighmarkRequestingProvider", new Guid("44F4842D-88D3-E211-81D2-000C29729D00"));
-            collectionItem.Add("UHCRadRequestingProvider", new Guid("8c379ceb-11c8-e011-a8c4-000c29729dff"));
-            collectionItem.Add("AetnaRequestingProvider", new Guid("2e9c25ae-d25b-e011-b21d-001e4f27a50b"));
-            collectionItem.Add("State", new Guid("7B466BB8-D0A6-49DC-876A-2B237ADAC07C"));
-            collectionItem.Add("UserContactName", new Guid("6A3E2FF8-07F5-4657-ACDC-3AABEE967A21"));
-            collectionItem.Add("UserContactPhone", new Guid("f3fbbdfe-e84c-4dea-b471-0883a443ca0f"));
-            collectionItem.Add("TextEntry", new Guid("154f0a0c-f1a4-e511-96c2-000c29729dff"));
-            collectionItem.Add("ProviderFax", new Guid("1043b0fa-5f3d-e111-a475-000c29729dff"));
-
-            var deviceId = "OSAetna";
+            var deviceId = "NYMedicaid";
 
             var websiteDomain = new ScriptCollectionItem();
-            websiteDomain.FieldKey = collectionItem["WebsiteDomain"];
-            websiteDomain.ScriptKey = new Guid("ca8754e0-8eb4-e511-96c2-000c29729dff");
+            websiteDomain.FieldKey = collectionItemsMap["WebsiteDomain"];
+            websiteDomain.ScriptKey = new Guid("0e035220-49da-e511-8d27-000c29729dff");
             websiteDomain.OverrideLabel = "Website Domain";
             websiteDomain.DeviceId = deviceId + "_001";
             collectionItems.Add(websiteDomain);
 
             var username = new ScriptCollectionItem();
-            username.FieldKey = collectionItem["Username"];
-            username.ScriptKey = new Guid("ca8754e0-8eb4-e511-96c2-000c29729dff");
+            username.FieldKey = collectionItemsMap["Username"];
+            username.ScriptKey = new Guid("0e035220-49da-e511-8d27-000c29729dff");
             username.OverrideLabel = "Username";
             username.DeviceId = deviceId + "_001";
             collectionItems.Add(username);
 
             var websitePassword = new ScriptCollectionItem();
-            websitePassword.FieldKey = collectionItem["websitePassword"];
-            websitePassword.ScriptKey = new Guid("ca8754e0-8eb4-e511-96c2-000c29729dff");
+            websitePassword.FieldKey = collectionItemsMap["websitePassword"];
+            websitePassword.ScriptKey = new Guid("0e035220-49da-e511-8d27-000c29729dff");
             websitePassword.OverrideLabel = "website Password";
             websitePassword.DeviceId = deviceId + "_001";
             collectionItems.Add(websitePassword);
 
-            //var userContactName = new ScriptCollectionItem();
-            //userContactName.FieldKey = collectionItem["UserContactPhone"];
-            //userContactName.ScriptKey = new Guid("31a4e68f-91a5-e511-96c2-000c29729dff");
-            //userContactName.OverrideLabel = "Phone Number";
-            //userContactName.DeviceId = deviceId + "_002";
-            //collectionItems.Add(userContactName);
-
-            //var uhcRadRequestingProvider = new ScriptCollectionItem();
-            //uhcRadRequestingProvider.FieldKey = collectionItem["UHCRadRequestingProvider"];
-            //uhcRadRequestingProvider.ScriptKey = new Guid("a30a7eea-d28e-e511-96c2-000c29729dff");
-            //uhcRadRequestingProvider.OverrideLabel = "Requesting Provider";
-            //uhcRadRequestingProvider.DeviceId = deviceId + "_008";
-            //collectionItems.Add(uhcRadRequestingProvider);
-
-            //var requesterName = new ScriptCollectionItem();
-            //requesterName.FieldKey = collectionItem["UserContactName"];
-            //requesterName.ScriptKey = new Guid("a40a7eea-d28e-e511-96c2-000c29729dff");
-            //requesterName.OverrideLabel = "Enter requester name";
-            //requesterName.DeviceId = deviceId + "_009";
-            //collectionItems.Add(requesterName);
-
-            //var faxNumber = new ScriptCollectionItem();
-            //faxNumber.FieldKey = collectionItem["ProviderFax"];
-            //faxNumber.ScriptKey = new Guid("a50a7eea-d28e-e511-96c2-000c29729dff");
-            //faxNumber.OverrideLabel = "Enter provider's fax number";
-            //faxNumber.DeviceId = deviceId + "_010";
-            //collectionItems.Add(faxNumber);
-
             var memberId = new ScriptCollectionItem();
-            memberId.FieldKey = collectionItem["MemberID"];
-            memberId.ScriptKey = new Guid("31a4e68f-91a5-e511-96c2-000c29729dff");
-            memberId.OverrideLabel = "Enter member Id";
-            memberId.DeviceId = deviceId + "_002";
+            memberId.FieldKey = collectionItemsMap["MemberID"];
+            memberId.ScriptKey = new Guid("12035220-49da-e511-8d27-000c29729dff");
+            memberId.OverrideLabel = "MemberId";
+            memberId.DeviceId = deviceId + "_005";
             collectionItems.Add(memberId);
 
-            var firstName = new ScriptCollectionItem();
-            firstName.FieldKey = collectionItem["PatientFirstName"];
-            firstName.ScriptKey = new Guid("31a4e68f-91a5-e511-96c2-000c29729dff");
-            firstName.OverrideLabel = "Enter patient first name";
-            firstName.DeviceId = deviceId + "_002";
-            collectionItems.Add(firstName);
+            //var patLastName = new ScriptCollectionItem();
+            //patLastName.FieldKey = collectionItem["PatientLastName"];
+            //patLastName.ScriptKey = new Guid("5cd3e1ec-abd5-e511-8d27-000c29729dff");
+            //patLastName.OverrideLabel = "PatLName";
+            //patLastName.DeviceId = deviceId + "_002";
+            //collectionItems.Add(patLastName);
 
-            //var lastName = new ScriptCollectionItem();
-            //lastName.FieldKey = collectionItem["PatientLastName"];
-            //lastName.ScriptKey = new Guid("c88c89f2-e3a4-e511-96c2-000c29729dff");
-            //lastName.OverrideLabel = "Enter patient first name";
-            //lastName.DeviceId = deviceId + "_002";
-            //collectionItems.Add(lastName);
+            var serviceDate = new ScriptCollectionItem();
+            serviceDate.FieldKey = collectionItemsMap["ServiceDate"];
+            serviceDate.ScriptKey = new Guid("10035220-49da-e511-8d27-000c29729dff");
+            serviceDate.OverrideLabel = "ServiceDate";
+            serviceDate.DeviceId = deviceId + "_003";
+            collectionItems.Add(serviceDate);
 
-            var pateintDateOfBirth = new ScriptCollectionItem();
-            pateintDateOfBirth.FieldKey = collectionItem["PatientDOB"];
-            pateintDateOfBirth.ScriptKey = new Guid("31a4e68f-91a5-e511-96c2-000c29729dff");
-            pateintDateOfBirth.OverrideLabel = "Enter patient date of birth";
-            pateintDateOfBirth.DeviceId = deviceId + "_002";
-            collectionItems.Add(pateintDateOfBirth);
+            var serviceDate2 = new ScriptCollectionItem();
+            serviceDate2.FieldKey = collectionItemsMap["ServiceDate"];
+            serviceDate2.ScriptKey = new Guid("10035220-49da-e511-8d27-000c29729dff");
+            serviceDate2.OverrideLabel = "ServiceDate";
+            serviceDate2.DeviceId = deviceId + "_003";
+            collectionItems.Add(serviceDate2);
 
 
-            //var requestionProvider = new ScriptCollectionItem();
-            //requestionProvider.FieldKey = collectionItem["ServiceDate"];
-            //requestionProvider.ScriptKey = new Guid("f44474d3-f083-e511-96c2-000c29729dff");
-            //requestionProvider.OverrideLabel = "Service Date";
-            //requestionProvider.DeviceId = deviceId + "_003a";
-            //collectionItems.Add(requestionProvider);
+            //var pateintDateOfBirth = new ScriptCollectionItem();
+            //pateintDateOfBirth.FieldKey = collectionItem["PatientDOB"];
+            //pateintDateOfBirth.ScriptKey = new Guid("5dd3e1ec-abd5-e511-8d27-000c29729dff");
+            //pateintDateOfBirth.OverrideLabel = "PatDOB";
+            //pateintDateOfBirth.DeviceId = deviceId + "_003";
+            //collectionItems.Add(pateintDateOfBirth);
 
             //var serviceDate = new ScriptCollectionItem();
-            //serviceDate.FieldKey = collectionItem["ServiceDate"];
-            //serviceDate.ScriptKey = new Guid("f44474d3-f083-e511-96c2-000c29729dff");
+            //serviceDate.FieldKey = collectionItem["PatientDOB"];
+            //serviceDate.ScriptKey = new Guid("5cd3e1ec-abd5-e511-8d27-000c29729dff");
             //serviceDate.OverrideLabel = "Service Date";
-            //serviceDate.DeviceId = deviceId + "_003a";
+            //serviceDate.DeviceId = deviceId + "_003";
             //collectionItems.Add(serviceDate);
 
-
-            foreach (var item in collectionItems)
+            collectionItems.ForEach(async record =>
             {
-                var result = await CreateCollectionItems(item);
+                var result = await CreateCollectionItems(record);
                 write(result.OverrideLabel + " " + result.ScriptKey);
-            }
+            });
+
+            //foreach (var item in collectionItems)
+            //{
+            //    var result = await CreateCollectionItems(item);
+            //    write(result.OverrideLabel + " " + result.ScriptKey);
+            //}
         }
         [Test]
         public async Task Add_ExtractionMap_Test()
@@ -656,7 +537,7 @@ namespace RepoTests {
             var container = new UnityContainer();
             var em = new WebsiteExtractionMap();
 
-            em.WebsiteKey = new Guid("526d0fa1-8198-4e27-92cc-7ba692fb721d");
+            em.WebsiteKey = new Guid("120e4663-add9-42de-aa7f-fc66768f4570");
             em.DataName = "Status";
             em.DocumentLocation = "table";
             em.LocationType = "Containsl";
@@ -698,49 +579,121 @@ namespace RepoTests {
             container.RegisterType<ISmartAgentRepository, SmartAgentRepo>(new InjectionConstructor(prodDb));
             var prodRepo = container.Resolve<ISmartAgentRepository>();
 
-            var results = await prodRepo.AddScripts(scripts);
+            await prodRepo.AddScripts(scripts);
 
-            foreach (var item in results)
-            {
-                Console.WriteLine(item.ScriptCode.ToString());
-            }
         }
         [Test]
         public async Task MoveReturnValuesToProdTest()
         {
-            var prodDb = new SqlConnection(ConfigurationManager.ConnectionStrings[_prodAppConfigName].ConnectionString);
-            var devDb = new SqlConnection(ConfigurationManager.ConnectionStrings[_devSmartAgent].ConnectionString);
+            var devDataSource = "SmartAgentDev";
+            var prodDataSource = "SmartAgentProd";
+            var websiteKey = new Guid("e6b9299a-f903-4120-a481-3e5952fb98bc");
 
-            var container = new UnityContainer();
-            var websiteKey = new Guid("11c6bc55-4014-e511-96c2-000c29729dff");
+            Func<Guid, string, Task<IEnumerable<ScriptReturnValue>>> FindRecords = async (key, connectionString) =>
+            {
+                using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionString].ConnectionString))
+                {
+                    var container = new UnityContainer();
+                    container.RegisterType<ISmartAgentRepository, SmartAgentRepo>(new InjectionConstructor(db));
+                    var devRepo = container.Resolve<ISmartAgentRepository>();
+                    return await devRepo.FindScriptReturnValues(key);
+                }
+            };
 
-            container.RegisterType<ISmartAgentRepository, SmartAgentRepo>(new InjectionConstructor(devDb));
-            var devRepo = container.Resolve<ISmartAgentRepository>();
+            Func<IEnumerable<ScriptReturnValue>, Task> MoveScriptsToProd = async (scriptReturnValues) =>
+            {
+                using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings[prodDataSource].ConnectionString))
+                {
+                    var container = new UnityContainer();
+                    container.RegisterType<ISmartAgentRepository, SmartAgentRepo>(new InjectionConstructor(db));
+                    var prodRepo = container.Resolve<ISmartAgentRepository>();
+                    await prodRepo.AddScriptReturnValues(scriptReturnValues, websiteKey);
+                }
+            };
 
-            var returnValues = await devRepo.FindScriptReturnValues(websiteKey);
 
-            container.RegisterType<ISmartAgentRepository, SmartAgentRepo>(new InjectionConstructor(prodDb));
-            var prodRepo = container.Resolve<ISmartAgentRepository>();
-            await prodRepo.AddScriptReturnValues(returnValues);
+            var returnValues = await FindRecords(websiteKey, devDataSource);
+            Assert.IsNotEmpty(returnValues);
+            ConsoleTable.From<ScriptReturnValue>(returnValues).Write();
+
+            await MoveScriptsToProd(returnValues);
+
+            var prodReturnValues = await FindRecords(websiteKey, prodDataSource);
+            Assert.IsNotEmpty(prodReturnValues);
+            ConsoleTable.From<ScriptReturnValue>(prodReturnValues).Write();
+
 
         }
         [Test]
         public async Task MoveCollectionItemsToProd()
         {
-            var prodDb = new SqlConnection(ConfigurationManager.ConnectionStrings[_prodAppConfigName].ConnectionString);
-            var devDb = new SqlConnection(ConfigurationManager.ConnectionStrings[_devSmartAgent].ConnectionString);
+            var devDataSource = "SmartAgentDev";
+            var prodDataSource = "SmartAgentProd";
+            var websiteKey = new Guid("e6b9299a-f903-4120-a481-3e5952fb98bc");
 
-            var container = new UnityContainer();
-            var websiteKey = new Guid("11c6bc55-4014-e511-96c2-000c29729dff");
+            Func<Guid, string, Task<IEnumerable<ScriptCollectionItem>>> FindRecords = async (key, connectionString) =>
+            {
+                using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionString].ConnectionString))
+                {
+                    var container = new UnityContainer();
+                    container.RegisterType<ISmartAgentRepository, SmartAgentRepo>(new InjectionConstructor(db));
+                    var devRepo = container.Resolve<ISmartAgentRepository>();
+                    return await devRepo.FindScriptCollectionItems(key);
+                }
+            };
 
-            container.RegisterType<ISmartAgentRepository, SmartAgentRepo>(new InjectionConstructor(devDb));
-            var devRepo = container.Resolve<ISmartAgentRepository>();
+            Func<IEnumerable<ScriptReturnValue>, Task> MoveScriptsToProd = async (scriptReturnValues) =>
+            {
+                using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings[prodDataSource].ConnectionString))
+                {
+                    var container = new UnityContainer();
+                    container.RegisterType<ISmartAgentRepository, SmartAgentRepo>(new InjectionConstructor(db));
+                    var prodRepo = container.Resolve<ISmartAgentRepository>();
+                    await prodRepo.AddScriptReturnValues(scriptReturnValues, websiteKey);
+                }
+            };
 
-            var collectionItems = await devRepo.FindCollectionItems(websiteKey);
+            var collectionItems = await FindRecords(websiteKey, devDataSource);
+        }
+        [Test]
+        public async Task MoveScriptMasterRecordsToProd()
+        {
+            var devDataSource = "SmartAgentDev";
+            var prodDataSource = "SmartAgentProd";
+            var websiteKey = new Guid("e6b9299a-f903-4120-a481-3e5952fb98bc");
 
-            container.RegisterType<ISmartAgentRepository, SmartAgentRepo>(new InjectionConstructor(prodDb));
-            var prodRepo = container.Resolve<ISmartAgentRepository>();
-            await prodRepo.AddScriptCollectionItems(collectionItems);
+            Func<Guid, string, Task<IEnumerable<ScriptMaster>>> FindRecords = async (key, connectionString) =>
+            {
+                using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionString].ConnectionString))
+                {
+                    var container = new UnityContainer();
+                    container.RegisterType<ISmartAgentRepository, SmartAgentRepo>(new InjectionConstructor(db));
+                    var devRepo = container.Resolve<ISmartAgentRepository>();
+                    return await devRepo.FindScriptMaster(key);
+                }
+            };
+
+            Func<IEnumerable<ScriptMaster>, Task> MoveScriptsToProd = async (scriptMaster) =>
+            {
+                using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings["SmartAgentProd"].ConnectionString))
+                {
+                    var container = new UnityContainer();
+                    container.RegisterType<ISmartAgentRepository, SmartAgentRepo>(new InjectionConstructor(db));
+                    var prodRepo = container.Resolve<ISmartAgentRepository>();
+                    await prodRepo.AddScripts(scriptMaster);
+                }
+            };
+
+            IEnumerable<ScriptMaster> scripts = await FindRecords(websiteKey, devDataSource);
+
+            ConsoleTable.From<ScriptMaster>(scripts).Write();
+            Assert.IsNotNull(scripts);
+
+            await MoveScriptsToProd(scripts);
+
+            IEnumerable<ScriptMaster> productionScripts = await FindRecords(websiteKey, prodDataSource);
+            Assert.IsNotNull(productionScripts);
+            ConsoleTable.From<ScriptMaster>(scripts).Write();
         }
         [Test]
         public async Task Update_Website_Url_Test()
@@ -748,9 +701,13 @@ namespace RepoTests {
             IDbConnection prodDb = new SqlConnection(ConfigurationManager.ConnectionStrings[_prodAppConfigName].ConnectionString);
             IDbConnection devDb = new SqlConnection(ConfigurationManager.ConnectionStrings[_devSmartAgent].ConnectionString);
 
-            var uhc = new WebsiteMaster();
-            uhc.WebsiteKey = new Guid("aef4b705-176a-e111-90b9-000c29729dff");
-            uhc.WebsiteDomain = "https://www.unitedhealthcareonline.com/b2c/CmaAction.do?viewKey=PreLoginMain&forwardToken=UserLogin";
+            var uhc = WebsiteMaster.CreateWebsiteMaster(
+                "Community Family Care",
+                "https://www.capcms.com/capconnect/login.aspx",               
+                "CFC",
+                Guid.NewGuid(),
+                 101
+            );
 
             var container = new UnityContainer();
             container.RegisterType<IAsyncRepository<WebsiteMaster>, WebsiteMasterAsyncRepository>(new InjectionConstructor(devDb));
@@ -781,11 +738,7 @@ namespace RepoTests {
         }
         public async Task Create_ClientMaster_Test()
         {
-            var clientMaster = ClientMaster.CreateClientMaster(
-                "Citizens Medical Center",
-                new Guid("DF31493C-9654-4F86-9D04-F404B417167C"),
-                "ECNAUTH2"
-            );
+            var clientMaster = new ClientMaster(clientName: "ClientName", clientKey: new Guid("DF31493C-9654-4F86-9D04-F404B417167C"), howToDeliver: "ECNAUTH2");
 
             Func<ClientMaster, string, Task<Guid>> CreateClientMappingValues = async (record, source) =>
             {
