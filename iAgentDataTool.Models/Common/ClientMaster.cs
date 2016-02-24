@@ -9,38 +9,35 @@ using System.ComponentModel.DataAnnotations;
 
 namespace iAgentDataTool.Models.Common
 {
-    public class ClientMaster
-    {
-        public string ClientName { get; private set; }
+    public class ClientMaster {
+
+        private Guid _clientKey;
+        private string _clientName;
+        private string _howToDeliver;
+        private string _deviceId;
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
-        public Guid ClientKey { get; private set; }
+        public Guid ClientKey { get { return _clientKey; } }
+        public string HowToDeliver { get { return _howToDeliver;  } }
+        public string ClientName { get { return _clientName; } }
+        public string DeviceId { get { return _deviceId; } }
 
-        public string HowToDeliver { get; private set; }
-        public string DeviceId { get; private set; }
-
-        public ClientMaster(string clientName, Guid clientKey, string howToDeliver)
+        public ClientMaster(Guid clientKey, string clientName = "NoclientName", string howToDeliver = "OCSVC", string deviceId="nodata")
         {
-            this.ClientName = clientName;
-            this.ClientKey = clientKey;
-            this.HowToDeliver = howToDeliver;
-            this.DeviceId = clientName.Split(' ').FirstOrDefault();
-        }
-        public ClientMaster()
-        {
-        }
-        public static ClientMaster CreateClientMaster(string clientName, Guid clientKey, string howToDeliver="OCSVC")
-        {
-            return new ClientMaster(clientName, clientKey, howToDeliver);
+            _clientName = clientName;
+            _clientKey = clientKey;
+            _howToDeliver = howToDeliver;
+            _deviceId = deviceId;
         }
         public override string ToString()
         {
             return string.Join(" | ", new string[] {
-                string.Format("ClientKey: {0}", this.ClientKey),
-                string.Format("Client Name: {0}", this.ClientName),
-                string.Format("How to Deliver: {0}", this.HowToDeliver),
-                string.Format("Device Id: {0}", this.DeviceId)
+                string.Format("ClientKey: {0}", _clientKey),
+                string.Format("{0}", _clientName),
+                string.Format("How to Deliver: {0}", _howToDeliver),
+                string.Format("{0}", _deviceId)
             });
         }
     }
