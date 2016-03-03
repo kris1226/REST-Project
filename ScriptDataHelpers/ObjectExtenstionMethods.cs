@@ -26,5 +26,6 @@ namespace ScriptDataHelpers
                                    .Where(p => p.GetValue(entity) is string)
                                    .Any(p => string.IsNullOrWhiteSpace((p.GetValue(entity) as string)));
         }
+
     }
 }

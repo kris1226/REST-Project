@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RepoTests</RootNamespace>
     <AssemblyName>RepoTests</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -151,6 +151,10 @@
     <ProjectReference Include="..\..\iAgentDataTool.Models\iAgentDataTool.Models.csproj">
       <Project>{c67d864e-ebcc-4642-88e2-dee0d4d8c837}</Project>
       <Name>iAgentDataTool.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ScriptDataHelpers\ScriptDataHelpers.csproj">
+      <Project>{d88ff43a-f276-4cde-8682-3e1752d89fd0}</Project>
+      <Name>ScriptDataHelpers</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\AgentData\AgentDataServices.csproj">
       <Project>{082ca88d-db11-4d9d-ae54-c5a778894eb1}</Project>

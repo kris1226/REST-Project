@@ -21,10 +21,10 @@ namespace RepoTests
         public async Task Get_All_Websites_Test()
         {
             var devAppConfigName = "SmartAgentDev";
-            //var prodAppConfigName = "SmartAgentProd";
+            var prodAppConfigName = "SmartAgentProd";
 
-            IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings[devAppConfigName].ConnectionString);
-            IKernel kernel = new StandardKernel(new RepoTestsModule(db));
+            var db = new SqlConnection(ConfigurationManager.ConnectionStrings[devAppConfigName].ConnectionString);
+            var kernel = new StandardKernel(new RepoTestsModule(db));
 
             var websiteRepo = kernel.Get<IAsyncRepository<WebsiteMaster>>();
             var websites = await websiteRepo.GetAllAsync();
@@ -79,9 +79,9 @@ namespace RepoTests
             var websitesToAdd = new List<WebsiteMaster>();
 
             var website = WebsiteMaster.CreateWebsiteMaster(
-                "Empire BCBS NY Medicaid via Avility",
-                "https://apps.availity.com/",   
-                "NYMedicaid",
+                "Horizan NJ Health via NaviNet",
+                "https://navinet.navimedix.com/Main.asp",
+                "NJHealth",
                 Guid.NewGuid(),
                 3
             );

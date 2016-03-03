@@ -20,6 +20,8 @@ using RepoTests.Factories;
 using ConsoleTables.Core;
 using NUnit.Framework;
 using AgentDataServices;
+using ScriptDataHelpers;
+using iAgentDataTool.Helpers;
 
 
 
@@ -261,109 +263,67 @@ namespace RepoTests {
             write(result.WebsiteDescription + " " + result.WebsiteKey);
 
         }
+        [Test]
+        public void HorizonNaviNetScript()
+        {
+            var code = new StringBuilder()
+                .Append(NaviNet.LoginScript())            
+                .Append(NaviNet.HorizonNJ.GotoHorizonSubmitPage());
+
+            //var authoirzationPage = NaviNet.HorizonNJ.GotoHorizonSubmitPage(horizonLoginScript).ToString();
+            Console.WriteLine(code);
+           
+        }
 
         [Test]
         public async Task Create_Script_Record_Test()
         {
             Action<object> writeOut = value => Console.WriteLine(value);
-
+            var scriptVariablesMap = StaticHelpers.GetScriptVairableMap();
             var container = new UnityContainer();
             var scripts = new List<Script>();
+            var websiteDescription = "Horizon NJ Health via NaviNet Submit ";
+            var websiteKey = new Guid("6af63ad0-66cf-4b64-9042-38f061ce5cbd");
+            var deviceId = "NJHorizon";
+         
+            //var script1 = Script.CreateScript
+            //(
+            //    websiteDescription + "001: Login, onlogin error check",
+            //    NaviNet.LoginScript().ToString(),
+            //    string.Concat(deviceId, "_001"),
+            //    "Login",
+            //     websiteKey
+            //);
+            //scripts.Add(script1);
 
-
-            //IEnumerable<ScriptReturnValue> rtv = null;
-
-            var websiteDescription = "Empire NY Medicaid via Avility Submit ";
-            var websiteKey = new Guid("120e4663-add9-42de-aa7f-fc66768f4570");
-            var deviceId = "NYMedicaid";
-
-            var script1 = Script.CreateScript
-            (
-                websiteDescription + "001: Login, onlogin error check",
-                "SET !TIMEOUT_STEP 4\nURL GOTO=%%websiteDomain%%\n" + 
-                "\nTAG POS=1 TYPE=INPUT:TEXT FORM=* ATTR=NAME:userId CONTENT=%%websiteUsername%%\n" + 
-                "\nTAG POS=1 TYPE=INPUT:PASSWORD FORM=ACTION:* ATTR=NAME:password CONTENT=%%websitePassword%%\n" +
-                "\nTAG POS=1 TYPE=INPUT:BUTTON FORM=* ATTR=NAME:loginButton\n" + 
-                "\nTAG POS=1 TYPE=LABEL FORM=ACTION:* ATTR=TXT:User<SP>ID: EXTRACT=TXT\n",
-                string.Concat(deviceId, "_001"),
-                "Login",
-                 websiteKey
-            );
-            scripts.Add(script1);
-
-            var script2 = Script.CreateScript
-            (
-                websiteDescription + "002: Redirect, submit page",
-                "\nSET !TIMEOUT_STEP 12\nTAG POS=1 TYPE=INPUT:BUTTON FORM=NAME:alertsForm ATTR=NAME:continueButtonAlerts\n" +
-                "FRAME NAME=leftMenu\nTAG POS=1 TYPE=A ATTR=TXT:Auths<SP>and<SP>Referrals\nWAIT SECONDS=1\nTAG POS=1 TYPE=A ATTR=TXT:Auth/Referral<SP>Inquiry\nFRAME NAME=body\n" +
-                "TAG POS=1 TYPE=SELECT FORM=* ATTR=NAME:payerPanel:payerContainer:payer CONTENT=$EMPIRE<SP>MEDICARE<SP>ADVANTAGE<SP>BCBS<SP>-<SP>NY\nWAIT SECONDS=1\nFRAME NAME=body\n" +
-                "TAG POS=1 TYPE=INPUT:BUTTON FORM=ACTION:* ATTR=VALUE:Submit\nTAB T=2\nTAB CLOSEALLOTHERS\nFRAME F=0\nWAIT SECONDS=6\nSET !TIMEOUT_STEP 5\n" +
-                "TAG POS=1 TYPE=A ATTR=TXT:Auth<SP>Submission\nTAG POS=1 TYPE=A ATTR=TXT:GeneralServices\nWAIT SECONDS=1\nTAG POS=1 TYPE=SELECT ATTR=NAME:*$DropDownList_PreAuthType CONTENT=%Outpatient\n",
-                string.Concat(deviceId, "_002"),
-                "PatientSearch",
-                 websiteKey
-            );
-            scripts.Add(script2);
-
-            var script3 = Script.CreateScript
-            (
-                websiteDescription + "003: service start date",
-                @"SET !TIMEOUT_STEP 3\nSET !ERRORIGNORE YES\nTAG POS=1 TYPE=INPUT:TEXT ATTR=NAME:*$Text_AuthStartDate CONTENT=%%ServiceDate%%\n",
-                string.Concat(deviceId,"_003"),
-                "PatientSearch",
-                 websiteKey
-            );
-            scripts.Add(script3);
-
-            var script4 = Script.CreateScript
-            (
-                websiteDescription + "004: service end date",
-                @"SET !TIMEOUT_STEP 3\nSET !ERRORIGNORE YES\nTAG POS=1 TYPE=INPUT:TEXT ATTR=NAME:*$Text_AuthEndDate CONTENT=%%ServiceDate%%\n",
-                string.Concat(deviceId, "_004"),
-                "PatientSearch",
-                 websiteKey
-            );
-            scripts.Add(script4);
-
-            var placeOfService = Script.CreateScript
-            (
-                websiteDescription + "005: MemberId",
-                @"SET !TIMEOUT_STEP 3\nTAG POS=1 TYPE=SELECT ATTR=NAME:*$DropDownList_MemberIDType CONTENT=%AMERIGROUP\nTAG POS=1 TYPE=INPUT:TEXT ATTR=NAME:*$Text_MemberID CONTENT=%%MemberID%%\n",
-                string.Concat(deviceId, "_005"),
-                "PatientSearch",
-                 websiteKey
-            );
-            scripts.Add(placeOfService);
-
+            //var script2 = Script.CreateScript
+            //(
+            //    websiteDescription + "002: goto Horizon, submit page",
+            //    NaviNet.HorizonNJ.GotoHorizonSubmitPage().ToString(),
+            //    string.Concat(deviceId, "_002"),
+            //    "PatientSearch",
+            //     websiteKey
+            //);
+            //scripts.Add(script2);
 
             var script5 = Script.CreateScript(
-                websiteDescription + "006: Pause for Submit",
-                @"PAUSESUBMIT|SET !TIMEOUT_STEP 2\nTAG POS=1 TYPE=HTML ATTR=* EXTRACT=HTM\nSAVEAS TYPE=PNG FOLDER=* FILE=*\n",
-                string.Concat(deviceId, "_006"),
+                websiteDescription + "004: Pause for Submit",
+                NaviNet.Pause().ToString(),
+                string.Concat(deviceId, "_004"),
                 "Extraction",
-                 websiteKey
+                websiteKey
             );
             scripts.Add(script5);
 
-            var script6 = Script.CreateScript
-             (
-                 websiteDescription + "007: Pause error",
-                 @"PAUSEERR|SET !TIMEOUT_STEP 3\nTAG POS=1 TYPE=HTML ATTR=* EXTRACT=HTM\nSAVEAS TYPE=PNG FOLDER=* FILE=*\n",
-                 deviceId + "_007",
-                 "Extraction",
-                  websiteKey
-             );
-            scripts.Add(script6);
-
-            var script7 = Script.CreateScript
-             (
-                 websiteDescription + "006: log out",
-                 @"PAUSESUBMIT|SET !TIMEOUT_STEP 2\nTAG POS=1 TYPE=HTML ATTR=* EXTRACT=HTM\nSAVEAS TYPE=PNG FOLDER=* FILE=*\n",
-                 deviceId + "_005",
-                 "LOGOUT",
-                  websiteKey
-             );
-            scripts.Add(script7);
+            //var script6 = Script.CreateScript
+            // (
+            //     websiteDescription + "004: Pause error",
+            //     NaviNet.PauseOnError().ToString(),
+            //     deviceId + "_007",
+            //     "Extraction",
+            //     websiteKey
+            // );
+            //scripts.Add(script6);
 
             Func<Script, string, Task<Guid>> AddScriptMasterRecord = async (sm, connectionString) =>
             {

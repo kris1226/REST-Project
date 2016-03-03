@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>iAgentDataTool.Helpers</RootNamespace>
     <AssemblyName>iAgentDataTool.Helpers</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -62,9 +62,12 @@
     <Compile Include="Interfaces\ITransactionRepo.cs" />
     <Compile Include="Interfaces\ITransactionService.cs" />
     <Compile Include="Interfaces\IUpwAsyncRepository.cs" />
+    <Compile Include="Interfaces\ISubmitScript.cs" />
+    <Compile Include="NaviNet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Singleton.cs" />
     <Compile Include="StringHelpers\StringExtensions.cs" />
+    <Compile Include="SubmitScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\iAgentDataTool.Models\iAgentDataTool.Models.csproj">

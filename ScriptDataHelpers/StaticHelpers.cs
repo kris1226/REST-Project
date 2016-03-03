@@ -23,5 +23,15 @@ namespace ScriptDataHelpers
                          .Where(p => p.GetValue(entity) is string)
                          .Any(p => string.IsNullOrWhiteSpace((p.GetValue(entity) as string)));
         }
+        public static Dictionary<string, string> GetScriptVairableMap()
+        {
+            var scriptVariablesMap = new Dictionary<string, string>();
+            scriptVariablesMap.Add("pln", "%%PatLname%%");
+            scriptVariablesMap.Add("pfn", "%%PatFname%%");
+            scriptVariablesMap.Add("wd", "%%websiteDomain%%");
+            scriptVariablesMap.Add("dob", "%%PatDOB%%");
+            scriptVariablesMap.Add("mid", "%%MemberID%%");
+            return scriptVariablesMap;
+        }
     }
 }

@@ -54,5 +54,12 @@ namespace AgentDataServices
             collectionItemsMap.Add("ProviderFax", new Guid("1043b0fa-5f3d-e111-a475-000c29729dff"));
             return collectionItemsMap;
         }
+        public Dictionary<string, string> GetScriptVairableMap()
+        {
+            var scriptVariablesMap = new Dictionary<string, string>();
+            scriptVariablesMap.Add("pln", "%%PatLname%%");
+            scriptVariablesMap.Add("pfn", "%%PatFname%%");
+            return scriptVariablesMap;
+        }
     }
 }
