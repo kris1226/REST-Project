@@ -910,7 +910,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                         p.Add("@deviceId", record.DeviceId);
                         p.Add("@scriptKey", record.ScriptKey);
                         p.Add("@returnValue", record.ReturnValue);
-                        p.Add("@EQScriptKey", record.NextScriptId);
+                        p.Add("@EQScriptKey", record.NextScriptKey);
                         p.Add("@deviceId", record.DeviceId);
                         p.Add("@mappingValue", record.MappingValue);     
 

@@ -1,4 +1,4 @@
-﻿using iAgentDataTool.Helpers.Interfaces;
+﻿using iAgentDataTool.ScriptHelpers.Interfaces;
 using iAgentDataTool.Models.Common;
 using iAgentDataTool.Repositories.SmartAgentRepos;
 using Ninject;
@@ -11,6 +11,8 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using iAgentDataTool.Models.Remix;
+using ConsoleTables.Core;
 
 namespace RepoTests
 {
@@ -18,7 +20,7 @@ namespace RepoTests
     public class WebsiteRepoTests
     {
         [Test]
-        public async Task Get_All_Websites_Test()
+        public async Task Get_All_SmartAgent_Websites_Test()
         {
             var devAppConfigName = "SmartAgentDev";
             var prodAppConfigName = "SmartAgentProd";
@@ -32,6 +34,27 @@ namespace RepoTests
 
             websites.ToList()
                     .ForEach(website => Console.WriteLine(website.ToString()));        
+        }
+        [Test]
+        public async Task Get_All_Remix_Websites_Test()
+        {
+            var dbConfig = new
+            {
+                devConfig = "SmartAgentDev",
+                prodConfig = "SmartAgentProd",
+                remixConfig = "RemixDb"
+            };
+
+
+            var db = new SqlConnection(ConfigurationManager.ConnectionStrings[dbConfig.remixConfig].ConnectionString);
+            var kernel = new StandardKernel(new RepoTestsModule(db));
+
+            var websiteRepo = kernel.Get<IAsyncRepository<WebsiteMaster>>();
+            var websites = await websiteRepo.GetAllAsync();
+            Assert.NotNull(websites);
+
+            websites.ToList()
+                    .ForEach(website => Console.WriteLine(website.ToString()));
         }
         [Test]
         public async Task Update_Website_URL()
@@ -79,11 +102,11 @@ namespace RepoTests
             var websitesToAdd = new List<WebsiteMaster>();
 
             var website = WebsiteMaster.CreateWebsiteMaster(
-                "Horizan NJ Health via NaviNet",
-                "https://navinet.navimedix.com/Main.asp",
-                "NJHealth",
-                Guid.NewGuid(),
-                3
+                websiteDesription: "Horizan NJ Health via NaviNet",
+                websiteDoman: "https://navinet.navimedix.com/Main.asp",
+                deviceId: "NJHealth",
+                websiteKey: Guid.NewGuid(),
+                portalId: 3
             );
 
             websitesToAdd.Add(website);
@@ -94,6 +117,43 @@ namespace RepoTests
 
             var prodResult = await CreateRecord(website, productionDatabase);
             Console.WriteLine(prodResult);
+
+        }
+        [Test]
+        public async Task Create_WebsiteMaster_With_Portal()
+        {
+
+        }
+        [Test]
+        public async Task Get_Portal_Records()
+        {
+            var devRemixSource = "RemixDb";
+            var db = new SqlConnection(ConfigurationManager.ConnectionStrings[devRemixSource].ConnectionString);
+            var kernel = new StandardKernel(new RepoTestsModule(db));
+
+            var portalsRepo = kernel.Get<IAsyncRepository<Portals>>();
+            var portals = await portalsRepo.GetAllAsync();
+            Assert.NotNull(portals);
+
+            ConsoleTable
+                .From<Portals>(portals)
+                .Write();            
+        }
+        [Test]
+        public async Task Create_Portal_Record()
+        {
+            var devRemixSource = "RemixDb";
+            var db = new SqlConnection(ConfigurationManager.ConnectionStrings[devRemixSource].ConnectionString);
+
+            Func<string, string, Task<IEnumerable<Portals>>> GetPortalRecord = async (name, dbConfig) =>
+            {
+                using (IDbConnection smartAgentDb = new SqlConnection(ConfigurationManager.ConnectionStrings[dbConfig].ConnectionString))
+                {
+                    var kernel = new StandardKernel(new RepoTestsModule(smartAgentDb));
+                    var portalsRepo = kernel.Get<IAsyncRepository<Portals>>();
+                    return await portalsRepo.FindByName(name);
+                }
+            };
 
         }
     }

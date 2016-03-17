@@ -1,17 +1,19 @@
-﻿using System;
+﻿using iAgentDataTool.ScriptHelpers.Interfaces;
+using iAgentDataTool.Models.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace iAgentDataTool.Helpers
+namespace iAgentDataTool.ScriptHelpers
 {
     public static class NaviNet
     {
-        public static StringBuilder LoginScript(string IEVersion = "MSIE 10.0")
+        public static StringBuilder LoginScript(string browserVersion)
         {
             return new StringBuilder()
-                .AppendFormat(@"SET !USERAGENT {0}\nSET !TIMEOUT_STEP 5\n", IEVersion)
+                .AppendFormat(@"SET !USERAGENT {0}\nSET !TIMEOUT_STEP 5\n", browserVersion)
                 .Append(@"URL GOTO %%websiteDomain%%\nWAIT SECONDS=1\nTAG POS=1 TYPE=INPUT:TEXT ATTR=NAME:*Username CONTENT=%%websiteUsername%%\n")
                 .Append(@"TAG POS=1 TYPE=INPUT:PASSWORD ATTR=NAME:*Password CONTENT=%%websitePassword%%\nTAG POS=1 TYPE=INPUT:SUBMIT ATTR=ID:btnSignInSubmit\n")
                 .Append(@"SET !TIMEOUT_STEP 2\nTAG POS=1 TYPE=DIV ATTR=ID:SignInErrorInfo EXTRACT=TXT\n");            ;
@@ -26,8 +28,6 @@ namespace iAgentDataTool.Helpers
             return new StringBuilder()
                 .Append(@"PAUSEERR|SET !TIMEOUT_STEP 3\nTAG POS=1 TYPE=HTML ATTR=* EXTRACT=HTM\nSAVEAS TYPE=PNG FOLDER=* FILE=*\n");
         }
-
-
         public static class HorizonNJ
         {
             public static StringBuilder GotoHorizonSubmitPage()

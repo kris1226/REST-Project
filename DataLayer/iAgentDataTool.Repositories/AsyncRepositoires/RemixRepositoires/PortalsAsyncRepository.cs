@@ -8,14 +8,14 @@ using System.Data.SqlClient;
 using System.Configuration;
 using iAgentDataTool.Models;
 using iAgentDataTool.Models.Remix;
-using iAgentDataTool.Helpers.Interfaces;
+using iAgentDataTool.ScriptHelpers.Interfaces;
 using iAgentDataTool.Repositories.RemixRepositories;
 using Dapper;
 
 
 namespace iAgentDataTool.Repositories.AsyncRepositoires.RemixRepositoires
 {
-    public class PortalsAsyncRepository : IAsyncRepository<Portal>
+    public class PortalsAsyncRepository : IAsyncRepository<Portals>
     {
         private readonly IDbConnection _db;
 
@@ -25,13 +25,13 @@ namespace iAgentDataTool.Repositories.AsyncRepositoires.RemixRepositoires
         }
         public IDbConnection Database { get { return _db; } }
 
-        public Task<IEnumerable<Portal>> GetAllAsync()
+        public Task<IEnumerable<Portals>> GetAllAsync()
         {
-            var query = @"SELECT Id, Description, IsEnabled
-                          FROM Portals";
+            var query = @"SELECT Id, url, Description, IsEnabled
+                          FROM Portals order by description";
             try
             {
-                return Database.QueryAsync<Portal>(query);
+                return Database.QueryAsync<Portals>(query);
             }
             catch (Exception)
             {           
@@ -39,7 +39,7 @@ namespace iAgentDataTool.Repositories.AsyncRepositoires.RemixRepositoires
             }
         }
 
-        public async Task<IEnumerable<Portal>> FindWithGuidAsync(Guid websiteKey)
+        public async Task<IEnumerable<Portals>> FindWithGuidAsync(Guid websiteKey)
         {
             var query = @"SELECT PWM.Portal_Id, PWM.WebsiteKey, P.Description
                         FROM Portals P
@@ -47,7 +47,7 @@ namespace iAgentDataTool.Repositories.AsyncRepositoires.RemixRepositoires
                         WHERE PWM.WebsiteKey = @websiteKey";
             try
             {
-                return await Database.QueryAsync<Portal>(query, new { websiteKey });
+                return await Database.QueryAsync<Portals>(query, new { websiteKey });
             }
             catch (Exception)
             {                
@@ -56,43 +56,61 @@ namespace iAgentDataTool.Repositories.AsyncRepositoires.RemixRepositoires
 
         }
 
-        public Task<IEnumerable<Portal>> FindWith2GuidsAsync(Guid key, Guid secondKey)
+        public Task<IEnumerable<Portals>> FindWith2GuidsAsync(Guid key, Guid secondKey)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Portal>> FindWithIdAsync(int id)
+        public Task<IEnumerable<Portals>> FindWithIdAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Portal>> FindByName(string name)
+        public async Task<IEnumerable<Portals>> FindByName(string description)
+        {
+            if (string.IsNullOrWhiteSpace(description)) {
+                throw new ArgumentNullException("Please provide search criteria");
+            }
+            var name = "%" + description + "%";
+            var query = @"SELECT Id, url, Description, IsEnabled
+                          FROM Portals order by description
+                          WHERE description like @description ";
+            var parameters = new DynamicParameters();
+            parameters.Add("@description", description);
+            try
+            {
+                return await _db.QueryAsync<Portals>(query, parameters);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+
+        }
+
+        public Task<IEnumerable<Portals>> Find(Portals obj)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Portal>> Find(Portal obj)
+        public Task<Guid> AddAsync(Portals entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Guid> AddAsync(Portal entity)
+        public Task RemoveAsync(Portals entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task RemoveAsync(Portal entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(Portal entity)
+        public Task UpdateAsync(Portals entity)
         {
             throw new NotImplementedException();
         }
 
 
-        public Task AddMultipleToProd(IEnumerable<Portal> entities)
+        public Task AddMultipleToProd(IEnumerable<Portals> entities)
         {
             throw new NotImplementedException();
         }
@@ -104,7 +122,7 @@ namespace iAgentDataTool.Repositories.AsyncRepositoires.RemixRepositoires
         }
 
 
-        public Task<Guid> AddAsync(IEnumerable<Portal> entity)
+        public Task<Guid> AddAsync(IEnumerable<Portals> entity)
         {
             throw new NotImplementedException();
         }

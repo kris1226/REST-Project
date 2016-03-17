@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using iAgentDataTool.Models.Common;
-using iAgentDataTool.Helpers.Interfaces;
+using iAgentDataTool.ScriptHelpers.Interfaces;
 using Dapper;
 
 namespace iAgentDataTool.Repositories.Common

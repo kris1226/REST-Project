@@ -8,7 +8,7 @@ using Ninject;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
-using iAgentDataTool.Helpers.Interfaces;
+using iAgentDataTool.ScriptHelpers.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TheCreator;
 

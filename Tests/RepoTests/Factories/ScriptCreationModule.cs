@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using iAgentDataTool.Repositories.SmartAgentRepos;
 using Ninject.Modules;
 using System.Data;
-using iAgentDataTool.Helpers.Interfaces;
+using iAgentDataTool.ScriptHelpers.Interfaces;
 using iAgentDataTool.Models.Common;
 using iAgentDataTool.Repositories;
 

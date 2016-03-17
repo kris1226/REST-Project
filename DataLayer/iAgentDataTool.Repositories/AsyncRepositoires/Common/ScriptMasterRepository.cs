@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
 using iAgentDataTool.Models.Common;
-using iAgentDataTool.Helpers.Interfaces;
+using iAgentDataTool.ScriptHelpers.Interfaces;
 using Dapper;
 
 
@@ -139,6 +139,24 @@ namespace iAgentDataTool.Repositories
         public void GetAllData()
         {
 
+        }
+        public async Task<Script> GetScript(Guid scriptKey) {
+            if (scriptKey == null) {
+                throw new ArgumentNullException("no script key passed in");
+            }
+            
+            var query = @"select scriptDesc, scriptCode, deviceId, category, websitekey 
+                          from dsa_scriptMaster where scriptkey = @scriptKey";
+            var parameters = new DynamicParameters();
+            parameters.Add("@scriptKey", scriptKey);
+
+            try {
+               var script = await _db.QueryAsync<Script>(query, parameters);
+               return script.SingleOrDefault();
+            }
+            catch (Exception) {                
+                throw;
+            }
         }
         public Task AddMultipleToProd(IEnumerable<ScriptMaster> entities)
         {

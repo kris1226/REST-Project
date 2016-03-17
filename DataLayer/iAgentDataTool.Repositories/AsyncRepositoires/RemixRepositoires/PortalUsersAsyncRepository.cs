@@ -7,11 +7,11 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using Dapper;
-using iAgentDataTool.Helpers;
+using iAgentDataTool.ScriptHelpers;
 using iAgentDataTool.Models;
 using iAgentDataTool.Models.Common;
 using iAgentDataTool.Models.Remix;
-using iAgentDataTool.Helpers.Interfaces;
+using iAgentDataTool.ScriptHelpers.Interfaces;
 
 namespace iAgentDataTool.Repositories.RemixRepositories
 {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Configuration;
-using iAgentDataTool.Helpers.Interfaces;
+using iAgentDataTool.ScriptHelpers.Interfaces;
 using iAgentDataTool.Models.SmartAgentModels;
 using iAgentDataTool.Repositories.AsyncRepositoires.SmartAgent;
 using Ninject;

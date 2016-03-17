@@ -22,7 +22,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
         }
         public async Task<Guid> CreateScritp(Script script)
         {
-            if (string.IsNullOrWhiteSpace(script.Description))
+            if (string.IsNullOrWhiteSpace(script.WebsiteDescription))
             {
                 throw new ArgumentNullException("Need a script description to create a new record.");
             }
@@ -46,7 +46,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
 
             var p = new DynamicParameters();
 
-            p.Add("@Desc", script.Description);
+            p.Add("@Desc", script.WebsiteDescription);
             p.Add("@Code", script.Code);
             p.Add("@websiteKey", script.WebsiteKey);
             p.Add("@category", script.Category);
@@ -125,8 +125,8 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             p.Add("@deviceId", returnValues.DeviceId);
             p.Add("@scriptKey", returnValues.ScriptKey);
             p.Add("@returnValue", returnValues.ReturnValue);
-            p.Add("@NEGuid", returnValues.WhenNotEquelScriptKey);
-            p.Add("@EQScriptKey", returnValues.WhenEqualScripKey);
+            p.Add("@NEGuid", returnValues.NotEquelScriptKey);
+            p.Add("@EQScriptKey", returnValues.EqualScripKey);
             p.Add("@deviceId", returnValues.DeviceId);
             p.Add("@mappingValue", returnValues.MappingValue);
 

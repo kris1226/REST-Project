@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 using iAgentDataTool.Models.Remix;
 using phc_DACommon;
 
-namespace iAgentDataTool.Helpers
+namespace iAgentDataTool.ScriptHelpers
 {
     public static class HelperMethods
     {
@@ -132,7 +132,15 @@ namespace iAgentDataTool.Helpers
             }
             return result;
         }
- 
+
+        public static int Dec(this int number)
+        {
+            return --number;
+        }
+        public static int Inc(this int number)
+        {
+            return ++number;
+        }
 
     }
 }

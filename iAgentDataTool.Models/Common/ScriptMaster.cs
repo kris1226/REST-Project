@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 namespace iAgentDataTool.Models.Common
 {
     public class ScriptMaster
-    {
+    {        
         public class Builder {
             private Guid _scriptKey;
             private Guid _websiteKey;
@@ -25,18 +26,29 @@ namespace iAgentDataTool.Models.Common
             public Builder WithCategory(string value) { _category = value; return this; }
             public Builder WithDeviceId(string value) { _deviceId = value; return this; }
 
-            public ScriptMaster Build() { return new ScriptMaster(_scriptKey, _websiteKey, _scriptDesc, _scriptCode, _category, _deviceId, _noIterations); }
+            public ScriptMaster Build() { 
+                return new ScriptMaster(
+                    _scriptKey, 
+                    _websiteKey, 
+                    _scriptDesc,
+                    _scriptCode,
+                    _category,
+                    _deviceId,
+                    _noIterations
+               ); 
+            }
 
         }
-        private readonly Guid _scriptKey;
-        private Guid _websiteKey;
+
+        readonly Guid _scriptKey;
+        Guid _websiteKey;
         public string _scriptDesc;
-        private string _scriptCode;
-        private int _noIterations;
-        private string _category;
-        private string _deviceId;
+        string _scriptCode;
+        int _noIterations;
+        string _category;
+        string _deviceId;
 
-
+        
         public Guid ScriptKey { get { return _scriptKey; } }
         public Guid WebsiteKey { get { return _websiteKey; } }
         public string ScriptDesc { get { return _scriptDesc; } }

@@ -11,7 +11,7 @@ namespace iAgentDataTool.Models.Common
         public string WebsiteDescription { get;  private set; }
         public Guid WebsiteKey { get; private set; }
         public string WebsiteDomain { get; private set; }
-        public int Portal_Id { get; private set; }
+        public int PortalId { get; private set; }
         public string DeviceId { get; private set; }
 
         public WebsiteMaster()
@@ -26,7 +26,7 @@ namespace iAgentDataTool.Models.Common
         {
             WebsiteDescription = websiteDesription;
             WebsiteDomain = websiteDoman;
-            Portal_Id = portalId;
+            PortalId = portalId;
             DeviceId = deviceId;
             WebsiteKey = websiteKey;
         }
@@ -49,7 +49,7 @@ namespace iAgentDataTool.Models.Common
                 string.Format("{0}", this.WebsiteKey),
                 string.Format("{0}", this.WebsiteDomain),
                 string.Format("{0}", this.DeviceId),
-                string.Format("{0}", this.Portal_Id)
+                string.Format("{0}", this.PortalId)
             });
         }
     }

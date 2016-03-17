@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using iAgentDataTool.Models.Common;
 using iAgentDataTool.Repositories.Interfaces;
 using iAgentDataTool.Repositories.SmartAgentRepos;
-using iAgentDataTool.Helpers.Interfaces;
+using iAgentDataTool.ScriptHelpers.Interfaces;
 using iAgentDataTool.Models.SmartAgentModels;
 using iAgentDataTool.Repositories.AsyncRepositoires.SmartAgent;
 using ConsoleTables.Core;
@@ -22,9 +22,9 @@ namespace RepoTests
     [TestClass]
     public class ClientDataRepoTests
     {
-        private Guid _clientKey = new Guid("38d61357-8643-42ec-9003-3b9da4db390c");
-        private string _criteriaSetName = "Palomar Medical Center – Mental Health Services";
-        private Guid _facilityKey = new Guid("3E15E013-4A15-44A2-83F4-D8B2ED630397");
+        private Guid _clientKey = new Guid("e2e522fa-9154-4b34-b1c7-5acc341c7544");
+        private string _criteriaSetName = "Denver Health Medical Center";
+        private Guid _facilityKey = new Guid("7186d22b-5966-4fed-9171-21fc3a46b258");
         private readonly string _devAppConfigName = "SmartAgentDev";
         private readonly string _prodAppConfigName = "SmartAgentProd";
         private Action<string, object> writeToConsole = (desc, value) => Console.WriteLine(desc, value);
@@ -456,7 +456,7 @@ namespace RepoTests
         public async Task Get_Client_Master_Records()
         {
             IEnumerable<ClientMaster> clientData = null;
-            using (IDbConnection smartAgentDb = new SqlConnection(ConfigurationManager.ConnectionStrings[_prodAppConfigName].ConnectionString))
+            using (IDbConnection smartAgentDb = new SqlConnection(ConfigurationManager.ConnectionStrings[ _devAppConfigName].ConnectionString))
             {
                 IKernel kernel = new StandardKernel(new RepoTestsModule(smartAgentDb));
                 var repo = kernel.Get<IAsyncRepository<ClientMaster>>();
@@ -505,24 +505,27 @@ namespace RepoTests
         public async Task Get_Facility_Data_Test()
         {
             IEnumerable<FacilityMaster> facilityData = null;
-            using (IDbConnection smartAgentDb = new SqlConnection(ConfigurationManager.ConnectionStrings[_prodAppConfigName].ConnectionString))
+            using (IDbConnection smartAgentDb = new SqlConnection(ConfigurationManager.ConnectionStrings[_devAppConfigName].ConnectionString))
             {
                 IKernel kernel = new StandardKernel(new RepoTestsModule(smartAgentDb));
                 var repo = kernel.Get<IAsyncRepository<FacilityMaster>>();
                 facilityData = await repo.GetAllAsync();
             }
 
-            foreach (var location in facilityData)
-            {
-                Console.WriteLine(location);
-            }
+            facilityData
+                .ToList()
+                .ForEach(location => Console.WriteLine(location));
+
+            //foreach (var location in facilityData)
+            //{
+            //    Console.WriteLine(location);
+            //}
         }
         [TestMethod]
        //Test starts hear to move all client data to production from development.
         // Summary:
         //     Testing for moving development data from development to production
         //
-
         public async Task Move_Client_Master_Records_To_Production_Test()
         {
             // Guid clientKey = new Guid("db38cb6a-29fc-452c-befe-a3acf2648b61");
@@ -712,19 +715,22 @@ namespace RepoTests
                 }
             };
 
-            Func<IEnumerable<PayerWebsiteMappingValue>, string, Task<int>> AddPayerWebsiteMappingValues = async (payerWebsiteMappingValues, source) =>
+            Func<IEnumerable<PayerWebsiteMappingValue>, string, Task> AddPayerWebsiteMappingValues = async (payerWebsiteMappingValues, source) =>
             {
                 using (var devDb = new SqlConnection(ConfigurationManager.ConnectionStrings[source].ConnectionString))
                 {
                     var kernel = new StandardKernel(new RepoTestsModule(devDb));
                     var repo = kernel.Get<ISmartAgentRepo>();
-                    var result = await repo.AddPayerWebsiteMappingValue(payerWebsiteMappingValues);
-                    return result;
+                    await repo.AddPayerWebsiteMappingValue(payerWebsiteMappingValues);
                 }
             };
             var devRecords = await FindPayerWebsiteMappingValues(_clientKey, _devAppConfigName);
-            var moveToProd = AddPayerWebsiteMappingValues(devRecords, _prodAppConfigName);
+            await AddPayerWebsiteMappingValues(devRecords, _prodAppConfigName);
+            var prodRecords = await FindPayerWebsiteMappingValues(_clientKey, _prodAppConfigName);
 
+            prodRecords
+                .ToList()
+                .ForEach(record => Console.WriteLine(record));
         }
         // Move criteriaSets to production from development.
         public async Task Move_CriteriaSets_From_Dev_To_Prod_Test()

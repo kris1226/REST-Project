@@ -17,6 +17,6 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
         Task<WebsiteMaster> FindWebsiteRecord(string term);
         Task<IEnumerable<Criteria>> CreateCriteraRecords(Criteria record);
         Task DeleteCritera(string criteraSetName);
-        Task<int> AddPayerWebsiteMappingValue(IEnumerable<PayerWebsiteMappingValue> payerWebsiteMappingValue);
+        Task AddPayerWebsiteMappingValue(IEnumerable<PayerWebsiteMappingValue> payerWebsiteMappingValue);
     }
 }

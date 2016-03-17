@@ -7,8 +7,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using ScriptDataHelpers;
-using iAgentDataTool.Helpers.Interfaces;
-using iAgentDataTool.Helpers;
+using iAgentDataTool.ScriptHelpers.Interfaces;
+using iAgentDataTool.ScriptHelpers;
 using iAgentDataTool.Models.Common;
 using Dapper;
 

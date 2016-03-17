@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using ScriptDataHelpers;
 using iAgentDataTool.Models.Common;
-using iAgentDataTool.Helpers.Interfaces;
+using iAgentDataTool.ScriptHelpers.Interfaces;
 using iAgentDataTool.Repositories.RemixRepositories;
 using Dapper;
 

@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using iAgentDataTool.Helpers.Interfaces;
+using iAgentDataTool.ScriptHelpers.Interfaces;
 using iAgentDataTool.Models.SmartAgentModels;
 using iAgentDataTool.Repositories.AsyncRepositoires.SmartAgent;
 using Ninject;

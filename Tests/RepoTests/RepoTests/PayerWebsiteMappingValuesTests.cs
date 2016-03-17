@@ -7,7 +7,7 @@ using NUnit.Framework;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
-using iAgentDataTool.Helpers.Interfaces;
+using iAgentDataTool.ScriptHelpers.Interfaces;
 using Microsoft.Practices.Unity;
 using iAgentDataTool.Repositories.Common;
 using iAgentDataTool.Models.Common;

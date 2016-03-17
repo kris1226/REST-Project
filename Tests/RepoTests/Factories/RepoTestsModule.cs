@@ -1,5 +1,5 @@
 ﻿using iAgentDataTool.AsyncRepositories.Common;
-using iAgentDataTool.Helpers.Interfaces;
+using iAgentDataTool.ScriptHelpers.Interfaces;
 using iAgentDataTool.Models.Common;
 using iAgentDataTool.Models.SmartAgentModels;
 using iAgentDataTool.Repositories;
@@ -14,6 +14,8 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using iAgentDataTool.Models.Remix;
+using iAgentDataTool.Repositories.AsyncRepositoires.RemixRepositoires;
 
 namespace RepoTests
 {
@@ -27,13 +29,30 @@ namespace RepoTests
         }
         public override void Load()
         {
-            Bind<IUpwAsyncRepository>().To<UpwAsyncRepository>().WithConstructorArgument("db", _db);
-            Bind<ISmartAgentRepo>().To<CreateSmartAgentUserRepo>().WithConstructorArgument("db", _db);
-            Bind<ISmartAgentRepository>().To<SmartAgentRepo>().WithConstructorArgument("db", _db);
+            Bind<IUpwAsyncRepository>()
+                .To<UpwAsyncRepository>()
+                .WithConstructorArgument("db", _db);
 
-            Bind<IAsyncRepository<WebsiteMaster>>().To<WebsiteMasterAsyncRepository>().WithConstructorArgument("db", _db);
-        
-            Bind<IAsyncRepository<ClientMaster>>().To<ClientMasterRepositoryAsync>().WithConstructorArgument("db", _db);
+            Bind<ISmartAgentRepo>()
+                .To<CreateSmartAgentUserRepo>()
+                .WithConstructorArgument("db", _db);
+
+            Bind<ISmartAgentRepository>()
+                .To<SmartAgentRepo>()
+                .WithConstructorArgument("db", _db);
+
+            Bind<IAsyncRepository<WebsiteMaster>>()
+                .To<WebsiteMasterAsyncRepository>()
+                .WithConstructorArgument("db", _db);
+
+            Bind<IAsyncRepository<Portals>>()
+                .To<PortalsAsyncRepository>()
+                .WithConstructorArgument("db", _db);
+
+            Bind<IAsyncRepository<ClientMaster>>()
+                .To<ClientMasterRepositoryAsync>()
+                .WithConstructorArgument("db", _db);
+
             Bind<IAsyncRepository<ClientLocations>>().To<ClientLocationsAsyncRepository>().WithConstructorArgument("db", _db);
             Bind<IAsyncRepository<PayerWebsiteMappingValue>>().To<PayerWebsiteMappingValuesAsyncRepository>().WithConstructorArgument("db", _db);
             Bind<IAsyncRepository<ScriptMaster>>().To<ScriptMasterRepository>().WithConstructorArgument("db", _db);

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using iAgentDataTool.Models;
 
-namespace iAgentDataTool.Helpers.Interfaces
+namespace iAgentDataTool.ScriptHelpers.Interfaces
 {
     public interface IAsyncRepository<T> where T : class
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace iAgentDataTool.Helpers.StringHelpers
+namespace iAgentDataTool.ScriptHelpers.StringHelpers
 {
     public static class StringExtensions
     {

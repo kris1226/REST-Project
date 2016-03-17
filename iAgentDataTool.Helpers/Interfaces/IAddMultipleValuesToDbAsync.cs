@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace iAgentDataTool.Helpers.Interfaces
+namespace iAgentDataTool.ScriptHelpers.Interfaces
 {
     public  interface IAddMultipleEntitesToDbAsync<T> where T : class
     {

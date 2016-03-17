@@ -335,9 +335,8 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             }
         }
 
-        public async Task<int> AddPayerWebsiteMappingValue(IEnumerable<PayerWebsiteMappingValue> payerWebsiteMappingValue)
+        public async Task AddPayerWebsiteMappingValue(IEnumerable<PayerWebsiteMappingValue> payerWebsiteMappingValue)
         {
-            IEnumerable<int> result = null;
             var p = new DynamicParameters();
 
             foreach (var item in payerWebsiteMappingValue)
@@ -351,15 +350,13 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
 
                 try
                 {
-                    result =  await _db.QueryAsync<int>("AddPayerWebsiteMappingValue", p, commandType: CommandType.StoredProcedure);
+                    await _db.ExecuteAsync("AddPayerWebsiteMappingValue", p, commandType: CommandType.StoredProcedure);
                 }
-                catch (SqlException)
+                catch (Exception)
                 {
-                    return result.SingleOrDefault();
                     throw;
                 }
             }
-            return result.SingleOrDefault();
         }
     }
 }
