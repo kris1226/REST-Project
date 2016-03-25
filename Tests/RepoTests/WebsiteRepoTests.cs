@@ -96,15 +96,15 @@ namespace RepoTests
                 }
             };
 
-            var devAppConfigName = "SmartAgentDev";
-            var productionDatabase = "SmartAgentProd";
+            var smartAgentDevelopmentDb = "SmartAgentDev";
+            var smartAgentProdDb = "SmartAgentProd";
 
             var websitesToAdd = new List<WebsiteMaster>();
 
             var website = WebsiteMaster.CreateWebsiteMaster(
-                websiteDesription: "Horizan NJ Health via NaviNet",
-                websiteDoman: "https://navinet.navimedix.com/Main.asp",
-                deviceId: "NJHealth",
+                websiteDesription: "Maverick Medical Group Submit",
+                websiteDoman: "https://aerial.carecoordination.medecision.com/pmg/physician/LoginDefault.aspx",
+                deviceId: "MMG",
                 websiteKey: Guid.NewGuid(),
                 portalId: 3
             );
@@ -112,10 +112,10 @@ namespace RepoTests
             websitesToAdd.Add(website);
 
 
-            var result = await CreateRecord(website, devAppConfigName);
+            var result = await CreateRecord(website, smartAgentDevelopmentDb);
             Console.WriteLine(result);
 
-            var prodResult = await CreateRecord(website, productionDatabase);
+            var prodResult = await CreateRecord(website, smartAgentProdDb);
             Console.WriteLine(prodResult);
 
         }

@@ -40,10 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CollectionItems.cs" />
+    <Compile Include="RemixCollectionItems.cs" />
     <Compile Include="ObjectExtenstionMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReturnValue.cs" />
+    <Compile Include="SmartAgentCollectionItems.cs" />
     <Compile Include="StaticHelpers.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\iAgentDataTool.Models\iAgentDataTool.Models.csproj">
+      <Project>{c67d864e-ebcc-4642-88e2-dee0d4d8c837}</Project>
+      <Name>iAgentDataTool.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

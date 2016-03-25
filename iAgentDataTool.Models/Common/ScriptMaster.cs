@@ -28,14 +28,13 @@ namespace iAgentDataTool.Models.Common
 
             public ScriptMaster Build() { 
                 return new ScriptMaster(
-                    _scriptKey, 
-                    _websiteKey, 
+                    _scriptKey,
                     _scriptDesc,
                     _scriptCode,
+                    _noIterations,
                     _category,
-                    _deviceId,
-                    _noIterations
-               ); 
+                    _websiteKey,
+                    _deviceId); 
             }
 
         }
@@ -47,8 +46,7 @@ namespace iAgentDataTool.Models.Common
         int _noIterations;
         string _category;
         string _deviceId;
-
-        
+     
         public Guid ScriptKey { get { return _scriptKey; } }
         public Guid WebsiteKey { get { return _websiteKey; } }
         public string ScriptDesc { get { return _scriptDesc; } }
@@ -57,22 +55,23 @@ namespace iAgentDataTool.Models.Common
         public string Category { get { return _category; } }
         public string DeviceId { get { return _deviceId; } }
         
-        private ScriptMaster(Guid scriptKey, 
-                             Guid websiteKey, 
-                             string scriptDesc = "no desc found", 
-                             string scriptCode = "no code found", 
-                             string category ="no category found",
-                             string deviceId ="no deviceId found",
-                             int noIterations = 0)
+        private ScriptMaster(
+            Guid scriptKey,
+            string scriptDesc,
+            string scriptCode,
+            int noIterations,
+            string category,
+            Guid websiteKey,
+            string deviceId)
         {
 
             _scriptKey = scriptKey;
-            _websiteKey = websiteKey;
             _scriptDesc = scriptDesc;
-           _scriptCode =  scriptCode;
+            _scriptCode =  scriptCode;
             _noIterations = noIterations;
-           _deviceId = deviceId;
            _category = category;
+           _websiteKey = websiteKey;
+           _deviceId = deviceId;
         }
         public static Builder Build() { return new Builder(); }
 

@@ -31,16 +31,18 @@ namespace ScriptingTests
             }
         };
 
-        Func<ScriptReturnValue, string, Task<IEnumerable<ScriptReturnValue>>> AddReturnValues = async (rv, connectionString) =>
+        Func<ScriptReturnValue, string, Task> AddReturnValues = async (rv, connectionString) =>
         {
             using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionString].ConnectionString))
             {
                 var container = new UnityContainer();
                 container.RegisterType<IScriptCreation, ScriptCreationRepo>(new InjectionConstructor(db));
                 var repo = container.Resolve<IScriptCreation>();
-                return await repo.CreateReturnValues(rv);
+                await repo.CreateReturnValues(rv);
             }
         };
+
+        
 
         [Fact]
         public async Task Create_Tuffs_Script_Test() 
@@ -72,11 +74,10 @@ namespace ScriptingTests
                 tuffs.websitekey);
             TuffsScript.Add(loginScript);
 
-            count.Inc();
             var goToAuthPage = Script.CreateScript(
-                string.Concat(tuffs.WebstieDescription, count, ": Go to authorization page"),
+                string.Concat(tuffs.WebstieDescription, HelperMethods.Increment(count), ": Go to authorization page"),
                 TufsNetworkHealth.Goto_Referrals_Auhorizations_PatientSearch_Page().ToString(),
-                string.Concat(tuffs.DeviceId, count),
+                string.Concat(tuffs.DeviceId, HelperMethods.Increment(count)),
                 "PatientSearch",
                 tuffs.websitekey);
             TuffsScript.Add(goToAuthPage);
@@ -86,7 +87,6 @@ namespace ScriptingTests
                 var returnValueCount = 0;
                 var deviceId = string.Concat("TufsNetowr00", returnValueCount);
                 var scriptKey = await agentDataSvc.AddScript(script, db.remixDev);
-                Console.WriteLine(scriptKey);
 
                 if (scriptKey != null)
                 {
@@ -97,19 +97,18 @@ namespace ScriptingTests
                         .WithNotEqualKey(new Guid("00000000-0000-0000-0000-000000000000"))
                         .WithEqualKey(new Guid("00000000-0000-0000-0000-000000000000"))
                         .WithReturnValue("SUCCESS")
+                        .WithValueOperation("EQ")
                         .Build();
 
-                    var results = await agentDataSvc.AddReturnValue(returnValue, db.smartAgentDev);
-                    results
-                        .ToList()
-                        .ForEach(s => Console.WriteLine(s.ScriptKey + " " + s.DeviceId));
-
+                    await agentDataSvc.AddReturnValues(returnValue, db.remixDev);
+                    Console.WriteLine(scriptKey);
                 }
                 else
                 {
                     Console.WriteLine("error adding record", scriptKey);
                 }
             }
+
 
         }
     }

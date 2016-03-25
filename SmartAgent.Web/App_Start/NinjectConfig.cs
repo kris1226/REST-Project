@@ -6,7 +6,7 @@ using Ninject;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
-using iAgentDataTool.Helpers.Interfaces;
+using iAgentDataTool.ScriptHelpers.Interfaces;
 using iAgentDataTool.Models.Common;
 using iAgentDataTool.Repositories.Common;
 using iAgentDataTool.Models.SmartAgentModels;

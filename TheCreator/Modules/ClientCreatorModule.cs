@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Ninject;
 using Ninject.Modules;
 using iAgentDataTool.AsyncRepositories.Common;
-using iAgentDataTool.Helpers.Interfaces;
+using iAgentDataTool.ScriptHelpers.Interfaces;
 using iAgentDataTool.Models.Common;
 using iAgentDataTool.Models.SmartAgentModels;
 using iAgentDataTool.Repositories;

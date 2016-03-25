@@ -135,11 +135,15 @@ namespace iAgentDataTool.ScriptHelpers
 
         public static int Dec(this int number)
         {
-            return --number;
+            return number -= 1;
         }
-        public static int Inc(this int number)
+        public static int Increment(this int number)
         {
-            return ++number;
+            return number += 1;
+        }
+        public static int Inc(int number)
+        {
+            return number += 1;
         }
 
     }

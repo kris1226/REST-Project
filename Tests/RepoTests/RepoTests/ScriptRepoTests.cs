@@ -31,7 +31,7 @@ namespace RepoTests {
 
         private Action<object> write = w => Console.WriteLine(w);
         private readonly string _devSmartAgent = "SmartAgentDev";
-        private readonly string _prodAppConfigName = "SmartAgentProd";
+        private readonly string _prodSmartAgentDb = "SmartAgentProd";
         private IAsyncRepository<ScriptMaster> _scriptRepo;
 
         //  private readonly string _devIAgent = "RemixDb";
@@ -243,7 +243,7 @@ namespace RepoTests {
             };
 
             var dataSource = _devSmartAgent;
-            var prodDataSource = _prodAppConfigName;
+            var prodDataSource = _prodSmartAgentDb;
 
             var result = await FindWebsiteRecord(websiteMaster.WebsiteDescription, dataSource);
 
@@ -348,16 +348,16 @@ namespace RepoTests {
                 }
             };
 
-            Func<ScriptReturnValue, string, Task<IEnumerable<ScriptReturnValue>>> AddReturnValues = async (rv, connectionString) =>
-            {
-                using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionString].ConnectionString))
-                {
-                    var container = new UnityContainer();
-                    container.RegisterType<IScriptCreation, ScriptCreationRepo>(new InjectionConstructor(db));
-                    var repo = container.Resolve<IScriptCreation>();
-                    return await repo.CreateReturnValues(rv);
-                }
-            };
+            //Func<ScriptReturnValue, string, Task<IEnumerable<ScriptReturnValue>>> AddReturnValues = async (rv, connectionString) =>
+            //{
+            //    using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionString].ConnectionString))
+            //    {
+            //        var container = new UnityContainer();
+            //        container.RegisterType<IScriptCreation, ScriptCreationRepo>(new InjectionConstructor(db));
+            //        var repo = container.Resolve<IScriptCreation>();
+            //        return await repo.CreateReturnValues(rv);
+            //    }
+            //};
 
             //foreach (var script in scripts)
             //{
@@ -384,29 +384,6 @@ namespace RepoTests {
             //    {
             //        Console.WriteLine("error adding record", result);
             //    }
-            //}
-        }
-        [Ignore]
-        public async Task Create_Return_Values_Test()
-        {
-            //IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings[_devSmartAgent].ConnectionString);
-            //var returnValue = new ScriptReturnValue();
-            //var container = new UnityContainer();
-            //container.RegisterType<IScriptCreation, ScriptCreationRepo>(new InjectionConstructor(db));
-
-            //returnValue.ScriptKey = new Guid("f902e1ec-9f1a-e511-96c2-000c29729dff");
-            //returnValue.EqualScripKey = new Guid("00000000-0000-0000-0000-000000000000");
-            //returnValue.NotEquelScriptKey = new Guid("00000000-0000-0000-0000-000000000000");
-            //returnValue.DeviceId = "INOVHealth003";
-            //returnValue.MappingValue = null;
-            //returnValue.ReturnValue = "Invalid username and/or password.";
-
-            //var repo = container.Resolve<IScriptCreation>();
-            //var rv = await repo.CreateReturnValues(returnValue);
-
-            //foreach (var item in rv)
-            //{
-            //    Console.WriteLine(item.ScriptKey);
             //}
         }
         //[Test]
@@ -511,7 +488,7 @@ namespace RepoTests {
             var container = new UnityContainer();
             var em = new WebsiteExtractionMap();
 
-            em.WebsiteKey = new Guid("120e4663-add9-42de-aa7f-fc66768f4570");
+            em.WebsiteKey = new Guid("86ee2f58-33f9-4dbb-8db2-a43c89da5dfc");
             em.DataName = "Status";
             em.DocumentLocation = "table";
             em.LocationType = "Containsl";
@@ -532,13 +509,14 @@ namespace RepoTests {
 
             var newExtractionRecord = await AddRecord(em, _devSmartAgent);
             Console.WriteLine(newExtractionRecord.WebsiteKey.ToString());
-            var prodRecord = await AddRecord(em, _prodAppConfigName);
+
+            var prodRecord = await AddRecord(em, _prodSmartAgentDb);
             Console.WriteLine(prodRecord.WebsiteKey.ToString());
         }
         [Test]
         public async Task Add_ClientScripts_Test()
         {
-            var prodDb = new SqlConnection(ConfigurationManager.ConnectionStrings[_prodAppConfigName].ConnectionString);
+            var prodDb = new SqlConnection(ConfigurationManager.ConnectionStrings[_prodSmartAgentDb].ConnectionString);
             var devDb = new SqlConnection(ConfigurationManager.ConnectionStrings[_devSmartAgent].ConnectionString);
             var container = new UnityContainer();
             var websiteKey = new Guid("9b82289b-6f72-e511-96c2-000c29729dff");
@@ -672,7 +650,7 @@ namespace RepoTests {
         [Test]
         public async Task Update_Website_Url_Test()
         {
-            IDbConnection prodDb = new SqlConnection(ConfigurationManager.ConnectionStrings[_prodAppConfigName].ConnectionString);
+            IDbConnection prodDb = new SqlConnection(ConfigurationManager.ConnectionStrings[_prodSmartAgentDb].ConnectionString);
             IDbConnection devDb = new SqlConnection(ConfigurationManager.ConnectionStrings[_devSmartAgent].ConnectionString);
 
             var uhc = WebsiteMaster.CreateWebsiteMaster(

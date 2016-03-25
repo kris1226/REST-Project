@@ -12,11 +12,13 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
     public interface IScriptCreation
     {
         Task<Guid> CreateScritp(Script script);
-        Task<IEnumerable<ScriptReturnValue>> CreateReturnValues(ScriptReturnValue returnValues);
+        Task CreateReturnValues(ScriptReturnValue returnValues);
         Task<ScriptCollectionItem> CreateCollectionItems(ScriptCollectionItem collectionItem);
 
         Task<WebsiteExtractionMap> CreateExtractionMap(WebsiteExtractionMap extractMap);
 
         Task<IEnumerable<ScriptMaster>> GetScripts(Guid websiteKey);
+
+        Task UpdateScriptCode(string scriptCode, Guid scriptKey);
     }
 }

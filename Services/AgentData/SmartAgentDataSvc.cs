@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using System.Threading.Tasks;
+using iAgentDataTool.Repositories;
 using iAgentDataTool.Models.Common;
 using iAgentDataTool.Models.SmartAgentModels;
 using iAgentDataTool.Models.Remix;
@@ -24,38 +25,82 @@ namespace AgentDataServices
     public class SmartAgentDataSvc
     {
         public async Task<IEnumerable<CriteriaSets>> FindCriteria(string term, string source) {
-            return await Disposable.Using(
+            return await Disposable.UsingAsync(
                 () => new SqlConnection(ConfigurationManager.ConnectionStrings[source].ConnectionString),
                 async connection => {
-                    IKernel kernel = new StandardKernel(new AgentDataModule(connection));
+                    var kernel = new StandardKernel(new AgentDataModule(connection));
                     var repo = kernel.Get<IAsyncRepository<CriteriaSets>>();
                     return await repo.FindByName(term);
                 });
         }
-        public async Task<Guid> AddScript(Script script, string source)
+        public async Task<IEnumerable<ScriptMaster>> GetScriptMasterRecords(Guid websiteKey, string source)
         {
-            return await Disposable.Using(
+            return await Disposable.UsingAsync(
                 () => new SqlConnection(ConfigurationManager.ConnectionStrings[source].ConnectionString),
                 async connection =>
                 {
-                    IKernel kernel = new StandardKernel(new AgentDataModule(connection));
+                    var kernel = new StandardKernel(new AgentDataModule(connection));
+                    var repo = kernel.Get<IAsyncRepository<ScriptMaster>>();
+                    return await repo.FindWithGuidAsync(websiteKey);
+                });
+        }
+        public async Task<IEnumerable<ScriptReturnValue>> GetScriptReturnValues(Guid websiteKey, string source)
+        {
+            return await Disposable.UsingAsync(
+                () => new SqlConnection(ConfigurationManager.ConnectionStrings[source].ConnectionString),
+                async connection =>
+                {
+                    var repo = new ScriptRetrunValuesRepository(connection);
+                    return await repo.Find(websiteKey);
+                });
+        }
+        public async Task<Guid> AddScript(Script script, string source)
+        {
+            return await Disposable.UsingAsync(
+                () => new SqlConnection(ConfigurationManager.ConnectionStrings[source].ConnectionString),
+                async connection =>
+                {
+                    var kernel = new StandardKernel(new AgentDataModule(connection));
                     var repo = kernel.Get<IScriptCreation>();
                     return await repo.CreateScritp(script);
                 });
         }
-        public async Task<IEnumerable<ScriptReturnValue>> AddReturnValue(ScriptReturnValue returnValue, string source)
+
+        public async Task AddReturnValues(ScriptReturnValue returnValue, string dbConfig)
         {
-            return await Disposable.Using(
-                () => new SqlConnection(ConfigurationManager.ConnectionStrings[source].ConnectionString),
-                async connection =>
-                {
-                    IKernel kernel = new StandardKernel(new AgentDataModule(connection));
-                    var repo = kernel.Get<IScriptCreation>();
-                    return await repo.CreateReturnValues(returnValue);
-                });
+            await Disposable.UsingVoid(
+                 () => new SqlConnection(ConfigurationManager.ConnectionStrings[dbConfig].ConnectionString),
+                 async connection =>
+                 {
+                     var kernel = new StandardKernel(new AgentDataModule(connection));
+                     var repo = kernel.Get<IScriptCreation>();
+                     await repo.CreateReturnValues(returnValue);
+                 });          
+        }
+        public async Task<ScriptCollectionItem> AddCollectionItems(ScriptCollectionItem collectionItem, string dbConfig)
+        {
+            return await Disposable.UsingAsync(
+               () => new SqlConnection(ConfigurationManager.ConnectionStrings[dbConfig].ConnectionString),
+               async connection =>
+               {
+                   var kernel = new StandardKernel(new AgentDataModule(connection));
+                   var repo = kernel.Get<IScriptCreation>();
+                   return await repo.CreateCollectionItems(collectionItem);
+               }); 
+        }
+        public async Task UpdateScript(string scriptCode, Guid scriptKey, string dbConfig)
+        {
+           await Disposable.UsingVoid(
+                            () => new SqlConnection(ConfigurationManager.ConnectionStrings[dbConfig].ConnectionString),
+                            async connection =>
+                            {
+                                IKernel kernel = new StandardKernel(new AgentDataModule(connection));
+                                var repo = kernel.Get<IScriptCreation>();
+                                await repo.UpdateScriptCode(scriptCode, scriptKey);
+                            });
         }
 
-        public ImmutableDictionary<string, Guid> GetCollectionItemsMap()
+        public ImmutableDictionary<string, Guid> GetSmartAgentCollectionItemsMap()
         {
             var builder = ImmutableDictionary.CreateBuilder<string, Guid>();
             builder.Add("WebsiteDomain", new Guid("96F51FD2-6539-49BD-A1C8-1F8DDE73CE1E"));
@@ -85,6 +130,6 @@ namespace AgentDataServices
             scriptVariablesMap.Add("pln", "%%PatLname%%");
             scriptVariablesMap.Add("pfn", "%%PatFname%%");
             return scriptVariablesMap.ToImmutable();
-        }
+        }  
     }
 }

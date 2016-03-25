@@ -27,16 +27,16 @@ namespace RepoTests
         [TestMethod]
         public async Task Create_Single_CriteraSet_Record_Test()
         {
-            var firstScriptKey = new Guid("763600d9-abd5-e511-8d27-000c29729dff");
+            var firstScriptKey = new Guid("853a9d42-5ff0-e511-8d27-000c29729dff");
             var clientName = "De La Pena Eye Clinic: ";
-            var insuranceName = "Allied Submit";
+            var insuranceName = "Mavericks Medical Group Submit";
             var clientkey = new Guid("822b47a8-2aea-4ab5-a868-92c1cb3882cd");
             var clientLocationKey = new Guid("f23522c5-08cd-49ae-9ecd-1c9870902792");
 
             var criteriaSetname = clientName + insuranceName;
             var scriptKey = firstScriptKey;
             var criteriaSetKey = Guid.NewGuid();
-            var iprkey = "PCALLPHYS";
+            var iprkey = "PCMAVERMED";
 
             var clientScriptCriteria = Criteria.CreateCriteria
                 (
@@ -49,7 +49,7 @@ namespace RepoTests
                     "kris.lindsey"
                 );
 
-            clientScriptCriteria.DeviceId = "Allied";
+            clientScriptCriteria.DeviceId = "Maverick";
             clientScriptCriteria.UpdatedBy = "kris.lindsey";
          
             Func<Criteria, string, Task<IEnumerable<Criteria>>> CreateRecords = async (newRecord, dbConfig) =>

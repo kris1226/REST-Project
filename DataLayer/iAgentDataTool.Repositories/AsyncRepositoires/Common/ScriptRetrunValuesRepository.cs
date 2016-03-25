@@ -29,10 +29,16 @@ namespace iAgentDataTool.Repositories
 
         public async Task<IEnumerable<ScriptReturnValue>> Find(Guid websiteKey)
         {
-            var query = @"SELECT scriptKey, returnValue, valueOperation, nextScriptID, mappingValue
-                          FROM dsa_scriptReturnValues WHERE (scriptKey IN
-                         (SELECT scriptKey FROM dsa_scriptMaster
-                          WHERE (websiteKey = @websiteKey))) ORDER BY deviceID";
+            var query = @"SELECT deviceId, 
+                                 scriptKey, 
+                                 returnValue, 
+                                 valueOperation, 
+                                 nextScriptID
+                          FROM dsa_scriptReturnValues 
+                          WHERE (scriptKey IN (
+                                SELECT scriptKey FROM dsa_scriptMaster
+                                WHERE (websiteKey = @websiteKey))) 
+                          ORDER BY deviceID";
             try
             {
                 return await _db.QueryAsync<ScriptReturnValue>(query, new {websiteKey });

@@ -27,20 +27,31 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                 throw new ArgumentNullException("Need a script description to create a new record.");
             }
             var query = @"INSERT INTO [dsa_scriptMaster]([dateAdded]
-	                               ,[dateChanged],[lastUserID],[deviceID],[noRetries],[delayBefore]
+	                               ,[dateChanged]
+                                   ,[lastUserID]
+                                   ,[deviceID]
+                                   ,[scriptKey]
+                                   ,[noRetries],[delayBefore]
 	                               ,[delayAfter],[timeout],[scriptDesc],scriptCode,[websiteKey]
 	                               ,[iterative],[setAgentAs],[noIterations],[tableRow],[tableColumn],[Category]
 	                               ,[Priority])
-		                            VALUES(GETDATE(),GETDATE(),'kris.lindsey',@deviceId,0
-		                            ,0,0,60
+		                            VALUES(GETDATE(),GETDATE(),'kris.lindsey'
+                                    , @deviceId
+                                    , @scriptKey
+                                    , 0
+		                            , 0
+                                    , 0
+                                    , 60
                                     , @Desc
                                     , @Code
                                     , @websiteKey
-                                    ,0
+                                    , 0
                                      ,'I.E.7'
-                                    ,NULL
-		                            ,NULL,NULL
-                                    ,@category,1)
+                                    , NULL
+		                            , NULL
+                                    , NULL
+                                    , @category
+                                    , 1)
                           SELECT scriptKey 
                           FROM [dsa_scriptMaster] WHERE scriptDesc = @Desc";
 
@@ -51,6 +62,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             p.Add("@websiteKey", script.WebsiteKey);
             p.Add("@category", script.Category);
             p.Add("@deviceId", script.DeviceId);
+            p.Add("@scriptKey", Guid.NewGuid());
 
             try
             {
@@ -63,7 +75,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
             }
         }
 
-        public async Task<IEnumerable<ScriptReturnValue>> CreateReturnValues(ScriptReturnValue returnValues)
+        public async Task CreateReturnValues(ScriptReturnValue returnValues)
         {
             if (string.IsNullOrWhiteSpace(returnValues.DeviceId))
             {
@@ -84,7 +96,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                          VALUES
                                (GETDATE()
                                ,GETDATE()
-                               ,'kris.lindsey'
+                               ,@lastUserID
                                ,@deviceId
                                ,NULL
                                ,@scriptKey
@@ -92,8 +104,9 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                                ,NULL
                                ,'EQ'
                                ,@EQScriptKey
-                               ,@mappingValue)
-                    INSERT INTO .dbo.[dsa_scriptReturnValues]
+                               ,@mappingValue)";
+
+            var retrunValue2 = @"INSERT INTO .dbo.[dsa_scriptReturnValues]
                                ([dateAdded]
                                ,[dateChanged]
                                ,[lastUserID]
@@ -108,7 +121,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                          VALUES
                                (GETDATE()
                                ,GETDATE()
-                               ,'kris.lindsey'
+                               ,@lastUserID
                                ,@deviceId
                                ,NULL
                                ,@scriptKey
@@ -116,12 +129,11 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                                ,NULL
                                ,'NE'
                                ,@NEGuid
-                               ,@mappingValue)
-                    select deviceId, scriptkey, returnValue, overrideLabel, valueOperation, nextScriptID  
-                    FROM dbo.[dsa_scriptReturnValues] where scriptKey =@scriptKey";
+                               ,@mappingValue)";
 
             var p = new DynamicParameters();
 
+            p.Add("@lastUserID", "kris.lindsey");
             p.Add("@deviceId", returnValues.DeviceId);
             p.Add("@scriptKey", returnValues.ScriptKey);
             p.Add("@returnValue", returnValues.ReturnValue);
@@ -132,9 +144,10 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
 
             try
             {
-                return await _db.QueryAsync<ScriptReturnValue>(query, p);
+                await _db.ExecuteAsync(query, p);
+                await _db.ExecuteAsync(retrunValue2, p);
             }
-            catch (SqlException)
+            catch (Exception)
             {
                 throw;
             }
@@ -150,7 +163,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
                         (dateAdded,dateChanged,lastUserID, deviceID, scriptKey, fieldKey,overrideLabel, defaultValue, required, 
                         collectionMask, validationRoutine,Can_Go_back)
                         VALUES(GetDate(),GetDate(),'kris.lindsey',@deviceId, @scriptKey,@fieldKey,@overideLabel,NULL,1,NULL,NULL, 1)
-                         SELECT deviceID, scriptKey, fieldKey,overrideLabel, defaultValue 
+                         SELECT scriptKey, fieldKey, deviceId, overrideLabel
                          FROM dbo.dsa_scriptCollectionItems 
                          WHERE scriptkey = @scriptkey and overrideLabel = @overideLabel";
 
@@ -246,8 +259,7 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
 
         public async Task<IEnumerable<ScriptMaster>> GetScripts(Guid websiteKey)
         {
-            if(StaticHelpers.CheckForNullOrWhiteSpace(websiteKey)) 
-            {
+            if(StaticHelpers.CheckForNullOrWhiteSpace(websiteKey)) {
                 throw new ArgumentNullException();
             }
             var query = @"SELECT scriptKey, scriptDesc, ScriptCode, websiteKey
@@ -257,18 +269,32 @@ namespace iAgentDataTool.Repositories.SmartAgentRepos
 
             var p = new DynamicParameters();
             p.Add("@websiteKey", websiteKey);
-            try
-            {
+            try {
                 return await _db.QueryAsync<ScriptMaster>(query, p);
             }
-            catch (SqlException)
-            {   
+            catch (Exception) {   
                 throw;
             }
         }
 
-     
-
-        
+        public async Task UpdateScriptCode(string scriptCode, Guid scriptKey)
+        {
+            if (string.IsNullOrWhiteSpace(scriptCode) || scriptKey == null)
+            {
+                throw new ArgumentNullException("Please provide script code and script key");
+            }
+            var query = @"UPDATE dsa_scriptMaster SET scriptCode=@scriptCode
+                          WHERE scriptKey = @scriptKey";
+            var parameters = new DynamicParameters();
+            parameters.Add("@scriptCode", scriptKey);
+            try
+            {
+                await _db.ExecuteAsync(query, parameters);
+            }
+            catch (Exception)
+            {                
+                throw;
+            }
+        }
     }
 }

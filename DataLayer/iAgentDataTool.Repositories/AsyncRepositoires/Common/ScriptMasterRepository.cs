@@ -24,13 +24,21 @@ namespace iAgentDataTool.Repositories
         }
         public async Task<IEnumerable<ScriptMaster>> GetAllAsync()
         {
-            var query = @"SELECT scriptKey, ScriptDesc, ScriptCode, websiteKey, noIterations, Category 
-                          FROM dsa_scriptMaster WHERE websiteKey = @websiteKey ORDER BY scriptDesc";
+            var query = @"SELECT scriptKey, 
+                                 websiteKey, 
+                                 scriptDesc,
+                                 scriptCode,
+                                 noIterations,
+                                 deviceId,
+                                 category                                 
+                          FROM dsa_scriptMaster 
+                          WHERE websiteKey = @websiteKey 
+                          ORDER BY scriptDesc";
             try
             {
                 return await _db.QueryAsync<ScriptMaster>(query);
             }
-            catch (SqlException)
+            catch (Exception)
             {               
                 throw;
             }
@@ -38,13 +46,13 @@ namespace iAgentDataTool.Repositories
 
         public async Task<IEnumerable<ScriptMaster>> FindWithGuidAsync(Guid websiteKey)
         {
-            var query = @"SELECT scriptKey, ScriptDesc, ScriptCode, noIterations, Category 
+            var query = @"SELECT scriptKey, ScriptDesc, ScriptCode, noIterations, Category, websiteKey, deviceId 
                           FROM dsa_scriptMaster WHERE websiteKey = @websiteKey ORDER BY scriptDesc";
             try
             {
                 return await _db.QueryAsync<ScriptMaster>(query, new { websiteKey });
             }
-            catch (SqlException)
+            catch (Exception)
             {                
                 throw;
             }
