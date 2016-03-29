@@ -124,8 +124,9 @@ namespace RepoTests {
         {
             Action<object> write = value => Console.WriteLine(value);
             var container = new UnityContainer();
-            var websiteKey = new Guid("D6C6AD62-0E24-E511-96C2-000C29729DFF");
+            var websiteKey = new Guid("197722e7-2f8a-e511-96c2-000c29729dff");
             IEnumerable<ScriptMaster> scripts = null;
+
             using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings[_devSmartAgent].ConnectionString))
             {
                 container.RegisterType<IScriptCreation, ScriptCreationRepo>(new InjectionConstructor(db));

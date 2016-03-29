@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using iAgentDataTool.Models.Remix;
 using ConsoleTables.Core;
+using AgentData;
 
 namespace RepoTests
 {
@@ -22,40 +23,59 @@ namespace RepoTests
         [Test]
         public async Task Get_All_SmartAgent_Websites_Test()
         {
-            var devAppConfigName = "SmartAgentDev";
-            var prodAppConfigName = "SmartAgentProd";
+            var db = new
+            {
+                smartAgentDev = "SmartAgentDev",
+                smartAgentProd = "SmartAgentProd",
+                remixDev = "RemixDev",
+                remixProd = "RemixProd"
+            };
 
-            var db = new SqlConnection(ConfigurationManager.ConnectionStrings[devAppConfigName].ConnectionString);
-            var kernel = new StandardKernel(new RepoTestsModule(db));
+            var config = new SqlConnection
+            (
+                ConfigurationManager
+                    .ConnectionStrings[db.smartAgentProd]
+                    .ConnectionString
+            );
+
+            var kernel = new StandardKernel(
+                new RepoTestsModule(config)
+            );
 
             var websiteRepo = kernel.Get<IAsyncRepository<WebsiteMaster>>();
             var websites = await websiteRepo.GetAllAsync();
             Assert.NotNull(websites);
 
             websites.ToList()
-                    .ForEach(website => Console.WriteLine(website.ToString()));        
+                    .ForEach(
+                        website => Console.WriteLine(website.ToString())
+                    );        
         }
         [Test]
         public async Task Get_All_Remix_Websites_Test()
         {
             var dbConfig = new
             {
-                devConfig = "SmartAgentDev",
+                smartagentDevConfig = "SmartAgentDev",
                 prodConfig = "SmartAgentProd",
                 remixConfig = "RemixDb"
             };
+            var smartAgentSvc = new GenericDbServices<WebsiteMaster>();
+            var websites = await smartAgentSvc.GetAll(dbConfig.remixConfig);
 
+            var db = new SqlConnection(
+                ConfigurationManager
+                    .ConnectionStrings[dbConfig.smartagentDevConfig]
+                    .ConnectionString
+            );
 
-            var db = new SqlConnection(ConfigurationManager.ConnectionStrings[dbConfig.remixConfig].ConnectionString);
             var kernel = new StandardKernel(new RepoTestsModule(db));
 
-            var websiteRepo = kernel.Get<IAsyncRepository<WebsiteMaster>>();
-            var websites = await websiteRepo.GetAllAsync();
-            Assert.NotNull(websites);
-
-            websites.ToList()
-                    .ForEach(website => Console.WriteLine(website.ToString()));
+            websites
+                .ToList()
+                .ForEach(website => Console.WriteLine(website.ToString()));
         }
+
         [Test]
         public async Task Update_Website_URL()
         {

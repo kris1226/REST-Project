@@ -31,6 +31,7 @@ namespace ScriptingTests
         public async Task Create_MMG_Test()
         {
             var agentDataSvc = new SmartAgentDataSvc();
+
             var db = new  {
                 smartAgentDev = "SmartAgentDev",
                 smartAgentProd = "SmartAgentProd"
@@ -48,6 +49,7 @@ namespace ScriptingTests
                 var returnValue = ReturnValue.CreateReturnValueTemplate(key, script.DeviceId);
                 await agentDataSvc.AddReturnValues(returnValue, db.smartAgentDev);
             }
+
         }
         [Fact]
         public async Task Update_MMG_ScriptCode_Test()

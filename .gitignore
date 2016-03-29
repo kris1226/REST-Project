@@ -18,6 +18,10 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
+.vs
+Settings.FSharpLint
+dapper-dot-net-master
+global.json
 
 # Roslyn cache directories
 *.ide/

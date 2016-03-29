@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MMGEntryTest.cs" />
+    <Compile Include="TufsViaEmdeonTests.cs" />
     <Compile Include="TufsViaNetworkHealthProviderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

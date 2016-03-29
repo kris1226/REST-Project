@@ -19,31 +19,6 @@ namespace ScriptingTests
 {
     public class TufsViaNetworkHealthProviderTest 
     {
-
-        Func<Script, string, Task<Guid>> AddScriptMasterRecord = async (sm, connectionString) =>
-        {
-            using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionString].ConnectionString))
-            {
-                var container = new UnityContainer();
-                container.RegisterType<IScriptCreation, ScriptCreationRepo>(new InjectionConstructor(db));
-                var repo = container.Resolve<IScriptCreation>();
-                return await repo.CreateScritp(sm);
-            }
-        };
-
-        Func<ScriptReturnValue, string, Task> AddReturnValues = async (rv, connectionString) =>
-        {
-            using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionString].ConnectionString))
-            {
-                var container = new UnityContainer();
-                container.RegisterType<IScriptCreation, ScriptCreationRepo>(new InjectionConstructor(db));
-                var repo = container.Resolve<IScriptCreation>();
-                await repo.CreateReturnValues(rv);
-            }
-        };
-
-        
-
         [Fact]
         public async Task Create_Tuffs_Script_Test() 
         {
@@ -57,6 +32,7 @@ namespace ScriptingTests
             var agentDataSvc = new SmartAgentDataSvc();
 
             int count = 1;
+
             var tuffs = new {
                 DeviceId = "TufsNetowr00", 
                 WebstieDescription = "TufsNetowrkHealth 00", 

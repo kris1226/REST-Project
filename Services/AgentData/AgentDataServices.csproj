@@ -67,6 +67,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GenericDbServices.cs" />
     <Compile Include="SmartAgentDataSvc.cs" />
     <Compile Include="Modules\AgentDataModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

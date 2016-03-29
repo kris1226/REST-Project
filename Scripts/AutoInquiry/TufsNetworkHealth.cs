@@ -24,6 +24,6 @@ namespace AutoInquiry
                 .Append(@"TAG POS=1 TYPE=SELECT FORM=NAME:* ATTR=NAME:d_sortby CONTENT=%member_last_name,<SP>member_first_name\nTAG POS=1 TYPE=INPUT:CHECKBOX FORM=NAME:* ATTR=NAME:c_sortdirection CONTENT=NO\n")
                 .Append(@"TAG POS=1 TYPE=INPUT:CHECKBOX FORM=NAME:* ATTR=NAME:c_sortdirection CONTENT=NO\nTAG POS=1 TYPE=SELECT FORM=NAME:* ATTR=NAME:d_sortby CONTENT=%effective_from_date\n")
                 .Append(@"TAG POS=1 TYPE=SELECT FORM=NAME:* ATTR=NAME:d_sortby CONTENT=%effective_from_date\nTAG POS=1 TYPE=INPUT:SUBMIT FORM=NAME:* ATTR=NAME:submit_ref\nWAIT SECONDS=5\n");
-        }
+        }        
     }
 }

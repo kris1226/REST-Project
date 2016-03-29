@@ -39,9 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Emdeon\TufsEmdeonColItems.cs" />
     <Compile Include="MaverickMedicalGroup.cs" />
     <Compile Include="MaverickMedicalGroupCollectionItems.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Emdeon\TufsHealthPlanViaEmdeon.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\iAgentDataTool.Helpers\iAgentDataTool.Helpers.csproj">

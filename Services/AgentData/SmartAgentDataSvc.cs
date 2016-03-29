@@ -33,6 +33,17 @@ namespace AgentDataServices
                     return await repo.FindByName(term);
                 });
         }
+        public async Task<IEnumerable<WebsiteMaster>> GetAllWebsites(string source)
+        {
+            return await Disposable.UsingAsync(
+                () => new SqlConnection(ConfigurationManager.ConnectionStrings[source].ConnectionString),
+                async connection =>
+                {
+                    var kernel = new StandardKernel(new AgentDataModule(connection));
+                    var websiteRepo = kernel.Get<IAsyncRepository<WebsiteMaster>>();
+                    return await websiteRepo.GetAllAsync();
+                });
+        }
         public async Task<IEnumerable<ScriptMaster>> GetScriptMasterRecords(Guid websiteKey, string source)
         {
             return await Disposable.UsingAsync(
@@ -77,6 +88,7 @@ namespace AgentDataServices
                      await repo.CreateReturnValues(returnValue);
                  });          
         }
+
         public async Task<ScriptCollectionItem> AddCollectionItems(ScriptCollectionItem collectionItem, string dbConfig)
         {
             return await Disposable.UsingAsync(
