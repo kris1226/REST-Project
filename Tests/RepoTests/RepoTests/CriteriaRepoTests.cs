@@ -27,30 +27,17 @@ namespace RepoTests
         [TestMethod]
         public async Task Create_Single_CriteraSet_Record_Test()
         {
-            var firstScriptKey = new Guid("853a9d42-5ff0-e511-8d27-000c29729dff");
-            var clientName = "Steward - Carney Hospital --  ";
-            var insuranceName = "Tufs via Emdeon Submit";
-            var clientkey = new Guid("e901a612-710e-4858-ba6c-5f15e7eb924e");
-            var clientLocationKey = new Guid("defd5fb4-c2b9-4094-a2bb-b54432dddfc2");
-
-            var criteriaSetname = clientName + insuranceName;
-            var scriptKey = firstScriptKey;
-            var criteriaSetKey = Guid.NewGuid();
-            var iprkey = "PCTUFTSHEALTH02";
-
             var clientScriptCriteria = Criteria.CreateCriteria
-                (
-                    criteriaSetname,
-                    criteriaSetKey,
-                    scriptKey,
-                    iprkey,
-                    clientkey,
-                    clientLocationKey,
-                    "kris.lindsey"
-                );
-
-            clientScriptCriteria.DeviceId = "Maverick";
-            clientScriptCriteria.UpdatedBy = "kris.lindsey";
+            (
+                    criteriaSetName: "Steward - Morton Hospital -- Tufs via Emdeon Submit",
+                    criteriaSetKey: Guid.NewGuid(),
+                    scriptKey: new Guid("853a9d42-5ff0-e511-8d27-000c29729dff"),
+                    iprkey: "PCTUFTSHEALTH01",
+                    clientKey: new Guid("e901a612-710e-4858-ba6c-5f15e7eb924e"),
+                    clientLocationKey: new Guid("3fed8eca-2a5e-47f3-8db0-c1cfca108c9e"),
+                    updatedBy: "kris.lindsey",
+                    deviceId: "TufsEmdeon"
+           );
          
             Func<Criteria, string, Task<IEnumerable<Criteria>>> CreateRecords = async (newRecord, dbConfig) =>
             {

@@ -20,7 +20,7 @@ namespace iAgentDataTool.Models.SmartAgentModels
         public string IprKey { get; set; }
         public string CompareValue { get; set; }
         public Criteria(){}
-        public Criteria(string criteriaSetName, Guid criteriaSetKey, Guid scriptKey, string iprkey, Guid clientKey, Guid clientLocationKey, string updatedBy)
+        public Criteria(string criteriaSetName, Guid criteriaSetKey, Guid scriptKey, string iprkey, Guid clientKey, Guid clientLocationKey, string updatedBy, string deviceId)
         {
             this.CriteriaSetName = criteriaSetName;
             this.CriteriaSetKey = criteriaSetKey;
@@ -29,11 +29,12 @@ namespace iAgentDataTool.Models.SmartAgentModels
             this.ClientKey = clientKey;
             this.ClientLocationKey = clientLocationKey;
             this.UpdatedBy = updatedBy;
+            this.DeviceId = deviceId;
         }
 
-        public static Criteria CreateCriteria(string criteriaSetName, Guid criteriaSetKey, Guid scriptKey, string iprkey, Guid clientKey, Guid clientLocationKey, string updatedBy)
+        public static Criteria CreateCriteria(string criteriaSetName, Guid criteriaSetKey, Guid scriptKey, string iprkey, Guid clientKey, Guid clientLocationKey, string updatedBy, string deviceId)
         {
-            return new Criteria(criteriaSetName, criteriaSetKey,  scriptKey, iprkey, clientKey, clientLocationKey, updatedBy);
+            return new Criteria(criteriaSetName, criteriaSetKey,  scriptKey, iprkey, clientKey, clientLocationKey, updatedBy, deviceId);
         }
         public static Criteria CreateCriteria(Criteria criteria)
         {
@@ -45,7 +46,8 @@ namespace iAgentDataTool.Models.SmartAgentModels
                 IprKey = criteria.IprKey,
                 ClientKey = criteria.ClientKey,
                 ClientLocationKey = criteria.ClientLocationKey,
-                UpdatedBy = criteria.UpdatedBy
+                UpdatedBy = criteria.UpdatedBy,
+                DeviceId = criteria.DeviceId
             };
         }
         public override string ToString()

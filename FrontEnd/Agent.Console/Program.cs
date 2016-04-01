@@ -28,62 +28,65 @@ namespace Agent.Console {
                 _timer.Stop();
             }
         }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         static void Main(params string[] args)
         {
-            if (!Environment.UserInteractive)
-            {
-
-            }
             System.Console.WriteLine("Running as a Console Application");
-            System.Console.WriteLine(" 1. Run Service");
+            System.Console.WriteLine(" 1. Create Criteria Record");
             System.Console.WriteLine(" 2. Other Option");
             System.Console.WriteLine(" 3. Exit");
             System.Console.Write("Enter Option: ");
-
             var input = System.Console.ReadLine();
-
+          
             switch (input)
             {
                 case "1":
-                    HostFactory.Run(topShelf =>
-                    {
-                        topShelf.Service<Service>(service =>
-                        {
-                            service.ConstructUsing(UriHostNameType => new Service());
-                            service.WhenStarted(svc => svc.Start(args));
-                            service.WhenStopped(svc => svc.Stop());
-                        });
-                        topShelf.UseSerilog();
-                        topShelf.RunAsLocalSystem();
-
-                        topShelf.SetDescription("Agent client host");
-                        topShelf.SetDisplayName("Kit McCloud");
-                        topShelf.SetServiceName("Smart Agent Data Service");
-                    });
+                    RunCriteriaCreator(args);
                     break;
                 case "2":
                     break;
                 default:
                     break;
             }
-            //HostFactory.Run(topShelf =>
-            //{
-            //    topShelf.Service<Service>(service =>
-            //    {
-            //        service.ConstructUsing(UriHostNameType => new Service());
-            //        service.WhenStarted(svc => svc.Start(args));
-            //        service.WhenStopped(svc => svc.Stop());
-            //    });
-            //    topShelf.UseSerilog();
-            //    topShelf.RunAsLocalSystem();
-            //    topShelf.SetDescription("Agent client host");
-            //    topShelf.SetDisplayName("Kit McCloud");
-            //    topShelf.SetServiceName("Smart Agent Data Service");
-            //});
+        }
 
+        static void RunCriteriaCreator(string[] args)
+        {
+            System.Console.WriteLine("Pleasee Enter a criteria set name");
+            var criteriaSetname = System.Console.ReadLine();
+
+            System.Console.WriteLine("Enter a inital scriptkey");
+            var initalScriptKey = System.Console.ReadLine();
+
+            System.Console.WriteLine("Enter a iprkey");
+            var iprkey = System.Console.ReadLine();
+
+            System.Console.WriteLine("Enter client key");
+            string clientKey = System.Console.ReadLine();
+            var toGuid = new Guid(clientKey);
+
+            System.Console.WriteLine("Enter client key");
+
+
+            System.Console.WriteLine(criteriaSetname);
+            HostFactory.Run(topShelf =>
+            {
+                topShelf.SetDescription("Agent client host");
+                topShelf.SetDisplayName("Kit McCloud");
+                topShelf.SetServiceName("Smart Agent Data Service");
+                topShelf.UseSerilog();
+
+                topShelf.RunAsLocalSystem();
+                topShelf.Service<Service>(service =>
+                {
+                    service.ConstructUsing(UriHostNameType => new Service());
+                    service.WhenStarted(svc => svc.Start(args));
+                    service.WhenStopped(svc => svc.Stop());
+                });
+            });
         }
         static void ConfigureSerilog()
         {

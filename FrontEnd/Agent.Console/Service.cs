@@ -13,6 +13,7 @@ namespace Agent.Console {
         public void Start(string[] args)
         {
             System.Console.WriteLine(args);
+
             System.Console.ReadKey();
         }
 

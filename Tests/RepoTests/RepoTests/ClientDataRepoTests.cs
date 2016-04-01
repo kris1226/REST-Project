@@ -202,7 +202,8 @@ namespace RepoTests
                                 iprkey,
                                 clientkey,
                                 clientLocationKey,
-                                "kris.lindsey"
+                                "kris.lindsey",
+                                ""
                             );
 
                         var critera = await criteriaSearchRepo.FindByName(clientLocationName);
@@ -432,7 +433,8 @@ namespace RepoTests
                         iprkey,
                         clientkey,
                         clientLocationKey,
-                        "kris.lindsey"
+                        "kris.lindsey",
+                        ""
                     );
 
                 
@@ -897,7 +899,8 @@ namespace RepoTests
                     iprkey,
                     clientkey,
                     clientLocationKey,
-                    "kris.lindsey"
+                    "kris.lindsey",
+                    ""
                 );
             Func<string, Criteria, Task<IEnumerable<Criteria>>> AddCritera = async (connString, critera) =>
             {

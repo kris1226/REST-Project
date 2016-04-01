@@ -43,42 +43,6 @@ namespace RepoTests {
             _scriptRepo = kernel.Get<IAsyncRepository<ScriptMaster>>();
         }
 
-        //[Test]
-        //public async void Update_Script_Records()
-        //{
-        //    var newCode = "SET !TIMEOUT_STEP 5\nTAG POS=1 TYPE=A FORM=ACTION:* ATTR=TXT:Member\nTAG POS=1 TYPE=INPUT:TEXT FORM=ACTION:* ATTR=NAME:*tbMemberID CONTENT=%%MemberID%%\nTAG POS=1 TYPE=INPUT:SUBMIT FORM=ACTION:* ATTR=NAME:*SearchMemberCtrl$btSearch\n";
-        //    var websiteKey = new Guid("89bd591b-8cbf-e111-b39a-000c29729dff");
-        //    var scriptKey = new Guid("8294dbd1-acbf-e111-b39a-000c29729dff");
-        //    var scriptDesc = "KePro Submit 002: Member search";
-        //    var category = "PatientSearch";
-        //    var deviceId = "002";
-
-
-        //var keproScript001 = ScriptMaster.Build()
-        //                .WithScriptKey(scriptKey)
-        //                .WithScriptDesc(scriptDesc)
-        //                .WithWebsiteKey(websiteKey)
-        //                .WithScriptCode(newCode)
-        //                .WithNumberOfIterations(0)
-        //                .WithCategory(category)
-        //                .WithDeviceId(deviceId)
-        //                .Build();
-
-        //    Action<ScriptMaster> UpdateScriptCode = async (script) => {
-        //        await _scriptRepo.UpdateAsync(script);
-        //    };
-        //    try
-        //    {
-        //        await UpdateScriptCode(keproScript001);
-        //    }
-        //    catch (Exception) {
-                                   
-        //    }                             
-        //    finally {
-        //        Console.WriteLine("process complete");
-        //    }
-        //}
-
         [Test]
         public async Task Get_First_ScriptKey_From_Client_Script_SetUp()
         {
@@ -100,7 +64,8 @@ namespace RepoTests {
                     iprkey,
                     clientkey,
                     clientLocationKey,
-                    "kris.lindsey"
+                    "kris.lindsey",
+                    ""
                 );
 
 
@@ -272,7 +237,6 @@ namespace RepoTests {
                 .Append(NaviNet.LoginScript(IEVersion.GetIEVersion()[10]))            
                 .Append(NaviNet.HorizonNJ.GotoHorizonSubmitPage());
 
-            //var authoirzationPage = NaviNet.HorizonNJ.GotoHorizonSubmitPage(horizonLoginScript).ToString();
             Console.WriteLine(code);
            
         }
@@ -309,15 +273,6 @@ namespace RepoTests {
             );
             scripts.Add(loginScript);
 
-            //var script2 = Script.CreateScript
-            //(
-            //    websiteDescription + "002: goto Horizon, submit page",
-            //    NaviNet.HorizonNJ.GotoHorizonSubmitPage().ToString(),
-            //    string.Concat(deviceId, "_002"),
-            //    "PatientSearch",
-            //     websiteKey
-            //);
-            //scripts.Add(script2);
 
             var script5 = Script.CreateScript(
                 websiteDescription + "004: Pause for Submit",
@@ -327,16 +282,6 @@ namespace RepoTests {
                 websiteKey
             );
             scripts.Add(script5);
-
-            //var script6 = Script.CreateScript
-            // (
-            //     websiteDescription + "004: Pause error",
-            //     NaviNet.PauseOnError().ToString(),
-            //     deviceId + "_007",
-            //     "Extraction",
-            //     websiteKey
-            // );
-            //scripts.Add(script6);
 
             Func<Script, string, Task<Guid>> AddScriptMasterRecord = async (sm, connectionString) =>
             {
@@ -348,141 +293,7 @@ namespace RepoTests {
                     return await repo.CreateScritp(sm);
                 }
             };
-
-            //Func<ScriptReturnValue, string, Task<IEnumerable<ScriptReturnValue>>> AddReturnValues = async (rv, connectionString) =>
-            //{
-            //    using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionString].ConnectionString))
-            //    {
-            //        var container = new UnityContainer();
-            //        container.RegisterType<IScriptCreation, ScriptCreationRepo>(new InjectionConstructor(db));
-            //        var repo = container.Resolve<IScriptCreation>();
-            //        return await repo.CreateReturnValues(rv);
-            //    }
-            //};
-
-            //foreach (var script in scripts)
-            //{
-            //    var result = await AddScriptMasterRecord(script, _devSmartAgent);
-            //    write(result);
-
-            //    if (result != null)
-            //    {
-            //        var returnValue = new ScriptReturnValue();
-
-            //        returnValue.ScriptKey = result;
-            //        returnValue.DeviceId = script.DeviceId;
-            //        returnValue.EqualScripKey = new Guid("00000000-0000-0000-0000-000000000000");
-            //        returnValue.NotEquelScriptKey = new Guid("00000000-0000-0000-0000-000000000000");
-            //        returnValue.MappingValue = null;
-            //        returnValue.ReturnValue = "SUCCESS";
-
-            //        var resultScripts = await AddReturnValues(returnValue, _devSmartAgent);
-
-            //        resultScripts.ToList().ForEach(s => write(s.ScriptKey + " " + deviceId));
-
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine("error adding record", result);
-            //    }
-            //}
         }
-        //[Test]
-        //public async Task Create_Collection_Item_Test()
-        //{
-        //    var container = new UnityContainer();
-        //    var collectionItems = new List<ScriptCollectionItem>();
-        //    var data = new SmartAgentDataSvc();
-        //    var collectionItemsMap = data.GetCollectionItemsMap();
-        //    Func<ScriptCollectionItem, Task<ScriptCollectionItem>> CreateCollectionItems = async (c) =>
-        //    {
-        //        using (var db = new SqlConnection(ConfigurationManager.ConnectionStrings[_devSmartAgent].ConnectionString))
-        //        {
-        //            container.RegisterType<IScriptCreation, ScriptCreationRepo>(new InjectionConstructor(db));
-
-        //            var repo = container.Resolve<IScriptCreation>();
-        //            return await repo.CreateCollectionItems(c);
-        //        }
-        //    };
-
-        //    var deviceId = "NYMedicaid";
-
-        //    var websiteDomain = new ScriptCollectionItem();
-        //    websiteDomain.FieldKey = collectionItemsMap["WebsiteDomain"];
-        //    websiteDomain.ScriptKey = new Guid("0e035220-49da-e511-8d27-000c29729dff");
-        //    websiteDomain.OverrideLabel = "Website Domain";
-        //    websiteDomain.DeviceId = deviceId + "_001";
-        //    collectionItems.Add(websiteDomain);
-
-        //    var username = new ScriptCollectionItem();
-        //    username.FieldKey = collectionItemsMap["Username"];
-        //    username.ScriptKey = new Guid("0e035220-49da-e511-8d27-000c29729dff");
-        //    username.OverrideLabel = "Username";
-        //    username.DeviceId = deviceId + "_001";
-        //    collectionItems.Add(username);
-
-        //    var websitePassword = new ScriptCollectionItem();
-        //    websitePassword.FieldKey = collectionItemsMap["websitePassword"];
-        //    websitePassword.ScriptKey = new Guid("0e035220-49da-e511-8d27-000c29729dff");
-        //    websitePassword.OverrideLabel = "website Password";
-        //    websitePassword.DeviceId = deviceId + "_001";
-        //    collectionItems.Add(websitePassword);
-
-        //    var memberId = new ScriptCollectionItem();
-        //    memberId.FieldKey = collectionItemsMap["MemberID"];
-        //    memberId.ScriptKey = new Guid("12035220-49da-e511-8d27-000c29729dff");
-        //    memberId.OverrideLabel = "MemberId";
-        //    memberId.DeviceId = deviceId + "_005";
-        //    collectionItems.Add(memberId);
-
-        //    //var patLastName = new ScriptCollectionItem();
-        //    //patLastName.FieldKey = collectionItem["PatientLastName"];
-        //    //patLastName.ScriptKey = new Guid("5cd3e1ec-abd5-e511-8d27-000c29729dff");
-        //    //patLastName.OverrideLabel = "PatLName";
-        //    //patLastName.DeviceId = deviceId + "_002";
-        //    //collectionItems.Add(patLastName);
-
-        //    var serviceDate = new ScriptCollectionItem();
-        //    serviceDate.FieldKey = collectionItemsMap["ServiceDate"];
-        //    serviceDate.ScriptKey = new Guid("10035220-49da-e511-8d27-000c29729dff");
-        //    serviceDate.OverrideLabel = "ServiceDate";
-        //    serviceDate.DeviceId = deviceId + "_003";
-        //    collectionItems.Add(serviceDate);
-
-        //    var serviceDate2 = new ScriptCollectionItem();
-        //    serviceDate2.FieldKey = collectionItemsMap["ServiceDate"];
-        //    serviceDate2.ScriptKey = new Guid("10035220-49da-e511-8d27-000c29729dff");
-        //    serviceDate2.OverrideLabel = "ServiceDate";
-        //    serviceDate2.DeviceId = deviceId + "_003";
-        //    collectionItems.Add(serviceDate2);
-
-
-        //    //var pateintDateOfBirth = new ScriptCollectionItem();
-        //    //pateintDateOfBirth.FieldKey = collectionItem["PatientDOB"];
-        //    //pateintDateOfBirth.ScriptKey = new Guid("5dd3e1ec-abd5-e511-8d27-000c29729dff");
-        //    //pateintDateOfBirth.OverrideLabel = "PatDOB";
-        //    //pateintDateOfBirth.DeviceId = deviceId + "_003";
-        //    //collectionItems.Add(pateintDateOfBirth);
-
-        //    //var serviceDate = new ScriptCollectionItem();
-        //    //serviceDate.FieldKey = collectionItem["PatientDOB"];
-        //    //serviceDate.ScriptKey = new Guid("5cd3e1ec-abd5-e511-8d27-000c29729dff");
-        //    //serviceDate.OverrideLabel = "Service Date";
-        //    //serviceDate.DeviceId = deviceId + "_003";
-        //    //collectionItems.Add(serviceDate);
-
-        //    collectionItems.ForEach(async record =>
-        //    {
-        //        var result = await CreateCollectionItems(record);
-        //        write(result.OverrideLabel + " " + result.ScriptKey);
-        //    });
-
-        //    //foreach (var item in collectionItems)
-        //    //{
-        //    //    var result = await CreateCollectionItems(item);
-        //    //    write(result.OverrideLabel + " " + result.ScriptKey);
-        //    //}
-        //}
         [Test]
         public async Task Add_ExtractionMap_Test()
         {
